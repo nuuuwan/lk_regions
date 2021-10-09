@@ -10,3 +10,4 @@
   * Lint options
   * Updated package.json browserslist
   *  [2021-09-25 08:38AM] Changed Browser to Firefox; Removed failing tests
+  *  [2021-10-09 04:57PM] Initial files
