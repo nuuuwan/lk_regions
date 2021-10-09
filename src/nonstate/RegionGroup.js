@@ -1,25 +1,29 @@
-import Region from './Region.js';
+import { GeoJSON } from "react-leaflet";
+import * as topojsonClient from "topojson-client";
+import * as topojsonServer from "topojson-server";
 
 export default function RegionGroup(props) {
-  const {group, regionToGeo} = props;
+  const { group, regionToGeo } = props;
 
-  return (
-    <>
-      {
-        group.regionIDs.map(
-          function(regionID, iRegion) {
-            const geoJsonData = {
-              type: "MultiPolygon",
-              coordinates: regionToGeo[regionID],
-            };
-            const key = `group-region-${iRegion}`;
+  const geoJSONList = group.regionIDs.map(function (regionID) {
+    return {
+      type: "MultiPolygon",
+      coordinates: regionToGeo[regionID],
+    };
+  });
 
-            return (
-              <Region key={key} regionID={regionID} geoJsonData={geoJsonData} color={group.color} />
-            )
-          }
-        )
-      }
-    </>
+  const topoJSON = topojsonServer.topology(geoJSONList);
+  const mergedTopoJSON = topojsonClient.merge(
+    topoJSON,
+    Object.values(topoJSON.objects)
   );
+
+  const style = {
+    color: "black",
+    fillColor: group.color,
+    fillOpacity: 0.3,
+    weight: 5,
+  };
+
+  return <GeoJSON data={mergedTopoJSON} style={style} />;
 }

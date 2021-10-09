@@ -12,17 +12,14 @@ export default class RegionGroups extends Component {
     this.isComponentMounted = true;
     const { groups } = this.props;
 
-    const regionIDs = groups.reduce(
-      function(regionIDs, group) {
-        return [].concat(regionIDs, group.regionIDs);
-      },
-      [],
-    );
+    const regionIDs = groups.reduce(function (regionIDs, group) {
+      return [].concat(regionIDs, group.regionIDs);
+    }, []);
 
     const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
 
     if (this.isComponentMounted) {
-      this.setState({ regionToGeo  });
+      this.setState({ regionToGeo });
     }
   }
 
@@ -39,14 +36,12 @@ export default class RegionGroups extends Component {
 
     return (
       <>
-        {groups.map(
-          function(group, iGroup) {
-            const key = `group-${iGroup}`;
-            return (
-              <RegionGroup key={key} group={group} regionToGeo={regionToGeo} />
-            )
-          }
-        )}
+        {groups.map(function (group, iGroup) {
+          const key = `group-${iGroup}`;
+          return (
+            <RegionGroup key={key} group={group} regionToGeo={regionToGeo} />
+          );
+        })}
       </>
     );
   }

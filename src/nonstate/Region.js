@@ -1,10 +1,10 @@
 import { GeoJSON } from "react-leaflet";
 
 export default function Region(props) {
-  const {regionID, geoJsonData, color} = props;
+  const { regionID, geoJsonData, color } = props;
 
   const style = {
-    color: color,
+    color: null,
     fillColor: color,
     fillOpacity: 0.3,
     weight: 1,

@@ -75,20 +75,15 @@ export default class GeoData {
 
   static async getRegionToGeo(regionIDs) {
     const geoDataList = await Promise.all(
-      regionIDs.map(
-        async function(regionID) {
-          return await GeoData.getGeoForRegion(regionID);
-        },
-      )
-    )
-
-    return regionIDs.reduce(
-      function(regionToGeo, regionID, iRegion) {
-        regionToGeo[regionID] = geoDataList[iRegion];
-        return regionToGeo;
-      },
-      {},
+      regionIDs.map(async function (regionID) {
+        return await GeoData.getGeoForRegion(regionID);
+      })
     );
+
+    return regionIDs.reduce(function (regionToGeo, regionID, iRegion) {
+      regionToGeo[regionID] = geoDataList[iRegion];
+      return regionToGeo;
+    }, {});
   }
 
   static async getRegionTree() {
