@@ -73,6 +73,24 @@ export default class GeoData {
     return await WWW.json(url);
   }
 
+  static async getRegionToGeo(regionIDs) {
+    const geoDataList = await Promise.all(
+      regionIDs.map(
+        async function(regionID) {
+          return await GeoData.getGeoForRegion(regionID);
+        },
+      )
+    )
+
+    return regionIDs.reduce(
+      function(regionToGeo, regionID, iRegion) {
+        regionToGeo[regionID] = geoDataList[iRegion];
+        return regionToGeo;
+      },
+      {},
+    );
+  }
+
   static async getRegionTree() {
     const url = `/${APP_NAME}/data/geo/region_tree.json`;
     return await WWW.json(url);
