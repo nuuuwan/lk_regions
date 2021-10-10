@@ -1,6 +1,5 @@
 import { Component } from "react";
 import Drawer from "@mui/material/Drawer";
-import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -9,26 +8,22 @@ import TreeItem from "@material-ui/lab/TreeItem";
 
 export default class GroupPanel extends Component {
   render() {
-    const {
-      showGroupPanel,
-      onGroupPanelShow,
-      onGroupPanelHide,
-      groupIndex,
-      regionToGroup,
-    } = this.props;
+    const { showGroupPanel, onGroupPanelHide, groupIndex, regionToGroup } =
+      this.props;
 
-    const groupToRegion = Object.entries(regionToGroup).reduce(
-      function(groupToRegion, [regionID, groupID]) {
-        if (groupID) {
-          if (!groupToRegion[groupID]) {
-            groupToRegion[groupID] = [];
-          }
-          groupToRegion[groupID].push(regionID);
-          return groupToRegion;
+    const groupToRegion = Object.entries(regionToGroup).reduce(function (
+      groupToRegion,
+      [regionID, groupID]
+    ) {
+      if (groupID) {
+        if (!groupToRegion[groupID]) {
+          groupToRegion[groupID] = [];
         }
-      },
-      {},
-    );
+        groupToRegion[groupID].push(regionID);
+      }
+      return groupToRegion;
+    },
+    {});
 
     return (
       <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
@@ -53,12 +48,16 @@ export default class GroupPanel extends Component {
               const groupKey = `group-${groupID}`;
               return (
                 <TreeItem key={groupKey} nodeID={groupKey} label={label}>
-                  {regionIDs.map(
-                    function(regionID, iRegion) {
-                      const regionKey = `region-${regionID}`;
-                      return (<TreeItem key={regionKey} nodeID={regionKey} label={regionID} />);
-                    },
-                  )}
+                  {regionIDs.map(function (regionID, iRegion) {
+                    const regionKey = `region-${regionID}`;
+                    return (
+                      <TreeItem
+                        key={regionKey}
+                        nodeID={regionKey}
+                        label={regionID}
+                      />
+                    );
+                  })}
                 </TreeItem>
               );
             })}
