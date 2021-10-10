@@ -1,11 +1,19 @@
 import { Component } from "react";
 
-import Drawer from '@mui/material/Drawer';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Badge from '@mui/material/Badge';
+import MapIcon from '@mui/icons-material/Map';
 
 import { ENT } from "../../base/Ents.js";
 import GeoData from "../../base/GeoData.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
+import GroupPanel from "../molecules/GroupPanel.js";
 import RegionView from "../../nonstate/molecules/RegionView.js";
 
 const DEFAULT_ZOOM = 8;
@@ -20,7 +28,7 @@ export default class HomePage extends Component {
       activeGroupID: {},
       regionToGeo: {},
       isDataLoaded: false,
-      showGroupPanel:true,
+      showGroupPanel: false,
     };
   }
 
@@ -39,7 +47,10 @@ export default class HomePage extends Component {
     this.setState({regionToGroup});
   }
 
-  onCloseGroupPanel() {
+  onGroupPanelShow() {
+    this.setState({showGroupPanel: true});
+  }
+  onGroupPanelHide() {
     this.setState({showGroupPanel: false});
   }
 
@@ -73,15 +84,27 @@ export default class HomePage extends Component {
     }
     return (
       <div>
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar variant="dense">
+            <Typography variant="h6" color="inherit" component="div">
+              LK Regions
+            </Typography>
+
+
+             <Box sx={{ flexGrow: 1 }} />
+            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+           <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={this.onGroupPanelShow.bind(this)}>
+             <MapIcon />
+           </IconButton>
+           </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           {this.renderRegions()}
         </GeoMap>
-        <Drawer
-           anchor="right"
-           open={showGroupPanel}
-           onClose={this.onCloseGroupPanel.bind(this)}
-         />
-
+        <GroupPanel showGroupPanel={showGroupPanel} onGroupPanelShow={this.onGroupPanelShow.bind(this)} onGroupPanelHide={this.onGroupPanelHide.bind(this)}/>
       </div>
     );
   }
