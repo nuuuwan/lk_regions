@@ -16,7 +16,6 @@ import RegionView from "../../nonstate/molecules/RegionView.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
-const COLOR_NO_GROUP_REGION = "white";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -86,16 +85,10 @@ export default class HomePage extends Component {
   }
 
   renderRegions() {
-    const { regionToGroup, groupIndex, activeGroupID, regionToGeo } =
+    const { regionToGroup, activeGroupID, regionToGeo } =
       this.state;
     return Object.entries(regionToGroup).map(
       function ([regionID, groupID], iRegion) {
-        let color = COLOR_NO_GROUP_REGION;
-        if (groupID) {
-          const group = groupIndex[groupID];
-          color = group.color;
-        }
-
         const geoJSON = {
           type: "MultiPolygon",
           coordinates: regionToGeo[regionID],

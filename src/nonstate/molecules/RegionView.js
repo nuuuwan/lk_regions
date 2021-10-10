@@ -1,5 +1,8 @@
 import { GeoJSON } from "react-leaflet";
-import {COLOR_ACTIVE, COLOR_NOT_ACTIVE} from '../../constants/ColorConstants.js';
+import {
+  COLOR_ACTIVE,
+  COLOR_NOT_ACTIVE,
+} from "../../constants/ColorConstants.js";
 
 const BORDER_COLOR = "gray";
 const BORDER_WIDTH = 1;
