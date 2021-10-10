@@ -21,7 +21,7 @@ export default class RegionChip extends Component {
     }
     const regionType = Ents.getEntType(regionID);
     return (
-      <Chip
+      <Chip sx={{m: 0.2}}
         label={
           <Grid container direction="row" alignItems="center">
             <Grid item>

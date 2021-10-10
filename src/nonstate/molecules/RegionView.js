@@ -1,20 +1,16 @@
 import { GeoJSON } from "react-leaflet";
-import {
-  COLOR_ACTIVE,
-  COLOR_NOT_ACTIVE,
-} from "../../constants/ColorConstants.js";
 
 const BORDER_COLOR = "gray";
 const BORDER_WIDTH = 1;
+const FILL_OPACITY = 0.8;
 
 export default function RegionView(props) {
-  const { regionID, geoJSON, isActive, onClickRegion } = props;
-  const fillColor = isActive ? COLOR_ACTIVE : COLOR_NOT_ACTIVE;
+  const { regionID, geoJSON,color, onClickRegion } = props;
   const style = {
-    fillColor: fillColor,
+    fillColor: color,
     color: BORDER_COLOR,
     weight: BORDER_WIDTH,
-    fillOpacity: 0.8,
+    fillOpacity: FILL_OPACITY,
   };
   const onEachFeature = (feature, layer) => {
     layer.on({

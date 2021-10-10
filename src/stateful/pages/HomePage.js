@@ -93,14 +93,24 @@ export default class HomePage extends Component {
           type: "MultiPolygon",
           coordinates: regionToGeo[regionID],
         };
-        const isActive = activeGroupID === groupID;
+        let color;
+        if (activeGroupID === groupID) {
+          color = 'red';
+        } else if (groupID) {
+          color = 'pink';
+        } else {
+          color = 'lightgray';
+        }
+
+
+
         const key = `region-${iRegion}-${regionID}`;
         return (
           <RegionView
             key={key}
             regionID={regionID}
             geoJSON={geoJSON}
-            isActive={isActive}
+            color={color}
             onClickRegion={this.onClickRegion.bind(this)}
           />
         );
