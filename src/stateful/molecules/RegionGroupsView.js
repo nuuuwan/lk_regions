@@ -1,8 +1,8 @@
 import { Component } from "react";
 import GeoData from "../../base/GeoData.js";
-import RegionGroup from "../../nonstate/RegionGroup.js";
+import RegionGroupView from "../../nonstate/RegionGroupView.js";
 
-export default class RegionGroups extends Component {
+export default class RegionGroupsView extends Component {
   constructor(props) {
     super(props);
     this.state = { regionIDToGeoData: undefined };
@@ -32,14 +32,19 @@ export default class RegionGroups extends Component {
     if (!regionToGeo) {
       return "...";
     }
-    const { groups } = this.props;
+    const { groups, activeGroupID } = this.props;
 
     return (
       <>
         {groups.map(function (group, iGroup) {
           const key = `group-${iGroup}`;
           return (
-            <RegionGroup key={key} group={group} regionToGeo={regionToGeo} />
+            <RegionGroupView
+              key={key}
+              group={group}
+              regionToGeo={regionToGeo}
+              isActive={activeGroupID === group.groupID}
+            />
           );
         })}
       </>
