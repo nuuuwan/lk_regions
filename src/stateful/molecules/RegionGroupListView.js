@@ -5,14 +5,14 @@ import RegionGroupView from "../../nonstate/RegionGroupView.js";
 export default class RegionGroupListView extends Component {
   constructor(props) {
     super(props);
-    this.state = { regionIDToGeoData: undefined };
+    this.state = { regionToGeo: undefined };
   }
 
   async componentDidMount() {
     this.isComponentMounted = true;
-    const { groups } = this.props;
+    const { groupList } = this.props;
 
-    const regionIDs = groups.reduce(function (regionIDs, group) {
+    const regionIDs = groupList.reduce(function (regionIDs, group) {
       return [].concat(regionIDs, group.regionIDs);
     }, []);
 
@@ -36,11 +36,11 @@ export default class RegionGroupListView extends Component {
     if (!regionToGeo) {
       return "...";
     }
-    const { groups, activeGroupID } = this.props;
+    const { groupList, activeGroupID } = this.props;
 
     return (
       <>
-        {groups.map(
+        {groupList.map(
           function (group, iGroup) {
             const key = `group-${iGroup}`;
             return (
