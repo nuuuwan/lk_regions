@@ -1,11 +1,12 @@
 import { Component } from "react";
-
+import Card from '@mui/material/Card';
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
-import TreeView from "@material-ui/lab/TreeView";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import TreeItem from "@material-ui/lab/TreeItem";
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+
+
 
 export default class GroupPanel extends Component {
   render() {
@@ -43,12 +44,6 @@ export default class GroupPanel extends Component {
             m: 2,
           }}
         >
-          <TreeView
-            aria-label="file system navigator"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            defaultExpanded={groupKeyList}
-          >
             {Object.entries(groupIndex).map(function (
               [groupID, group],
               iGroup
@@ -65,26 +60,24 @@ export default class GroupPanel extends Component {
               }
 
               return (
-                <TreeItem
-                  key={groupKey}
-                  nodeId={groupKey}
-                  label={label}
-                  onClick={onClickGroupInner}
-                >
+                <Card sx={{m: 2, p: 2, color: group.color}}>
+                <Typography variant="overline">
+                  {group.name}
+                </Typography>
+                <Stack spacing={1} sx={{width: 100}}>
                   {regionIDs.map(function (regionID, iRegion) {
                     const regionKey = `region-${regionID}`;
                     return (
-                      <TreeItem
+                      <Chip
                         key={regionKey}
-                        nodeId={regionKey}
                         label={regionID}
                       />
                     );
                   })}
-                </TreeItem>
+                </Stack>
+                          </Card>
               );
             })}
-          </TreeView>
         </Box>
       </Drawer>
     );
