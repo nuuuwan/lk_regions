@@ -2,10 +2,12 @@ import { Component } from "react";
 import Card from '@mui/material/Card';
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-
+import RegionChip from '../atoms/RegionChip.js';
+import CircleIcon from '@mui/icons-material/Circle';
 
 
 export default class GroupPanel extends Component {
@@ -40,7 +42,7 @@ export default class GroupPanel extends Component {
       <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
         <Box
           sx={{
-            width: 200,
+            width: 300,
             m: 2,
           }}
         >
@@ -60,22 +62,27 @@ export default class GroupPanel extends Component {
               }
 
               return (
-                <Card sx={{m: 2, p: 2, color: group.color}}>
-                <Typography variant="overline">
-                  {group.name}
-                </Typography>
-                <Stack spacing={1} sx={{width: 100}}>
-                  {regionIDs.map(function (regionID, iRegion) {
-                    const regionKey = `region-${regionID}`;
-                    return (
-                      <Chip
-                        key={regionKey}
-                        label={regionID}
-                      />
-                    );
-                  })}
-                </Stack>
-                          </Card>
+                <Card sx={{m: 1, p: 1}}>
+                  <Grid container direction="row" alignItems="center">
+                    <Grid item>
+                      <CircleIcon sx={{color: group.color}}/>
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="overline" sx={{paddingLeft:1}}>
+                        {group.name}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+
+                  <Box>
+                    {regionIDs.map(function (regionID, iRegion) {
+                      const regionKey = `region-${regionID}`;
+                      return (
+                        <RegionChip key={regionKey} regionID={regionID}/>
+                      );
+                    })}
+                  </Box>
+                </Card>
               );
             })}
         </Box>

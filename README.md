@@ -53,3 +53,4 @@
   *  [2021-10-10 01:52PM] Unknown
   *  [2021-10-10 02:00PM] Color in Group Data
   *  [2021-10-10 02:22PM] Unknown
+  *  [2021-10-10 02:43PM] Chip color
