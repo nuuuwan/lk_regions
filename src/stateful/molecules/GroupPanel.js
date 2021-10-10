@@ -14,8 +14,22 @@ export default class GroupPanel extends Component {
       onGroupPanelShow,
       onGroupPanelHide,
       groupIndex,
-      regionIndex,
+      regionToGroup,
     } = this.props;
+
+    const groupToRegion = Object.entries(regionToGroup).reduce(
+      function(groupToRegion, [regionID, groupID]) {
+        if (groupID) {
+          if (!groupToRegion[groupID]) {
+            groupToRegion[groupID] = [];
+          }
+          groupToRegion[groupID].push(regionID);
+          return groupToRegion;
+        }
+      },
+      {},
+    );
+
     return (
       <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
         <Box
@@ -35,7 +49,18 @@ export default class GroupPanel extends Component {
               iGroup
             ) {
               const label = group.name;
-              return <TreeItem nodeId="1" label={label} />;
+              const regionIDs = groupToRegion[groupID];
+              const groupKey = `group-${groupID}`;
+              return (
+                <TreeItem key={groupKey} nodeID={groupKey} label={label}>
+                  {regionIDs.map(
+                    function(regionID, iRegion) {
+                      const regionKey = `region-${regionID}`;
+                      return (<TreeItem key={regionKey} nodeID={regionKey} label={regionID} />);
+                    },
+                  )}
+                </TreeItem>
+              );
             })}
           </TreeView>
         </Box>

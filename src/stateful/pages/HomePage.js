@@ -80,7 +80,7 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { groupIndex, showGroupPanel, regionIndex } = this.state;
+    const { groupIndex, showGroupPanel, regionToGroup } = this.state;
     if (groupIndex.length === 0) {
       return "...";
     }
@@ -115,7 +115,7 @@ export default class HomePage extends Component {
           onGroupPanelShow={this.onGroupPanelShow.bind(this)}
           onGroupPanelHide={this.onGroupPanelHide.bind(this)}
           groupIndex={groupIndex}
-          regionIndex={regionIndex}
+          regionToGroup={regionToGroup}
         />
       </div>
     );
