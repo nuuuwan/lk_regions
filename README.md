@@ -66,3 +66,4 @@
   *  [2021-10-10 03:45PM] Updated README
   *  [2021-10-10 04:25PM] Linted
   *  [2021-10-10 04:32PM] Pre-Merge
+  *  [2021-10-10 04:57PM] Fixed Tests
