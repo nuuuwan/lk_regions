@@ -43,7 +43,6 @@ export default class HomePage extends Component {
       [{}, false]
     );
 
-    console.debug(regionID, activeGroupID, activeGroupHas);
     if (!activeGroupHas) {
       newGroupIndex[activeGroupID].regionIDs.push(regionID);
     }
