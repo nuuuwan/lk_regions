@@ -1,6 +1,7 @@
 import { Component } from "react";
 import Card from '@mui/material/Card';
 import Drawer from "@mui/material/Drawer";
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Chip from '@mui/material/Chip';
@@ -41,15 +42,17 @@ export default class GroupPanel extends Component {
 
 
     return (
-        <Box
+        <Paper
           sx={{
             position: 'absolute',
-            top: 20,
-            right: 0,
+            top: 60,
+            right: 10,
             width: 300,
-            height: 300,
+            height: '70vh',
             m: 2,
+            p: 2,
             zIndex: 1000,
+            overflow: 'scroll',
           }}
         >
             {Object.entries(groupIndex).map(function (
@@ -71,7 +74,7 @@ export default class GroupPanel extends Component {
 
 
               return (
-                <Card sx={{m: 1, p: 1}} onClick={onClickGroupInner}>
+                <Paper sx={{m: 1, p: 1}} onClick={onClickGroupInner}>
                   <Grid container direction="row" alignItems="center">
                     <Grid item>
                       <CircleIcon sx={{color}} fontSize="smallest"/>
@@ -91,10 +94,10 @@ export default class GroupPanel extends Component {
                       );
                     })}
                   </Box>
-                </Card>
+                </Paper>
               );
             })}
-        </Box>
+        </Paper>
     );
   }
 }
