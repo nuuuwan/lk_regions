@@ -4,12 +4,8 @@
 
 ## TODOs
 
-* Side Panel, displaying what regions are in what groups, and other group info
+* Group Selector Panel Panel, displaying what regions are in what groups, and other group info
 * Automatically adjust zoom to reflect the selected region group
-* Region First Design
-  * Every region is rendered
-  * An index indicates which group it belongs to
-  * Updating the region changes the index
 
 ## Revision History
 
@@ -39,3 +35,4 @@
   *  [2021-10-10 10:41AM] Region First Design - Done
 * [2021-10-10 10:41AM] Group Selector Panel
   *  [2021-10-10 10:41AM] Updated README
+  *  [2021-10-10 10:55AM] Panel Stub

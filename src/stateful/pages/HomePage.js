@@ -1,5 +1,7 @@
 import { Component } from "react";
 
+import Drawer from '@mui/material/Drawer';
+
 import { ENT } from "../../base/Ents.js";
 import GeoData from "../../base/GeoData.js";
 import RegionGroup from "../../base/RegionGroup.js";
@@ -18,6 +20,7 @@ export default class HomePage extends Component {
       activeGroupID: {},
       regionToGeo: {},
       isDataLoaded: false,
+      showGroupPanel:true,
     };
   }
 
@@ -34,6 +37,10 @@ export default class HomePage extends Component {
     let {regionToGroup, activeGroupID} = this.state;
     regionToGroup[regionID] = (regionToGroup[regionID] === activeGroupID) ? null : activeGroupID;
     this.setState({regionToGroup});
+  }
+
+  onCloseGroupPanel() {
+    this.setState({showGroupPanel: false});
   }
 
   renderRegions() {
@@ -60,7 +67,7 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { groupIndex } = this.state;
+    const { groupIndex, showGroupPanel } = this.state;
     if (groupIndex.length === 0) {
       return "...";
     }
@@ -69,6 +76,12 @@ export default class HomePage extends Component {
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           {this.renderRegions()}
         </GeoMap>
+        <Drawer
+           anchor="right"
+           open={showGroupPanel}
+           onClose={this.onCloseGroupPanel.bind(this)}
+         />
+
       </div>
     );
   }
