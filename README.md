@@ -28,8 +28,12 @@
   *  [2021-10-10 10:01AM] Changed groupList to groupIndex
   *  [2021-10-10 10:07AM] Implemented adding
   *  [2021-10-10 10:07AM] Pre-Merge
+
 * [2021-10-10 10:09AM] select-regions-for-groups-2
   *  [2021-10-10 10:09AM] Updated README
   *  [2021-10-10 10:18AM] Pre-Merge
   *  [2021-10-10 10:19AM] Region First Design
   *  [2021-10-10 10:20AM] Unknown
+
+* Region First Design
+  *  [2021-10-10 10:41AM] Region First Design - Done
