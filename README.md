@@ -5,6 +5,9 @@
 ## TODOs
 
 * Group Selector Panel Panel, displaying what regions are in what groups, and other group info
+  * Display Regions  
+  * Select Active Group
+
 * Automatically adjust zoom to reflect the selected region group
 
 ## Revision History
@@ -33,7 +36,9 @@
 
 * Region First Design
   *  [2021-10-10 10:41AM] Region First Design - Done
+
 * [2021-10-10 10:41AM] Group Selector Panel
   *  [2021-10-10 10:41AM] Updated README
   *  [2021-10-10 10:55AM] Panel Stub
   *  [2021-10-10 11:13AM] Hide/Show Panel Complete
+  *  [2021-10-10 11:29AM] Basic Stub

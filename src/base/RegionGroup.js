@@ -16,13 +16,10 @@ export default class RegionGroup {
     }, {});
 
     const regionIDs = regionEnts.map((regionEnt) => regionEnt.id);
-    const regionToGroup = regionIDs.reduce(
-      function(regionToGroup, regionID) {
-        regionToGroup[regionID] = regionID;
-        return regionToGroup;
-      },
-      {}
-    );
+    const regionToGroup = regionIDs.reduce(function (regionToGroup, regionID) {
+      regionToGroup[regionID] = regionID;
+      return regionToGroup;
+    }, {});
 
     return [groupIndex, regionToGroup];
   }

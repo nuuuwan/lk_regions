@@ -1,13 +1,13 @@
 import { Component } from "react";
 
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Badge from '@mui/material/Badge';
-import MapIcon from '@mui/icons-material/Map';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Badge from "@mui/material/Badge";
+import MapIcon from "@mui/icons-material/Map";
 
 import { ENT } from "../../base/Ents.js";
 import GeoData from "../../base/GeoData.js";
@@ -33,37 +33,39 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    const [groupIndex, regionToGroup] = await RegionGroup.getGroupDataForRegionType(ENT.PROVINCE);
+    const [groupIndex, regionToGroup] =
+      await RegionGroup.getGroupDataForRegionType(ENT.PROVINCE);
     const activeGroupID = Object.keys(groupIndex)[0];
     const regionIDs = Object.keys(regionToGroup);
     const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
 
-    this.setState({ groupIndex, regionToGroup, activeGroupID , regionToGeo});
+    this.setState({ groupIndex, regionToGroup, activeGroupID, regionToGeo });
   }
 
   onClickRegion(regionID) {
-    let {regionToGroup, activeGroupID} = this.state;
-    regionToGroup[regionID] = (regionToGroup[regionID] === activeGroupID) ? null : activeGroupID;
-    this.setState({regionToGroup});
+    let { regionToGroup, activeGroupID } = this.state;
+    regionToGroup[regionID] =
+      regionToGroup[regionID] === activeGroupID ? null : activeGroupID;
+    this.setState({ regionToGroup });
   }
 
   onGroupPanelShow() {
-    this.setState({showGroupPanel: true});
+    this.setState({ showGroupPanel: true });
   }
   onGroupPanelHide() {
-    this.setState({showGroupPanel: false});
+    this.setState({ showGroupPanel: false });
   }
 
   renderRegions() {
     const { regionToGroup, activeGroupID, regionToGeo } = this.state;
     return Object.entries(regionToGroup).map(
-      function([regionID, groupID], iRegion) {
+      function ([regionID, groupID], iRegion) {
         const geoJSON = {
-            type: 'MultiPolygon',
-            coordinates: regionToGeo[regionID],
-        }
+          type: "MultiPolygon",
+          coordinates: regionToGeo[regionID],
+        };
         const isActive = activeGroupID === groupID;
-        const key = `region-${iRegion}-${regionID}`
+        const key = `region-${iRegion}-${regionID}`;
         return (
           <RegionView
             key={key}
@@ -73,38 +75,48 @@ export default class HomePage extends Component {
             onClickRegion={this.onClickRegion.bind(this)}
           />
         );
-      }.bind(this),
-    )
+      }.bind(this)
+    );
   }
 
   render() {
-    const { groupIndex, showGroupPanel } = this.state;
+    const { groupIndex, showGroupPanel, regionIndex } = this.state;
     if (groupIndex.length === 0) {
       return "...";
     }
     return (
       <div>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit" component="div">
-              LK Regions
-            </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <AppBar position="static">
+            <Toolbar variant="dense">
+              <Typography variant="h6" color="inherit" component="div">
+                LK Regions
+              </Typography>
 
-
-             <Box sx={{ flexGrow: 1 }} />
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-           <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={this.onGroupPanelShow.bind(this)}>
-             <MapIcon />
-           </IconButton>
-           </Box>
-          </Toolbar>
-        </AppBar>
-      </Box>
+              <Box sx={{ flexGrow: 1 }} />
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  color="inherit"
+                  onClick={this.onGroupPanelShow.bind(this)}
+                >
+                  <MapIcon />
+                </IconButton>
+              </Box>
+            </Toolbar>
+          </AppBar>
+        </Box>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           {this.renderRegions()}
         </GeoMap>
-        <GroupPanel showGroupPanel={showGroupPanel} onGroupPanelShow={this.onGroupPanelShow.bind(this)} onGroupPanelHide={this.onGroupPanelHide.bind(this)}/>
+        <GroupPanel
+          showGroupPanel={showGroupPanel}
+          onGroupPanelShow={this.onGroupPanelShow.bind(this)}
+          onGroupPanelHide={this.onGroupPanelHide.bind(this)}
+          groupIndex={groupIndex}
+          regionIndex={regionIndex}
+        />
       </div>
     );
   }
