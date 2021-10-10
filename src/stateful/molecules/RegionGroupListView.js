@@ -2,7 +2,7 @@ import { Component } from "react";
 import GeoData from "../../base/GeoData.js";
 import RegionGroupView from "../../nonstate/RegionGroupView.js";
 
-export default class RegionGroupsView extends Component {
+export default class RegionGroupListView extends Component {
   constructor(props) {
     super(props);
     this.state = { regionIDToGeoData: undefined };
@@ -27,6 +27,10 @@ export default class RegionGroupsView extends Component {
     this.isComponentMounted = false;
   }
 
+  onClickRegion(regionID) {
+    console.debug("RegionGroupListView.onClickRegion", regionID);
+  }
+
   render() {
     const { regionToGeo } = this.state;
     if (!regionToGeo) {
@@ -36,17 +40,20 @@ export default class RegionGroupsView extends Component {
 
     return (
       <>
-        {groups.map(function (group, iGroup) {
-          const key = `group-${iGroup}`;
-          return (
-            <RegionGroupView
-              key={key}
-              group={group}
-              regionToGeo={regionToGeo}
-              isActive={activeGroupID === group.groupID}
-            />
-          );
-        })}
+        {groups.map(
+          function (group, iGroup) {
+            const key = `group-${iGroup}`;
+            return (
+              <RegionGroupView
+                key={key}
+                group={group}
+                regionToGeo={regionToGeo}
+                isActive={activeGroupID === group.groupID}
+                onClickRegion={this.onClickRegion.bind(this)}
+              />
+            );
+          }.bind(this)
+        )}
       </>
     );
   }

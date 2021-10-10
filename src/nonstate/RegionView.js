@@ -6,7 +6,7 @@ const BORDER_COLOR = "gray";
 const BORDER_WIDTH = 1;
 
 export default function RegionView(props) {
-  const { geoJSON, isActive } = props;
+  const { regionID, geoJSON, isActive, onClickRegion } = props;
   const fillColor = isActive ? COLOR_ACTIVE : COLOR_NOT_ACTIVE;
   const style = {
     fillColor: fillColor,
@@ -16,7 +16,7 @@ export default function RegionView(props) {
   const onEachFeature = (feature, layer) => {
     layer.on({
       click: function (e) {
-        console.debug(e);
+        onClickRegion(regionID);
       },
     });
   };

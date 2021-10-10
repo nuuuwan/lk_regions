@@ -1,7 +1,7 @@
-import RegionView from './RegionView.js';
+import RegionView from "./RegionView.js";
 
 export default function RegionGroupView(props) {
-  const { group, regionToGeo, isActive } = props;
+  const { group, regionToGeo, isActive, onClickRegion } = props;
 
   return (
     <>
@@ -10,7 +10,16 @@ export default function RegionGroupView(props) {
           type: "MultiPolygon",
           coordinates: regionToGeo[regionID],
         };
-        return <RegionView geoJSON={geoJSON} isActive={isActive} />;
+        const key = `region-${iRegion}-${regionID}`;
+        return (
+          <RegionView
+            key={key}
+            regionID={regionID}
+            geoJSON={geoJSON}
+            isActive={isActive}
+            onClickRegion={onClickRegion}
+          />
+        );
       })}
     </>
   );
