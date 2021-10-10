@@ -24,3 +24,5 @@
   *  [2021-10-10 10:01AM] Changed groupList to groupIndex
   *  [2021-10-10 10:07AM] Implemented adding
   *  [2021-10-10 10:07AM] Pre-Merge
+* [2021-10-10 10:09AM] select-regions-for-groups-2
+  *  [2021-10-10 10:09AM] Updated README
