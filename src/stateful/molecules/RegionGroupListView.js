@@ -10,9 +10,9 @@ export default class RegionGroupListView extends Component {
 
   async componentDidMount() {
     this.isComponentMounted = true;
-    const { groupList } = this.props;
+    const { groupIndex } = this.props;
 
-    const regionIDs = groupList.reduce(function (regionIDs, group) {
+    const regionIDs = Object.values(groupIndex).reduce(function (regionIDs, group) {
       return [].concat(regionIDs, group.regionIDs);
     }, []);
 
@@ -27,32 +27,28 @@ export default class RegionGroupListView extends Component {
     this.isComponentMounted = false;
   }
 
-  onClickRegion(regionID) {
-    console.debug("RegionGroupListView.onClickRegion", regionID);
-  }
-
   render() {
     const { regionToGeo } = this.state;
     if (!regionToGeo) {
       return "...";
     }
-    const { groupList, activeGroupID } = this.props;
+    const { groupIndex, activeGroupID, onClickRegion } = this.props;
 
     return (
       <>
-        {groupList.map(
-          function (group, iGroup) {
+        {Object.entries(groupIndex).map(
+          function ([groupID, group], iGroup) {
             const key = `group-${iGroup}`;
             return (
               <RegionGroupView
                 key={key}
                 group={group}
                 regionToGeo={regionToGeo}
-                isActive={activeGroupID === group.groupID}
-                onClickRegion={this.onClickRegion.bind(this)}
+                isActive={activeGroupID === groupID}
+                onClickRegion={onClickRegion}
               />
             );
-          }.bind(this)
+          }
         )}
       </>
     );

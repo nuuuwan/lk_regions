@@ -21,3 +21,4 @@
   *  [2021-10-10 09:47AM] Updated README
   *  [2021-10-10 09:52AM] Click Handling Complete
   *  [2021-10-10 09:55AM] Renamed various
+  *  [2021-10-10 10:01AM] Changed groupList to groupIndex

@@ -11,26 +11,35 @@ const DEFAULT_LATLNG = [6.9157, 79.8636];
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = { groupList: [], activeGroupID: null };
+    this.state = { groupIndex: [], activeGroupID: null };
+  }
+
+  static async getDefaultGroupIndex() {
+    return await RegionGroup.getGroupIndexForType(ENT.PROVINCE);
   }
 
   async componentDidMount() {
-    const groupList = await RegionGroup.getGroupsByType(ENT.PROVINCE);
-    const activeGroupID = groupList[0].groupID;
-    this.setState({ groupList, activeGroupID });
+    const groupIndex = await HomePage.getDefaultGroupIndex();
+    const activeGroupID = Object.keys(groupIndex)[0];
+
+    this.setState({ groupIndex, activeGroupID });
   }
 
+  onClickRegion(regionID) {
+    console.debug("RegionGroupListView.onClickRegion", regionID);
+  }
   render() {
-    const { groupList, activeGroupID } = this.state;
-    if (groupList.length === 0) {
+    const { groupIndex, activeGroupID } = this.state;
+    if (groupIndex.length === 0) {
       return "...";
     }
     return (
       <div>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <RegionGroupListView
-            groupList={groupList}
+            groupIndex={groupIndex}
             activeGroupID={activeGroupID}
+            onClickRegion={this.onClickRegion.bind(this)}
           />
         </GeoMap>
       </div>
