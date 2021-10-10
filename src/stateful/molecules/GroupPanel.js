@@ -12,12 +12,8 @@ import {
 
 export default class GroupPanel extends Component {
   render() {
-    const {
-      groupIndex,
-      regionToGroup,
-      onClickGroup,
-      activeGroupID,
-    } = this.props;
+    const { groupIndex, regionToGroup, onClickGroup, activeGroupID } =
+      this.props;
 
     const groupToRegion = Object.entries(regionToGroup).reduce(function (
       groupToRegion,

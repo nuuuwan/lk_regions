@@ -5,7 +5,7 @@ const BORDER_WIDTH = 1;
 const FILL_OPACITY = 0.8;
 
 export default function RegionView(props) {
-  const { regionID, geoJSON,color, onClickRegion } = props;
+  const { regionID, geoJSON, color, onClickRegion } = props;
   const style = {
     fillColor: color,
     color: BORDER_COLOR,

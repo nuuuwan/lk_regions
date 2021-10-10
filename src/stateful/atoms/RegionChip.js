@@ -21,16 +21,20 @@ export default class RegionChip extends Component {
     }
     const regionType = Ents.getEntType(regionID);
     return (
-      <Chip sx={{m: 0.2}}
+      <Chip
+        sx={{ m: 0.2 }}
         label={
           <Grid container direction="row" alignItems="center">
             <Grid item>
-              <Typography variant="body2" sx={{fontSize: 9, fontWeight: 800}}>
+              <Typography variant="body2" sx={{ fontSize: 9, fontWeight: 800 }}>
                 {regionEnt.name}
               </Typography>
             </Grid>
             <Grid item>
-              <Typography variant="body2" sx={{paddingLeft: 0.5, fontSize: 9}}>
+              <Typography
+                variant="body2"
+                sx={{ paddingLeft: 0.5, fontSize: 9 }}
+              >
                 {regionType.toUpperCase()}
               </Typography>
             </Grid>

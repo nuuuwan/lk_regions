@@ -7,11 +7,12 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MapIcon from "@mui/icons-material/Map";
 
-import Ents, { ENT } from "../../base/Ents.js";
+import Ents from "../../base/Ents.js";
 import GeoData from "../../base/GeoData.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import GroupPanel from "../molecules/GroupPanel.js";
+import GroupSelector from "../molecules/GroupSelector.js";
 import RegionView from "../../nonstate/molecules/RegionView.js";
 
 const DEFAULT_ZOOM = 8;
@@ -21,13 +22,35 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      groupIndex: {},
-      regionToGroup: {},
-      activeGroupID: {},
-      regionToGeo: {},
-      isDataLoaded: false,
-      showGroupPanel: false,
+      selectedMapID: "by_province",
+      mapInfoIndex: undefined,
+      activeGroupID: undefined,
+      regionToGeo: undefined,
+      groupIndex: undefined,
+      showGroupSelector: false,
     };
+  }
+
+  async componentDidMount() {
+    const { selectedMapID } = this.state;
+    await this.updateMap(selectedMapID);
+  }
+
+  async updateMap(selectedMapID) {
+    const mapInfoIndex = await RegionGroup.getMapInfoIndex();
+    const { groupIndex, regionToGroup } = mapInfoIndex[selectedMapID];
+    const activeGroupID = Object.keys(groupIndex)[0];
+    const regionIDs = Object.keys(regionToGroup);
+    const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
+
+    this.setState({
+      mapInfoIndex,
+      groupIndex,
+      regionToGroup,
+      activeGroupID,
+      regionToGeo,
+      selectedMapID,
+    });
   }
 
   async expandRegion(regionID) {
@@ -52,16 +75,6 @@ export default class HomePage extends Component {
     this.setState({ regionToGroup, regionToGeo });
   }
 
-  async componentDidMount() {
-    const [groupIndex, regionToGroup] =
-      await RegionGroup.getGroupDataForRegionType(ENT.PROVINCE);
-    const activeGroupID = Object.keys(groupIndex)[0];
-    const regionIDs = Object.keys(regionToGroup);
-    const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
-
-    this.setState({ groupIndex, regionToGroup, activeGroupID, regionToGeo });
-  }
-
   async onClickRegion(regionID, altKey) {
     if (altKey) {
       await this.expandRegion(regionID);
@@ -77,16 +90,19 @@ export default class HomePage extends Component {
     this.setState({ activeGroupID: groupID });
   }
 
-  onGroupPanelShow() {
-    this.setState({ showGroupPanel: true });
+  onGroupSelectorShow() {
+    this.setState({ showGroupSelector: true });
   }
-  onGroupPanelHide() {
-    this.setState({ showGroupPanel: false });
+  onGroupSelectorHide() {
+    this.setState({ showGroupSelector: false });
+  }
+
+  async onClickMap(mapID) {
+    await this.updateMap(mapID);
   }
 
   renderRegions() {
-    const { regionToGroup, activeGroupID, regionToGeo } =
-      this.state;
+    const { regionToGroup, activeGroupID, regionToGeo } = this.state;
     return Object.entries(regionToGroup).map(
       function ([regionID, groupID], iRegion) {
         const geoJSON = {
@@ -95,14 +111,12 @@ export default class HomePage extends Component {
         };
         let color;
         if (activeGroupID === groupID) {
-          color = 'red';
+          color = "red";
         } else if (groupID) {
-          color = 'pink';
+          color = "pink";
         } else {
-          color = 'lightgray';
+          color = "lightgray";
         }
-
-
 
         const key = `region-${iRegion}-${regionID}`;
         return (
@@ -119,9 +133,15 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { groupIndex, showGroupPanel, regionToGroup, activeGroupID } =
-      this.state;
-    if (groupIndex.length === 0) {
+    const {
+      groupIndex,
+      showGroupSelector,
+      regionToGroup,
+      activeGroupID,
+      mapInfoIndex,
+      selectedMapID,
+    } = this.state;
+    if (!groupIndex) {
       return "...";
     }
     return (
@@ -130,7 +150,7 @@ export default class HomePage extends Component {
           <AppBar position="static">
             <Toolbar variant="dense">
               <Typography variant="h6" color="inherit" component="div">
-                LK Regions
+                {selectedMapID}
               </Typography>
 
               <Box sx={{ flexGrow: 1 }} />
@@ -139,7 +159,7 @@ export default class HomePage extends Component {
                   size="large"
                   aria-label="show 4 new mails"
                   color="inherit"
-                  onClick={this.onGroupPanelShow.bind(this)}
+                  onClick={this.onGroupSelectorShow.bind(this)}
                 >
                   <MapIcon />
                 </IconButton>
@@ -151,13 +171,16 @@ export default class HomePage extends Component {
           {this.renderRegions()}
         </GeoMap>
         <GroupPanel
-          showGroupPanel={showGroupPanel}
-          onGroupPanelShow={this.onGroupPanelShow.bind(this)}
-          onGroupPanelHide={this.onGroupPanelHide.bind(this)}
           groupIndex={groupIndex}
           regionToGroup={regionToGroup}
           onClickGroup={this.onClickGroup.bind(this)}
           activeGroupID={activeGroupID}
+        />
+        <GroupSelector
+          showGroupSelector={showGroupSelector}
+          onGroupSelectorHide={this.onGroupSelectorHide.bind(this)}
+          mapInfoIndex={mapInfoIndex}
+          onClickMap={this.onClickMap.bind(this)}
         />
       </div>
     );
