@@ -41,11 +41,15 @@ export default class GroupPanel extends Component {
 
 
     return (
-      <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
         <Box
           sx={{
+            position: 'absolute',
+            top: 20,
+            right: 0,
             width: 300,
+            height: 300,
             m: 2,
+            zIndex: 1000,
           }}
         >
             {Object.entries(groupIndex).map(function (
@@ -91,7 +95,6 @@ export default class GroupPanel extends Component {
               );
             })}
         </Box>
-      </Drawer>
     );
   }
 }
