@@ -11,12 +11,9 @@ export default class RegionGroup {
       };
     });
 
-    return groupList.reduce(
-      function(groupIndex, group) {
-        groupIndex[group.groupID] = group;
-        return groupIndex;
-      },
-      {},
-    )
+    return groupList.reduce(function (groupIndex, group) {
+      groupIndex[group.groupID] = group;
+      return groupIndex;
+    }, {});
   }
 }

@@ -12,9 +12,13 @@ export default class RegionGroupListView extends Component {
     this.isComponentMounted = true;
     const { groupIndex } = this.props;
 
-    const regionIDs = Object.values(groupIndex).reduce(function (regionIDs, group) {
+    const regionIDs = Object.values(groupIndex).reduce(function (
+      regionIDs,
+      group
+    ) {
       return [].concat(regionIDs, group.regionIDs);
-    }, []);
+    },
+    []);
 
     const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
 
@@ -36,20 +40,18 @@ export default class RegionGroupListView extends Component {
 
     return (
       <>
-        {Object.entries(groupIndex).map(
-          function ([groupID, group], iGroup) {
-            const key = `group-${iGroup}`;
-            return (
-              <RegionGroupView
-                key={key}
-                group={group}
-                regionToGeo={regionToGeo}
-                isActive={activeGroupID === groupID}
-                onClickRegion={onClickRegion}
-              />
-            );
-          }
-        )}
+        {Object.entries(groupIndex).map(function ([groupID, group], iGroup) {
+          const key = `group-${iGroup}`;
+          return (
+            <RegionGroupView
+              key={key}
+              group={group}
+              regionToGeo={regionToGeo}
+              isActive={activeGroupID === groupID}
+              onClickRegion={onClickRegion}
+            />
+          );
+        })}
       </>
     );
   }

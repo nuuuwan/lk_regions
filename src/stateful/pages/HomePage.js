@@ -5,7 +5,7 @@ import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import RegionGroupListView from "../molecules/RegionGroupListView.js";
 
-const DEFAULT_ZOOM = 10;
+const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
 
 export default class HomePage extends Component {
@@ -26,23 +26,29 @@ export default class HomePage extends Component {
   }
 
   onClickRegion(regionID) {
-    const {groupIndex, activeGroupID} = this.state;
-    let newGroupIndex = Object.entries(groupIndex).reduce(
-      function(newGroupIndex, [groupID, group]) {
+    const { groupIndex, activeGroupID } = this.state;
+
+    let [newGroupIndex, activeGroupHas] = Object.entries(groupIndex).reduce(
+      function ([newGroupIndex, activeGroupHas], [groupID, group]) {
         const index = group.regionIDs.indexOf(regionID);
         if (index > -1) {
-           group.regionIDs.splice(index, 1);
-        }
-
-        if (groupID === activeGroupID) {
-          group.regionIDs.push(regionID);
+          if (groupID === activeGroupID) {
+            activeGroupHas = true;
+          }
+          group.regionIDs.splice(index, 1);
         }
         newGroupIndex[groupID] = group;
-        return newGroupIndex;
+        return [newGroupIndex, activeGroupHas];
       },
-      {},
+      [{}, false]
     );
-    this.setState({groupIndex: newGroupIndex});
+
+    console.debug(regionID, activeGroupID, activeGroupHas);
+    if (!activeGroupHas) {
+      newGroupIndex[activeGroupID].regionIDs.push(regionID);
+    }
+
+    this.setState({ groupIndex: newGroupIndex });
   }
   render() {
     const { groupIndex, activeGroupID } = this.state;
