@@ -16,6 +16,7 @@ import RegionView from "../../nonstate/molecules/RegionView.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
+const COLOR_NO_GROUP_REGION = "white";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -31,24 +32,25 @@ export default class HomePage extends Component {
   }
 
   async expandRegion(regionID) {
-    let {regionToGroup} = this.state;
+    let { regionToGroup } = this.state;
     const regionType = Ents.getEntType(regionID);
     const childRegionType = Ents.getChildType(regionType);
     const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
     const regionGroup = regionToGroup[regionID];
 
-    regionToGroup = childRegionIDs.reduce(
-      function(regionToGroup, childRegionID) {
-        regionToGroup[childRegionID] = regionGroup;
-        return regionToGroup;
-      },
+    regionToGroup = childRegionIDs.reduce(function (
       regionToGroup,
-    );
+      childRegionID
+    ) {
+      regionToGroup[childRegionID] = regionGroup;
+      return regionToGroup;
+    },
+    regionToGroup);
     delete regionToGroup[regionID];
 
     const regionIDs = Object.keys(regionToGroup);
     const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
-    this.setState({regionToGroup, regionToGeo});
+    this.setState({ regionToGroup, regionToGeo });
   }
 
   async componentDidMount() {
@@ -70,7 +72,6 @@ export default class HomePage extends Component {
         regionToGroup[regionID] === activeGroupID ? undefined : activeGroupID;
       this.setState({ regionToGroup });
     }
-
   }
 
   onClickGroup(groupID) {
@@ -85,9 +86,16 @@ export default class HomePage extends Component {
   }
 
   renderRegions() {
-    const { regionToGroup, activeGroupID, regionToGeo } = this.state;
+    const { regionToGroup, groupIndex, activeGroupID, regionToGeo } =
+      this.state;
     return Object.entries(regionToGroup).map(
       function ([regionID, groupID], iRegion) {
+        let color = COLOR_NO_GROUP_REGION;
+        if (groupID) {
+          const group = groupIndex[groupID];
+          color = group.color;
+        }
+
         const geoJSON = {
           type: "MultiPolygon",
           coordinates: regionToGeo[regionID],
@@ -100,6 +108,7 @@ export default class HomePage extends Component {
             regionID={regionID}
             geoJSON={geoJSON}
             isActive={isActive}
+            color={color}
             onClickRegion={this.onClickRegion.bind(this)}
           />
         );
