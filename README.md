@@ -62,3 +62,5 @@
   *  [2021-10-10 03:10PM] Added other geo data
   *  [2021-10-10 03:31PM] Unknown
   *  [2021-10-10 03:45PM] Save maps
+* [2021-10-10 03:45PM] Save Maps
+  *  [2021-10-10 03:45PM] Updated README
