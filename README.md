@@ -4,10 +4,7 @@
 
 ## TODOs
 
-* Group Selector Panel Panel, displaying what regions are in what groups, and other group info
-  * Display Regions  
-  * Select Active Group
-
+* Expand
 * Automatically adjust zoom to reflect the selected region group
 
 ## Revision History
@@ -42,8 +39,10 @@
   *  [2021-10-10 10:55AM] Panel Stub
   *  [2021-10-10 11:13AM] Hide/Show Panel Complete
   *  [2021-10-10 11:29AM] Basic Stub
-  *  [2021-10-10 11:37AM] 
+  *  [2021-10-10 11:37AM]
   *  [2021-10-10 11:39AM] Lint
   *  [2021-10-10 11:39AM] Fixed nodeid
   *  [2021-10-10 12:24PM] Done
   *  [2021-10-10 12:27PM] Pre-Merge
+* [2021-10-10 12:39PM] Expand Regions
+  *  [2021-10-10 12:39PM] Updated README
