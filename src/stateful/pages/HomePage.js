@@ -47,6 +47,10 @@ export default class HomePage extends Component {
     this.setState({ regionToGroup });
   }
 
+  onClickGroup(groupID) {
+    this.setState({ activeGroupID: groupID });
+  }
+
   onGroupPanelShow() {
     this.setState({ showGroupPanel: true });
   }
@@ -78,7 +82,7 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { groupIndex, showGroupPanel, regionToGroup } = this.state;
+    const { groupIndex, showGroupPanel, regionToGroup, activeGroupID } = this.state;
     if (groupIndex.length === 0) {
       return "...";
     }
@@ -114,6 +118,8 @@ export default class HomePage extends Component {
           onGroupPanelHide={this.onGroupPanelHide.bind(this)}
           groupIndex={groupIndex}
           regionToGroup={regionToGroup}
+          onClickGroup={this.onClickGroup.bind(this)}
+          activeGroupID={activeGroupID}
         />
       </div>
     );

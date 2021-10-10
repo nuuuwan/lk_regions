@@ -1,4 +1,5 @@
 import { Component } from "react";
+
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import TreeView from "@material-ui/lab/TreeView";
@@ -8,8 +9,14 @@ import TreeItem from "@material-ui/lab/TreeItem";
 
 export default class GroupPanel extends Component {
   render() {
-    const { showGroupPanel, onGroupPanelHide, groupIndex, regionToGroup } =
-      this.props;
+    const {
+      showGroupPanel,
+      onGroupPanelHide,
+      groupIndex,
+      activeGroupID,
+      regionToGroup,
+      onClickGroup,
+    } = this.props;
 
     const groupToRegion = Object.entries(regionToGroup).reduce(function (
       groupToRegion,
@@ -25,6 +32,10 @@ export default class GroupPanel extends Component {
     },
     {});
 
+    const groupKeyList = Object.keys(groupIndex).map(
+      (groupID) => `group-${groupID}`
+    );
+
     return (
       <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
         <Box
@@ -37,17 +48,31 @@ export default class GroupPanel extends Component {
             aria-label="file system navigator"
             defaultCollapseIcon={<ExpandMoreIcon />}
             defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: "auto" }}
+            defaultExpanded={groupKeyList}
           >
             {Object.entries(groupIndex).map(function (
               [groupID, group],
               iGroup
             ) {
               const label = group.name;
-              const regionIDs = groupToRegion[groupID];
+              let regionIDs = groupToRegion[groupID];
+              if (!regionIDs) {
+                regionIDs = [];
+              }
               const groupKey = `group-${groupID}`;
+              const isActive = (activeGroupID === groupID);
+
+              function onClickGroupInner() {
+                onClickGroup(groupID);
+              }
+
               return (
-                <TreeItem key={groupKey} nodeId={groupKey} label={label}>
+                <TreeItem
+                  key={groupKey}
+                  nodeId={groupKey}
+                  label={label}
+                  onClick={onClickGroupInner}
+                >
                   {regionIDs.map(function (regionID, iRegion) {
                     const regionKey = `region-${regionID}`;
                     return (
