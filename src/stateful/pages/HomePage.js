@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MapIcon from "@mui/icons-material/Map";
 
-import { ENT } from "../../base/Ents.js";
+import Ents, { ENT } from "../../base/Ents.js";
 import GeoData from "../../base/GeoData.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
@@ -30,6 +30,27 @@ export default class HomePage extends Component {
     };
   }
 
+  async expandRegion(regionID) {
+    let {regionToGroup} = this.state;
+    const regionType = Ents.getEntType(regionID);
+    const childRegionType = Ents.getChildType(regionType);
+    const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
+    const regionGroup = regionToGroup[regionID];
+
+    regionToGroup = childRegionIDs.reduce(
+      function(regionToGroup, childRegionID) {
+        regionToGroup[childRegionID] = regionGroup;
+        return regionToGroup;
+      },
+      regionToGroup,
+    );
+    delete regionToGroup[regionID];
+
+    const regionIDs = Object.keys(regionToGroup);
+    const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
+    this.setState({regionToGroup, regionToGeo});
+  }
+
   async componentDidMount() {
     const [groupIndex, regionToGroup] =
       await RegionGroup.getGroupDataForRegionType(ENT.PROVINCE);
@@ -40,11 +61,16 @@ export default class HomePage extends Component {
     this.setState({ groupIndex, regionToGroup, activeGroupID, regionToGeo });
   }
 
-  onClickRegion(regionID) {
-    let { regionToGroup, activeGroupID } = this.state;
-    regionToGroup[regionID] =
-      regionToGroup[regionID] === activeGroupID ? null : activeGroupID;
-    this.setState({ regionToGroup });
+  async onClickRegion(regionID, altKey) {
+    if (altKey) {
+      await this.expandRegion(regionID);
+    } else {
+      let { regionToGroup, activeGroupID } = this.state;
+      regionToGroup[regionID] =
+        regionToGroup[regionID] === activeGroupID ? undefined : activeGroupID;
+      this.setState({ regionToGroup });
+    }
+
   }
 
   onClickGroup(groupID) {

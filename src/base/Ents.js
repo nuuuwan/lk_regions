@@ -123,6 +123,10 @@ export default class Ents {
     return await WWW.json(url);
   }
 
+  static getChildType(parentType) {
+    return PARENT_TO_CHILD[parentType];
+  }
+
   static async getChildIDs(parentID, childRegionType) {
     const ents = await Ents.getEntsByType(childRegionType);
     return ents

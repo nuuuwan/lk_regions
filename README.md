@@ -5,6 +5,10 @@
 ## TODOs
 
 * Expand
+  * Group Color
+  * Different way of Selecting Groups
+  * "No Groups"
+  * Add DSD/GND
 * Automatically adjust zoom to reflect the selected region group
 
 ## Revision History
@@ -46,3 +50,4 @@
   *  [2021-10-10 12:27PM] Pre-Merge
 * [2021-10-10 12:39PM] Expand Regions
   *  [2021-10-10 12:39PM] Updated README
+  *  [2021-10-10 01:52PM] Unknown

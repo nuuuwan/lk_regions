@@ -16,7 +16,7 @@ export default function RegionView(props) {
   const onEachFeature = (feature, layer) => {
     layer.on({
       click: function (e) {
-        onClickRegion(regionID);
+        onClickRegion(regionID, e.originalEvent.altKey);
       },
     });
   };
