@@ -26,7 +26,23 @@ export default class HomePage extends Component {
   }
 
   onClickRegion(regionID) {
-    console.debug("RegionGroupListView.onClickRegion", regionID);
+    const {groupIndex, activeGroupID} = this.state;
+    let newGroupIndex = Object.entries(groupIndex).reduce(
+      function(newGroupIndex, [groupID, group]) {
+        const index = group.regionIDs.indexOf(regionID);
+        if (index > -1) {
+           group.regionIDs.splice(index, 1);
+        }
+
+        if (groupID === activeGroupID) {
+          group.regionIDs.push(regionID);
+        }
+        newGroupIndex[groupID] = group;
+        return newGroupIndex;
+      },
+      {},
+    );
+    this.setState({groupIndex: newGroupIndex});
   }
   render() {
     const { groupIndex, activeGroupID } = this.state;
