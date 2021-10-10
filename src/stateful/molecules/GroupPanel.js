@@ -55,8 +55,13 @@ export default class GroupPanel extends Component {
           const color =
             activeGroupID === groupID ? COLOR_ACTIVE : COLOR_NOT_ACTIVE;
 
+          const groupKey = `group-${groupID}`;
           return (
-            <Paper sx={{ m: 1, p: 1 }} onClick={onClickGroupInner}>
+            <Paper
+              key={groupKey}
+              sx={{ m: 1, p: 1 }}
+              onClick={onClickGroupInner}
+            >
               <Grid container direction="row" alignItems="center">
                 <Grid item>
                   <CircleIcon sx={{ color }} fontSize="smallest" />
