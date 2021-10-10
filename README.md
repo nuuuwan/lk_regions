@@ -37,3 +37,5 @@
 
 * Region First Design
   *  [2021-10-10 10:41AM] Region First Design - Done
+* [2021-10-10 10:41AM] Group Selector Panel
+  *  [2021-10-10 10:41AM] Updated README
