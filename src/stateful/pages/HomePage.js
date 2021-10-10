@@ -82,7 +82,8 @@ export default class HomePage extends Component {
   }
 
   render() {
-    const { groupIndex, showGroupPanel, regionToGroup, activeGroupID } = this.state;
+    const { groupIndex, showGroupPanel, regionToGroup, activeGroupID } =
+      this.state;
     if (groupIndex.length === 0) {
       return "...";
     }

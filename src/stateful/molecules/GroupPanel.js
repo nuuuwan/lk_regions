@@ -13,7 +13,6 @@ export default class GroupPanel extends Component {
       showGroupPanel,
       onGroupPanelHide,
       groupIndex,
-      activeGroupID,
       regionToGroup,
       onClickGroup,
     } = this.props;
@@ -60,7 +59,6 @@ export default class GroupPanel extends Component {
                 regionIDs = [];
               }
               const groupKey = `group-${groupID}`;
-              const isActive = (activeGroupID === groupID);
 
               function onClickGroupInner() {
                 onClickGroup(groupID);
