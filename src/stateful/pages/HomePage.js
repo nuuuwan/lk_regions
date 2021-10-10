@@ -108,7 +108,6 @@ export default class HomePage extends Component {
             regionID={regionID}
             geoJSON={geoJSON}
             isActive={isActive}
-            color={color}
             onClickRegion={this.onClickRegion.bind(this)}
           />
         );

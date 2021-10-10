@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import RegionChip from '../atoms/RegionChip.js';
 import CircleIcon from '@mui/icons-material/Circle';
-
+import {COLOR_ACTIVE, COLOR_NOT_ACTIVE} from '../../constants/ColorConstants.js';
 
 export default class GroupPanel extends Component {
   render() {
@@ -18,6 +18,7 @@ export default class GroupPanel extends Component {
       groupIndex,
       regionToGroup,
       onClickGroup,
+      activeGroupID,
     } = this.props;
 
     const groupToRegion = Object.entries(regionToGroup).reduce(function (
@@ -37,6 +38,7 @@ export default class GroupPanel extends Component {
     const groupKeyList = Object.keys(groupIndex).map(
       (groupID) => `group-${groupID}`
     );
+
 
     return (
       <Drawer anchor="right" open={showGroupPanel} onClose={onGroupPanelHide}>
@@ -61,11 +63,14 @@ export default class GroupPanel extends Component {
                 onClickGroup(groupID);
               }
 
+              const color = (activeGroupID === groupID) ? COLOR_ACTIVE: COLOR_NOT_ACTIVE;
+
+
               return (
-                <Card sx={{m: 1, p: 1}}>
+                <Card sx={{m: 1, p: 1}} onClick={onClickGroupInner}>
                   <Grid container direction="row" alignItems="center">
                     <Grid item>
-                      <CircleIcon sx={{color: group.color}}/>
+                      <CircleIcon sx={{color}} fontSize="smallest"/>
                     </Grid>
                     <Grid item>
                       <Typography variant="overline" sx={{paddingLeft:1}}>

@@ -1,4 +1,3 @@
-import { Color } from "@nuuuwan/utils-js-dev";
 import Ents from "./Ents.js";
 
 export default class RegionGroup {
@@ -8,7 +7,6 @@ export default class RegionGroup {
       return {
         groupID: regionEnt.id,
         name: regionEnt.name,
-        color: Color.getRandomHSLA(),
       };
     });
 
