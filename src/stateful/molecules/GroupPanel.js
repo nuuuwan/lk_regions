@@ -39,7 +39,7 @@ export default class GroupPanel extends Component {
           position: "absolute",
           top: 60,
           right: 10,
-          width: 300,
+          width: 400,
           height: "70vh",
           m: 2,
           p: 2,
