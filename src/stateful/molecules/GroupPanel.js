@@ -47,13 +47,13 @@ export default class GroupPanel extends Component {
               const regionIDs = groupToRegion[groupID];
               const groupKey = `group-${groupID}`;
               return (
-                <TreeItem key={groupKey} nodeID={groupKey} label={label}>
+                <TreeItem key={groupKey} nodeId={groupKey} label={label}>
                   {regionIDs.map(function (regionID, iRegion) {
                     const regionKey = `region-${regionID}`;
                     return (
                       <TreeItem
                         key={regionKey}
-                        nodeID={regionKey}
+                        nodeId={regionKey}
                         label={regionID}
                       />
                     );
