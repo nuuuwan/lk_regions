@@ -1,7 +1,6 @@
 import { Component } from "react";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
-import Grid from "@mui/material/Grid";
 import Ents from "../../base/Ents.js";
 
 export default class RegionChip extends Component {
@@ -22,23 +21,12 @@ export default class RegionChip extends Component {
     const regionType = Ents.getEntType(regionID);
     return (
       <Chip
-        sx={{ m: 0.2 }}
         label={
-          <Grid container direction="row" alignItems="center">
-            <Grid item>
-              <Typography variant="body2" sx={{ fontSize: 9, fontWeight: 800 }}>
-                {regionEnt.name}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography
-                variant="body2"
-                sx={{ paddingLeft: 0.5, fontSize: 9 }}
-              >
-                {regionType.toUpperCase()}
-              </Typography>
-            </Grid>
-          </Grid>
+          <>
+            <Typography variant="body2" sx={{ fontSize: 9 }}>
+              {regionEnt.name + " " + regionType.toUpperCase()}
+            </Typography>
+          </>
         }
       />
     );

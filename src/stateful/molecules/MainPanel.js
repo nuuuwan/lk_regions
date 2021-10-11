@@ -56,7 +56,7 @@ export default class MainPanel extends Component {
               aria-label="lab API tabs example"
             >
               {[TAB.DATA, TAB.MAP_QUALITY, TAB.REGIONS].map(function (tab) {
-                return <Tab label={tab} value={tab} />;
+                return <Tab key={tab} label={tab} value={tab} />;
               })}
             </TabList>
           </Box>
