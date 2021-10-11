@@ -5,6 +5,12 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import RegionChip from "../atoms/RegionChip.js";
 import CircleIcon from "@mui/icons-material/Circle";
+import PropTypes from 'prop-types';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+
 
 import {
   COLOR_ACTIVE,
@@ -12,9 +18,14 @@ import {
 } from "../../constants/ColorConstants.js";
 
 export default class GroupPanel extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {activeTab: 0}
+  }
   render() {
     const { groupIndex, regionToGroup, onClickGroup, activeGroupID } =
       this.props;
+    const {activeTab} = this.props;
 
     const groupToRegion = Object.entries(regionToGroup).reduce(function (
       groupToRegion,
@@ -44,6 +55,19 @@ export default class GroupPanel extends Component {
           overflow: "scroll",
         }}
       >
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Item One" value="1" />
+            <Tab label="Item Two" value="2" />
+            <Tab label="Item Three" value="3" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">Item One</TabPanel>
+        <TabPanel value="2">Item Two</TabPanel>
+        <TabPanel value="3">Item Three</TabPanel>
+      </TabContext>
+
         {Object.entries(groupIndex).map(function ([groupID, group], iGroup) {
           let regionIDs = groupToRegion[groupID];
           if (!regionIDs) {
