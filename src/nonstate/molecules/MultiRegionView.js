@@ -1,7 +1,7 @@
 import RegionView from "../../stateful/atoms/RegionView.js";
 
 export default function MultiRegionView(props) {
-  const { regionToGroup, onClickRegion, funcGetRegionColor } = props;
+  const { regionToGroup, onClickRegion, funcGetRegionStyle } = props;
 
   return Object.entries(regionToGroup).map(function (
     [regionID, groupID],
@@ -13,7 +13,7 @@ export default function MultiRegionView(props) {
         key={key}
         regionID={regionID}
         onClickRegion={onClickRegion}
-        color={funcGetRegionColor(regionID)}
+        style={funcGetRegionStyle(regionID)}
       />
     );
   });

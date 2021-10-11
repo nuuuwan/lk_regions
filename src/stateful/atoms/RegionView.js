@@ -36,13 +36,8 @@ export default class RegionView extends Component {
       return null;
     }
 
-    const { regionID, color, onClickRegion } = this.props;
-    const style = {
-      fillColor: color,
-      color: BORDER_COLOR,
-      weight: BORDER_WIDTH,
-      fillOpacity: FILL_OPACITY,
-    };
+    const { regionID, style, onClickRegion } = this.props;
+
     const onEachFeature = (feature, layer) => {
       layer.on({
         click: function (e) {

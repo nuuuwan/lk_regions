@@ -71,6 +71,11 @@ export default class HomePage extends Component {
     let { regionToGroup } = this.state;
     const regionType = Ents.getEntType(regionID);
     const childRegionType = Ents.getChildType(regionType);
+
+    if (!childRegionType) {
+      return;
+    }
+    
     const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
     const regionGroup = regionToGroup[regionID];
     regionToGroup = childRegionIDs.reduce(function (
@@ -131,10 +136,22 @@ export default class HomePage extends Component {
       return "...";
     }
 
-    function funcGetRegionColor(regionID) {
+    function funcGetRegionStyle(regionID) {
       const tableIndex = tableIndexIndex[activeMapColorTableName];
       const regionRow = tableIndex[regionID];
-      return GIG2.getTableRowColor(regionRow);
+      const maxValueKey = GIG2.getMaxValueKey(regionRow);
+      const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
+
+      const opacity = maxValueP;
+      const color = GIG2.getTableRowColor(regionRow);
+
+      return {
+        fillColor: color,
+        fillOpacity: opacity,
+        color: 'lightgray',
+        weight: 1,
+      }
+
     }
 
     return (
@@ -144,7 +161,7 @@ export default class HomePage extends Component {
             regionToGroup={regionToGroup}
             activeGroupID={activeGroupID}
             onClickRegion={this.onClickRegion.bind(this)}
-            funcGetRegionColor={funcGetRegionColor}
+            funcGetRegionStyle={funcGetRegionStyle}
           />
         </GeoMap>
         <MainPanel
