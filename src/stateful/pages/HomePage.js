@@ -13,7 +13,7 @@ import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import GroupPanel from "../molecules/GroupPanel.js";
 import GroupSelector from "../molecules/GroupSelector.js";
-import RegionView from "../../nonstate/molecules/RegionView.js";
+import MultiRegionView from "../../nonstate/molecules/MultiRegionView.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
@@ -109,36 +109,7 @@ export default class HomePage extends Component {
     await this.updateMap(mapID);
   }
 
-  renderRegions() {
-    const { regionToGroup, activeGroupID, regionToGeo } = this.state;
-    return Object.entries(regionToGroup).map(
-      function ([regionID, groupID], iRegion) {
-        const geoJSON = {
-          type: "MultiPolygon",
-          coordinates: regionToGeo[regionID],
-        };
-        let color;
-        if (activeGroupID === groupID) {
-          color = "red";
-        } else if (groupID) {
-          color = "pink";
-        } else {
-          color = "lightgray";
-        }
 
-        const key = `region-${iRegion}-${regionID}`;
-        return (
-          <RegionView
-            key={key}
-            regionID={regionID}
-            geoJSON={geoJSON}
-            color={color}
-            onClickRegion={this.onClickRegion.bind(this)}
-          />
-        );
-      }.bind(this)
-    );
-  }
 
   render() {
     const {
@@ -148,6 +119,7 @@ export default class HomePage extends Component {
       activeGroupID,
       mapInfoIndex,
       selectedMapID,
+      regionToGeo,
     } = this.state;
     if (!groupIndex) {
       return "...";
@@ -176,7 +148,12 @@ export default class HomePage extends Component {
           </AppBar>
         </Box>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
-          {this.renderRegions()}
+          <MultiRegionView
+            regionToGroup={regionToGroup}
+            activeGroupID={activeGroupID}
+            regionToGeo={regionToGeo}
+            onClickRegion={this.onClickRegion.bind(this)}
+          />
         </GeoMap>
         <GroupPanel
           groupIndex={groupIndex}
