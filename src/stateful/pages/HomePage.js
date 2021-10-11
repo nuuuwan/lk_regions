@@ -14,8 +14,9 @@ const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
 const DEFAULT_MAP_ID = "by_province";
 
+const TABLE_NAMES = ["regions_ec.2019_election_presidential.result"];
+
 async function getTableIndexIndex() {
-  const TABLE_NAMES = ["regions_ec.2019_election_presidential.result"];
   return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
 }
 
@@ -29,6 +30,7 @@ export default class HomePage extends Component {
       groupIndex: undefined,
       activeGroupID: undefined,
       tableIndexIndex: undefined,
+      activeMapColorTableName: TABLE_NAMES[0],
 
       // View
       showGroupSelector: false,
@@ -106,6 +108,10 @@ export default class HomePage extends Component {
     await this.updateMap(mapID);
   }
 
+  onClickMapColor(activeMapColorTableName) {
+    this.setState({ activeMapColorTableName });
+  }
+
   render() {
     const {
       groupIndex,
@@ -114,6 +120,7 @@ export default class HomePage extends Component {
       activeGroupID,
       mapInfoIndex,
       tableIndexIndex,
+      activeMapColorTableName,
     } = this.state;
 
     if (!groupIndex) {
@@ -149,7 +156,10 @@ export default class HomePage extends Component {
           mapInfoIndex={mapInfoIndex}
           onClickMap={this.onClickMap.bind(this)}
         />
-        <ColorPanel />
+        <ColorPanel
+          activeMapColorTableName={activeMapColorTableName}
+          onClickMapColor={this.onClickMapColor.bind(this)}
+        />
       </div>
     );
   }

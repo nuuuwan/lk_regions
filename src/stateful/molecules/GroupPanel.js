@@ -61,16 +61,14 @@ export default class GroupPanel extends Component {
             <Box key={groupKey} onClick={onClickGroupInner}>
               <Grid container direction="row" alignItems="center">
                 <Grid item>
-                  <Typography variant="overline">
-                    {group.name}
-                  </Typography>
+                  <Typography variant="overline">{group.name}</Typography>
                 </Grid>
                 <Grid item>
                   <CircleIcon sx={{ color }} fontSize="smallest" />
                 </Grid>
               </Grid>
 
-              <Box sx={{paddingBottom: 2}}>
+              <Box sx={{ paddingBottom: 2 }}>
                 {regionIDs.map(function (regionID, iRegion) {
                   const regionKey = `region-${regionID}`;
                   return <RegionChip key={regionKey} regionID={regionID} />;
