@@ -2,7 +2,7 @@ import { Component } from "react";
 
 import { DataStructures } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
-import Ents from "../../base/Ents.js";
+import Ents, { ENT } from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import MainPanel from "../molecules/MainPanel.js";
@@ -11,12 +11,14 @@ import MultiRegionView from "../../nonstate/molecules/MultiRegionView.js";
 import ColorPanel, {
   COLOR_INFO_LIST,
 } from "../../nonstate/molecules/ColorPanel.js";
+import MapPanel from "../../nonstate/molecules/MapPanel.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
-const DEFAULT_MAP_ID = "by_province";
+const DEFAULT_MAP_ID = ENT.PROVINCE;
 
 const TABLE_NAMES = COLOR_INFO_LIST.map((d) => d.tableName);
+const DEFAULT_TABLE_NAME = TABLE_NAMES[0];
 
 async function getTableIndexIndex() {
   return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
@@ -27,12 +29,12 @@ export default class HomePage extends Component {
     super(props);
     this.state = {
       // Data
-      selectedMapID: DEFAULT_MAP_ID,
+      activeMapID: DEFAULT_MAP_ID,
       mapInfoIndex: undefined,
       groupIndex: undefined,
       activeGroupID: undefined,
       tableIndexIndex: undefined,
-      activeMapColorTableName: TABLE_NAMES[0],
+      activeMapColorTableName: DEFAULT_TABLE_NAME,
 
       // View
       showGroupSelector: false,
@@ -40,13 +42,13 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    const { selectedMapID } = this.state;
-    await this.updateMap(selectedMapID);
+    const { activeMapID } = this.state;
+    await this.updateMap(activeMapID);
   }
 
-  async updateMap(selectedMapID) {
+  async updateMap(activeMapID) {
     const mapInfoIndex = await RegionGroup.getMapInfoIndex();
-    const { groupIndex, regionToGroup } = mapInfoIndex[selectedMapID];
+    const { groupIndex, regionToGroup } = mapInfoIndex[activeMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
     let tableIndexIndex = this.state.tableIndexIndex;
@@ -59,7 +61,7 @@ export default class HomePage extends Component {
       groupIndex,
       regionToGroup,
       activeGroupID,
-      selectedMapID,
+      activeMapID,
       tableIndexIndex,
     });
   }
@@ -106,12 +108,11 @@ export default class HomePage extends Component {
     this.setState({ showGroupSelector: false });
   }
 
-  async onClickMap(mapID) {
-    await this.updateMap(mapID);
-  }
-
   onClickMapColor(activeMapColorTableName) {
     this.setState({ activeMapColorTableName });
+  }
+  async onClickMap(activeMapID) {
+    await this.updateMap(activeMapID);
   }
 
   render() {
@@ -123,6 +124,7 @@ export default class HomePage extends Component {
       mapInfoIndex,
       tableIndexIndex,
       activeMapColorTableName,
+      activeMapID,
     } = this.state;
 
     if (!groupIndex) {
@@ -160,6 +162,10 @@ export default class HomePage extends Component {
         <ColorPanel
           activeMapColorTableName={activeMapColorTableName}
           onClickMapColor={this.onClickMapColor.bind(this)}
+        />
+        <MapPanel
+          activeMapID={activeMapID}
+          onClickMap={this.onClickMap.bind(this)}
         />
       </div>
     );

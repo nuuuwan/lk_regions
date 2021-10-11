@@ -26,3 +26,4 @@
   *  [2021-10-11 03:36PM] Added impl to ColorPanel-3
   *  [2021-10-11 03:42PM] Added impl to ColorPanel-3npm install @material-ui/lab
   *  [2021-10-11 04:07PM] Added Tabs
+  *  [2021-10-11 05:00PM] MapPanel Done

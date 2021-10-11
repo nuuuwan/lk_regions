@@ -53,16 +53,14 @@ export default function ColorPanel(props) {
         position: "absolute",
         zIndex: 1000,
 
-        left: 10,
-        bottom: 10,
+        left: 20,
+        bottom: 20,
+
         width: 300,
         height: 200,
-
-        m: 1,
-        p: 1,
       }}
     >
-      <List subheader={<ListSubheader>Color Map by</ListSubheader>}>
+      <List dense subheader={<ListSubheader>Color Map by</ListSubheader>}>
         {COLOR_INFO_LIST.map(renderListItem)}
       </List>
     </Paper>

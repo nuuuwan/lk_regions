@@ -1,4 +1,5 @@
 import Ents, { ENT } from "./Ents.js";
+import { DataStructures } from "./BaseUtils.js";
 
 export default class RegionGroup {
   static async getGroupDataForRegionType(regionType) {
@@ -35,16 +36,9 @@ export default class RegionGroup {
   }
 
   static async getMapInfoIndex() {
-    const mapInfoList = await Promise.all(
-      [ENT.PROVINCE, ENT.DISTRICT, ENT.DSD, ENT.ED, ENT.PD].map(async function (
-        regionType
-      ) {
-        return await RegionGroup.getGroupDataForRegionType(regionType);
-      })
+    return await DataStructures.buildIndex(
+      [ENT.PROVINCE, ENT.DISTRICT, ENT.DSD, ENT.ED, ENT.PD],
+      RegionGroup.getGroupDataForRegionType
     );
-    return mapInfoList.reduce(function (mapInfoIndex, mapInfo) {
-      mapInfoIndex[mapInfo.mapID] = mapInfo;
-      return mapInfoIndex;
-    }, {});
   }
 }

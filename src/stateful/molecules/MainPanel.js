@@ -34,12 +34,11 @@ export default class MainPanel extends Component {
       <Paper
         sx={{
           position: "absolute",
-          top: 10,
-          right: 10,
+          top: 20,
+          right: 20,
+
           width: 400,
           height: "70vh",
-          m: 2,
-          p: 2,
           zIndex: 1000,
           overflow: "scroll",
         }}
