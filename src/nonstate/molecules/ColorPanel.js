@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BallotIcon from "@mui/icons-material/Ballot";
 
-const COLOR_INFO_LIST = [
+export const COLOR_INFO_LIST = [
   {
     label: "Ethnicity",
     tableName: "regions.2012_census.ethnicity_of_population",
@@ -26,6 +26,8 @@ const COLOR_INFO_LIST = [
     Icon: BallotIcon,
   },
 ];
+
+
 
 export default function ColorPanel(props) {
   const {activeMapColorTableName, onClickMapColor} = props;
@@ -57,7 +59,7 @@ export default function ColorPanel(props) {
         left: 10,
         bottom: 10,
         width: 300,
-        height: 300,
+        height: 200,
 
         m: 1,
         p: 1,

@@ -8,13 +8,13 @@ import GeoMap from "../molecules/GeoMap.js";
 import GroupPanel from "../molecules/GroupPanel.js";
 import GroupSelector from "../molecules/GroupSelector.js";
 import MultiRegionView from "../../nonstate/molecules/MultiRegionView.js";
-import ColorPanel from "../../nonstate/molecules/ColorPanel.js";
+import ColorPanel, {COLOR_INFO_LIST} from "../../nonstate/molecules/ColorPanel.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
 const DEFAULT_MAP_ID = "by_province";
 
-const TABLE_NAMES = ["regions_ec.2019_election_presidential.result"];
+const TABLE_NAMES = COLOR_INFO_LIST.map((d) => d.tableName);
 
 async function getTableIndexIndex() {
   return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
@@ -128,8 +128,7 @@ export default class HomePage extends Component {
     }
 
     function funcGetRegionColor(regionID) {
-      const tableName = "regions_ec.2019_election_presidential.result";
-      const tableIndex = tableIndexIndex[tableName];
+      const tableIndex = tableIndexIndex[activeMapColorTableName];
       const regionRow = tableIndex[regionID];
       return GIG2.getTableRowColor(regionRow);
     }

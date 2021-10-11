@@ -23,3 +23,4 @@
   *  [2021-10-11 03:12PM] Minor
   *  [2021-10-11 03:25PM] Added impl to ColorPanel-1
   *  [2021-10-11 03:29PM] Added impl to ColorPanel-2
+  *  [2021-10-11 03:36PM] Added impl to ColorPanel-3

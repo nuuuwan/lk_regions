@@ -2,7 +2,7 @@ export class DataStructures {
   static async buildIndex(keyIDs, asyncFuncKeyToData) {
     const dataList = await Promise.all(
       keyIDs.map(async function (keyID) {
-        return await asyncFuncKeyToData(keyIDs);
+        return await asyncFuncKeyToData(keyID);
       })
     );
 
