@@ -17,16 +17,26 @@ import RegionView from "../../nonstate/molecules/RegionView.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
+const DEFAULT_MAP_ID = "by_province";
+
+async function getRegionAuxData(regionToGroup) {
+  const regionIDs = Object.keys(regionToGroup);
+  const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
+  return { regionToGeo };
+}
 
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedMapID: "by_province",
+      // Data
+      selectedMapID: DEFAULT_MAP_ID,
       mapInfoIndex: undefined,
+      groupIndex: undefined,
       activeGroupID: undefined,
       regionToGeo: undefined,
-      groupIndex: undefined,
+
+      // View
       showGroupSelector: false,
     };
   }
@@ -40,8 +50,7 @@ export default class HomePage extends Component {
     const mapInfoIndex = await RegionGroup.getMapInfoIndex();
     const { groupIndex, regionToGroup } = mapInfoIndex[selectedMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
-    const regionIDs = Object.keys(regionToGroup);
-    const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
+    const { regionToGeo } = await getRegionAuxData(regionToGroup);
 
     this.setState({
       mapInfoIndex,
@@ -54,12 +63,12 @@ export default class HomePage extends Component {
   }
 
   async expandRegion(regionID) {
+    // Update regionToGroup
     let { regionToGroup } = this.state;
     const regionType = Ents.getEntType(regionID);
     const childRegionType = Ents.getChildType(regionType);
     const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
     const regionGroup = regionToGroup[regionID];
-
     regionToGroup = childRegionIDs.reduce(function (
       regionToGroup,
       childRegionID
@@ -70,8 +79,7 @@ export default class HomePage extends Component {
     regionToGroup);
     delete regionToGroup[regionID];
 
-    const regionIDs = Object.keys(regionToGroup);
-    const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
+    const { regionToGeo } = await getRegionAuxData(regionToGroup);
     this.setState({ regionToGroup, regionToGeo });
   }
 
