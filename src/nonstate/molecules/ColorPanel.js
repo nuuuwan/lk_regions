@@ -27,17 +27,14 @@ export const COLOR_INFO_LIST = [
   },
 ];
 
-
-
 export default function ColorPanel(props) {
-  const {activeMapColorTableName, onClickMapColor} = props;
-
+  const { activeMapColorTableName, onClickMapColor } = props;
 
   function renderListItem({ label, tableName, Icon }) {
-    const selected = (activeMapColorTableName === tableName);
+    const selected = activeMapColorTableName === tableName;
 
     function onClick() {
-        onClickMapColor(tableName);
+      onClickMapColor(tableName);
     }
 
     return (

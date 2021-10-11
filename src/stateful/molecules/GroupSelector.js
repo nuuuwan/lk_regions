@@ -9,7 +9,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import MapIcon from "@mui/icons-material/Map";
 
-export default class GroupPanel extends Component {
+export default class MainPanel extends Component {
   render() {
     const { showGroupSelector, onGroupSelectorHide, mapInfoIndex, onClickMap } =
       this.props;

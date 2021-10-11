@@ -11,4 +11,20 @@ export class DataStructures {
       return index;
     }, {});
   }
+
+  static invertDict(keyToValue) {
+    return Object.entries(keyToValue).reduce(function (
+      valueToKeys,
+      [key, value]
+    ) {
+      if (value) {
+        if (!valueToKeys[value]) {
+          valueToKeys[value] = [];
+        }
+        valueToKeys[value].push(key);
+      }
+      return valueToKeys;
+    },
+    {});
+  }
 }

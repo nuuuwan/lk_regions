@@ -5,10 +5,12 @@ import GIG2 from "../../base/GIG2.js";
 import Ents from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
-import GroupPanel from "../molecules/GroupPanel.js";
+import MainPanel from "../molecules/MainPanel.js";
 import GroupSelector from "../molecules/GroupSelector.js";
 import MultiRegionView from "../../nonstate/molecules/MultiRegionView.js";
-import ColorPanel, {COLOR_INFO_LIST} from "../../nonstate/molecules/ColorPanel.js";
+import ColorPanel, {
+  COLOR_INFO_LIST,
+} from "../../nonstate/molecules/ColorPanel.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
@@ -143,7 +145,7 @@ export default class HomePage extends Component {
             funcGetRegionColor={funcGetRegionColor}
           />
         </GeoMap>
-        <GroupPanel
+        <MainPanel
           groupIndex={groupIndex}
           regionToGroup={regionToGroup}
           onClickGroup={this.onClickGroup.bind(this)}
