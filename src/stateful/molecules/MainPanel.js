@@ -7,13 +7,14 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
 import PartitionsTabContent from "../../nonstate/molecules/PartitionsTabContent.js";
+import DataTable from "../../nonstate/molecules/DataTable.js";
 
 const TAB = {
   DATA: "Data",
   MAP_QUALITY: "Map Quality",
   REGIONS: "Regions",
 };
-const DEFAULT_TAB = TAB.REGIONS;
+const DEFAULT_TAB = TAB.DATA;
 
 export default class MainPanel extends Component {
   constructor(props) {
@@ -26,8 +27,13 @@ export default class MainPanel extends Component {
   }
 
   render() {
-    const { groupIndex, regionToGroup, onClickGroup, activeGroupID } =
-      this.props;
+    const {
+      groupIndex,
+      regionToGroup,
+      onClickGroup,
+      activeGroupID,
+      activeTableIndex,
+    } = this.props;
     const { activeTab } = this.state;
 
     return (
@@ -37,8 +43,8 @@ export default class MainPanel extends Component {
           top: 20,
           right: 20,
 
-          width: 400,
-          height: "70vh",
+          width: 600,
+          height: 400,
           zIndex: 1000,
           overflow: "scroll",
         }}
@@ -55,7 +61,12 @@ export default class MainPanel extends Component {
             </TabList>
           </Box>
 
-          <TabPanel value={TAB.DATA}>TODO</TabPanel>
+          <TabPanel value={TAB.DATA}>
+            <DataTable
+              regionToGroup={regionToGroup}
+              activeTableIndex={activeTableIndex}
+            />
+          </TabPanel>
           <TabPanel value={TAB.MAP_QUALITY}>TODO</TabPanel>
           <TabPanel value={TAB.REGIONS}>
             <PartitionsTabContent
