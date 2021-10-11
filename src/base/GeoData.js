@@ -67,7 +67,7 @@ function isPointInMultiMultiPolygon(point, multiMultiPolygon) {
 }
 
 export default class GeoData {
-  static async getGeoForRegion(regionID) {
+  static async getCoordinatesForRegion(regionID) {
     const regionType = Ents.getEntType(regionID);
     const url = `/${APP_NAME}/data/geo/${regionType}/${regionID}.json`;
     return await WWW.json(url);
@@ -76,7 +76,7 @@ export default class GeoData {
   static async getRegionToGeo(regionIDs) {
     const geoDataList = await Promise.all(
       regionIDs.map(async function (regionID) {
-        return await GeoData.getGeoForRegion(regionID);
+        return await GeoData.getCoordinatesForRegion(regionID);
       })
     );
 
@@ -92,7 +92,7 @@ export default class GeoData {
   }
 
   static async isPointInRegion(point, regionID) {
-    const multiPolygon = await GeoData.getGeoForRegion(regionID);
+    const multiPolygon = await GeoData.getCoordinatesForRegion(regionID);
     return isPointInMultiMultiPolygon(point, multiPolygon);
   }
 

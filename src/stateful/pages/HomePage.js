@@ -8,7 +8,6 @@ import IconButton from "@mui/material/IconButton";
 import MapIcon from "@mui/icons-material/Map";
 
 import Ents from "../../base/Ents.js";
-import GeoData from "../../base/GeoData.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import GroupPanel from "../molecules/GroupPanel.js";
@@ -19,12 +18,6 @@ const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
 const DEFAULT_MAP_ID = "by_province";
 
-async function getRegionAuxData(regionToGroup) {
-  const regionIDs = Object.keys(regionToGroup);
-  const regionToGeo = await GeoData.getRegionToGeo(regionIDs);
-  return { regionToGeo };
-}
-
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +27,6 @@ export default class HomePage extends Component {
       mapInfoIndex: undefined,
       groupIndex: undefined,
       activeGroupID: undefined,
-      regionToGeo: undefined,
 
       // View
       showGroupSelector: false,
@@ -50,14 +42,12 @@ export default class HomePage extends Component {
     const mapInfoIndex = await RegionGroup.getMapInfoIndex();
     const { groupIndex, regionToGroup } = mapInfoIndex[selectedMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
-    const { regionToGeo } = await getRegionAuxData(regionToGroup);
 
     this.setState({
       mapInfoIndex,
       groupIndex,
       regionToGroup,
       activeGroupID,
-      regionToGeo,
       selectedMapID,
     });
   }
@@ -79,8 +69,7 @@ export default class HomePage extends Component {
     regionToGroup);
     delete regionToGroup[regionID];
 
-    const { regionToGeo } = await getRegionAuxData(regionToGroup);
-    this.setState({ regionToGroup, regionToGeo });
+    this.setState({ regionToGroup });
   }
 
   async onClickRegion(regionID, altKey) {
@@ -109,8 +98,6 @@ export default class HomePage extends Component {
     await this.updateMap(mapID);
   }
 
-
-
   render() {
     const {
       groupIndex,
@@ -119,7 +106,6 @@ export default class HomePage extends Component {
       activeGroupID,
       mapInfoIndex,
       selectedMapID,
-      regionToGeo,
     } = this.state;
     if (!groupIndex) {
       return "...";
@@ -151,7 +137,6 @@ export default class HomePage extends Component {
           <MultiRegionView
             regionToGroup={regionToGroup}
             activeGroupID={activeGroupID}
-            regionToGeo={regionToGeo}
             onClickRegion={this.onClickRegion.bind(this)}
           />
         </GeoMap>
