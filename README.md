@@ -17,3 +17,4 @@
   *  [2021-10-11 02:21PM] Created MultiRegionView
   *  [2021-10-11 02:34PM] Created MultiRegionView; moved RegionView to stateful
   *  [2021-10-11 02:54PM] Added GIG2
+  *  [2021-10-11 03:04PM] Added Divided to GroupPanel

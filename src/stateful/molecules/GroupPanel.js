@@ -5,6 +5,8 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import RegionChip from "../atoms/RegionChip.js";
 import CircleIcon from "@mui/icons-material/Circle";
+import Divider from '@mui/material/Divider';
+
 import {
   COLOR_ACTIVE,
   COLOR_NOT_ACTIVE,
@@ -57,7 +59,7 @@ export default class GroupPanel extends Component {
 
           const groupKey = `group-${groupID}`;
           return (
-            <Paper
+            <Box
               key={groupKey}
               sx={{ m: 1, p: 1 }}
               onClick={onClickGroupInner}
@@ -79,7 +81,8 @@ export default class GroupPanel extends Component {
                   return <RegionChip key={regionKey} regionID={regionID} />;
                 })}
               </Box>
-            </Paper>
+              <Divider/>
+            </Box>
           );
         })}
       </Paper>

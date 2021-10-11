@@ -127,7 +127,13 @@ export default class HomePage extends Component {
       return "...";
     }
 
-    console.debug(tableIndexIndex);
+    function funcGetRegionColor(regionID) {
+      const tableName = "regions_ec.2019_election_presidential.result";
+      const tableIndex = tableIndexIndex[tableName];
+      const regionRow = tableIndex[regionID];
+      return GIG2.getTableRowColor(regionRow);
+    }
+
     return (
       <div>
         <Box sx={{ flexGrow: 1 }}>
@@ -156,6 +162,7 @@ export default class HomePage extends Component {
             regionToGroup={regionToGroup}
             activeGroupID={activeGroupID}
             onClickRegion={this.onClickRegion.bind(this)}
+            funcGetRegionColor={funcGetRegionColor}
           />
         </GeoMap>
         <GroupPanel
