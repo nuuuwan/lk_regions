@@ -21,3 +21,4 @@
   *  [2021-10-11 03:08PM] Added ColorPanel
   *  [2021-10-11 03:11PM] Removed AppBar
   *  [2021-10-11 03:12PM] Minor
+  *  [2021-10-11 03:25PM] Added impl to ColorPanel-1
