@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MapIcon from "@mui/icons-material/Map";
 
+import { DataStructures } from "../../base/BaseUtils.js";
+import GIG2 from "../../base/GIG2.js";
 import Ents from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
@@ -18,6 +20,11 @@ const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [6.9157, 79.8636];
 const DEFAULT_MAP_ID = "by_province";
 
+async function getTableIndexIndex() {
+  const TABLE_NAMES = ["regions_ec.2019_election_presidential.result"];
+  return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
+}
+
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -27,6 +34,7 @@ export default class HomePage extends Component {
       mapInfoIndex: undefined,
       groupIndex: undefined,
       activeGroupID: undefined,
+      tableIndexIndex: undefined,
 
       // View
       showGroupSelector: false,
@@ -43,12 +51,18 @@ export default class HomePage extends Component {
     const { groupIndex, regionToGroup } = mapInfoIndex[selectedMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
+    let tableIndexIndex = this.state.tableIndexIndex;
+    if (tableIndexIndex === undefined) {
+      tableIndexIndex = await getTableIndexIndex();
+    }
+
     this.setState({
       mapInfoIndex,
       groupIndex,
       regionToGroup,
       activeGroupID,
       selectedMapID,
+      tableIndexIndex,
     });
   }
 
@@ -106,10 +120,14 @@ export default class HomePage extends Component {
       activeGroupID,
       mapInfoIndex,
       selectedMapID,
+      tableIndexIndex,
     } = this.state;
+
     if (!groupIndex) {
       return "...";
     }
+
+    console.debug(tableIndexIndex);
     return (
       <div>
         <Box sx={{ flexGrow: 1 }}>
