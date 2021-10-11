@@ -35,7 +35,7 @@ export default class GroupPanel extends Component {
       <Paper
         sx={{
           position: "absolute",
-          top: 60,
+          top: 10,
           right: 10,
           width: 400,
           height: "70vh",

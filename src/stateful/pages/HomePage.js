@@ -1,12 +1,5 @@
 import { Component } from "react";
 
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MapIcon from "@mui/icons-material/Map";
-
 import { DataStructures } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
 import Ents from "../../base/Ents.js";
@@ -120,7 +113,6 @@ export default class HomePage extends Component {
       regionToGroup,
       activeGroupID,
       mapInfoIndex,
-      selectedMapID,
       tableIndexIndex,
     } = this.state;
 
@@ -137,27 +129,6 @@ export default class HomePage extends Component {
 
     return (
       <div>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar variant="dense">
-              <Typography variant="h6" color="inherit" component="div">
-                {selectedMapID}
-              </Typography>
-
-              <Box sx={{ flexGrow: 1 }} />
-              <Box sx={{ display: { xs: "none", md: "flex" } }}>
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  color="inherit"
-                  onClick={this.onGroupSelectorShow.bind(this)}
-                >
-                  <MapIcon />
-                </IconButton>
-              </Box>
-            </Toolbar>
-          </AppBar>
-        </Box>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
             regionToGroup={regionToGroup}

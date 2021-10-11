@@ -19,3 +19,4 @@
   *  [2021-10-11 02:54PM] Added GIG2
   *  [2021-10-11 03:04PM] Added Divided to GroupPanel
   *  [2021-10-11 03:08PM] Added ColorPanel
+  *  [2021-10-11 03:11PM] Removed AppBar
