@@ -2,10 +2,6 @@ import { Component } from "react";
 import { GeoJSON } from "react-leaflet";
 import GeoData from "../../base/GeoData.js";
 
-const BORDER_COLOR = "gray";
-const BORDER_WIDTH = 1;
-const FILL_OPACITY = 0.8;
-
 export default class RegionView extends Component {
   constructor(props) {
     super(props);

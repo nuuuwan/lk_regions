@@ -25,6 +25,11 @@ export const COLOR_INFO_LIST = [
     tableName: "regions_ec.2019_election_presidential.result",
     Icon: BallotIcon,
   },
+  {
+    label: "2015 Presidential Election",
+    tableName: "regions_ec.2015_election_presidential.result",
+    Icon: BallotIcon,
+  },
 ];
 
 export default function ColorPanel(props) {

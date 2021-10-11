@@ -14,8 +14,8 @@ import ColorPanel, {
 import MapPanel from "../../nonstate/molecules/MapPanel.js";
 
 const DEFAULT_ZOOM = 8;
-const DEFAULT_LATLNG = [6.9157, 79.8636];
-const DEFAULT_MAP_ID = ENT.PROVINCE;
+const DEFAULT_LATLNG = [7.9, 80.5];
+const DEFAULT_MAP_ID = ENT.ED;
 
 const TABLE_NAMES = COLOR_INFO_LIST.map((d) => d.tableName);
 const DEFAULT_TABLE_NAME = TABLE_NAMES[0];
@@ -75,7 +75,7 @@ export default class HomePage extends Component {
     if (!childRegionType) {
       return;
     }
-    
+
     const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
     const regionGroup = regionToGroup[regionID];
     regionToGroup = childRegionIDs.reduce(function (
@@ -142,16 +142,21 @@ export default class HomePage extends Component {
       const maxValueKey = GIG2.getMaxValueKey(regionRow);
       const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
 
-      const opacity = maxValueP;
-      const color = GIG2.getTableRowColor(regionRow);
+      let opacity, color;
+      if (maxValueP > 0.5) {
+        opacity = Math.max(0, maxValueP - 0.5) + 0.5;
+        color = GIG2.getTableRowColor(regionRow);
+      } else {
+        opacity = 0.75;
+        color = 'gray';
+      }
 
       return {
         fillColor: color,
         fillOpacity: opacity,
-        color: 'lightgray',
+        color: "lightgray",
         weight: 1,
-      }
-
+      };
     }
 
     return (
