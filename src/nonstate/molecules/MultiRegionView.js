@@ -7,8 +7,6 @@ export default function MultiRegionView(props) {
     [regionID, groupID],
     iRegion
   ) {
-    let color;
-
     const key = `region-${regionID}`;
     return (
       <RegionView
