@@ -59,25 +59,24 @@ export default class GroupPanel extends Component {
 
           const groupKey = `group-${groupID}`;
           return (
-            <Box key={groupKey} sx={{ m: 1, p: 1 }} onClick={onClickGroupInner}>
+            <Box key={groupKey} onClick={onClickGroupInner}>
               <Grid container direction="row" alignItems="center">
                 <Grid item>
-                  <CircleIcon sx={{ color }} fontSize="smallest" />
-                </Grid>
-                <Grid item>
-                  <Typography variant="overline" sx={{ paddingLeft: 1 }}>
+                  <Typography variant="overline">
                     {group.name}
                   </Typography>
                 </Grid>
+                <Grid item>
+                  <CircleIcon sx={{ color }} fontSize="smallest" />
+                </Grid>
               </Grid>
 
-              <Box>
+              <Box sx={{paddingBottom: 2}}>
                 {regionIDs.map(function (regionID, iRegion) {
                   const regionKey = `region-${regionID}`;
                   return <RegionChip key={regionKey} regionID={regionID} />;
                 })}
               </Box>
-              <Divider />
             </Box>
           );
         })}
