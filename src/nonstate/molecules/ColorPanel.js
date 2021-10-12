@@ -9,28 +9,33 @@ import ListItemText from "@mui/material/ListItemText";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BallotIcon from "@mui/icons-material/Ballot";
 
-export const COLOR_INFO_LIST = [
-  {
-    label: "2019 Presidential Election",
-    tableName: "regions_ec.2019_election_presidential.result",
-    Icon: BallotIcon,
-  },
-  {
-    label: "2015 Presidential Election",
-    tableName: "regions_ec.2015_election_presidential.result",
-    Icon: BallotIcon,
-  },
-  {
-    label: "Ethnicity",
-    tableName: "regions.2012_census.ethnicity_of_population",
-    Icon: PeopleAltIcon,
-  },
-  {
-    label: "Religion",
-    tableName: "regions.2012_census.religious_affiliation_of_population",
-    Icon: PeopleAltIcon,
-  },
+const PRESIDENTIAL_ELECTION_YEAR_LIST = [
+  2019, 2015, 2010, 2005, 1999, 1994, 1988, 1982,
 ];
+
+export const COLOR_INFO_LIST = [].concat(
+  // Presidential Elections
+  PRESIDENTIAL_ELECTION_YEAR_LIST.map(function (electionYear) {
+    return {
+      label: `${electionYear} Presidential Election`,
+      tableName: `regions_ec.${electionYear}_election_presidential.result`,
+      Icon: BallotIcon,
+    };
+  }),
+  // 2012 Census
+  [
+    {
+      label: "Ethnicity",
+      tableName: "regions.2012_census.ethnicity_of_population",
+      Icon: PeopleAltIcon,
+    },
+    {
+      label: "Religion",
+      tableName: "regions.2012_census.religious_affiliation_of_population",
+      Icon: PeopleAltIcon,
+    },
+  ]
+);
 
 export default function ColorPanel(props) {
   const { activeMapColorTableName, onClickMapColor } = props;
@@ -62,7 +67,8 @@ export default function ColorPanel(props) {
         bottom: 20,
 
         width: 300,
-        height: 200,
+        height: 420,
+        overflow: "scroll",
       }}
     >
       <List dense subheader={<ListSubheader>Color Map by</ListSubheader>}>
