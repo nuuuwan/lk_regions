@@ -7,10 +7,10 @@ const ID_FIELD_KEY = "entity_id";
 const OTHER_LIMIT = 0.05;
 const KEY_OTHER = "other";
 const MERGE_ALIAS_MAP = {
-  moor: "muslim_and_malay",
-  malay: "muslim_and_malay",
+  moor: "all_muslim",
+  malay: "all_muslim",
   sri_lankan_tamil: "all_tamil",
-  ind_tamil: "tamil",
+  indian_tamil: "all_tamil",
   roman_catholic: "all_christian",
   other_christian: "all_christian",
 };

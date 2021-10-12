@@ -34,3 +34,4 @@
   *  [2021-10-12 01:00PM] DataTable: Header labels to title case
   *  [2021-10-12 01:47PM] Added Other
   *  [2021-10-12 01:55PM] Merged keys complete
+  *  [2021-10-12 02:29PM] Table FOrmatting

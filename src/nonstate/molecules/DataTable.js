@@ -8,16 +8,36 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import { StringX } from "@nuuuwan/utils-js-dev";
+import {Humanize} from '../../base/BaseUtils.js';
 import GIG2 from "../../base/GIG2.js";
 import RegionChip from "../../stateful/atoms/RegionChip.js";
 
 function renderHeaderCell(valueKey) {
   return (
-    <TableCell key={"header-" + valueKey}>
+    <TableCell
+      key={"header-" + valueKey}
+      align="right"
+    >
       {StringX.toTitleCase(valueKey)}
     </TableCell>
   );
 }
+
+function TableCellNumber(props) {
+  const {value, valueSum} = props;
+  const humanizedValue = Humanize.number(value);
+  const humanizedPercent = Humanize.percent(value, valueSum);
+
+  return (
+    <TableCell align="right">
+      <div>
+        {humanizedPercent}
+        {humanizedValue}
+      </div>
+    </TableCell>
+  );
+}
+
 
 export default function DataTable(props) {
   const { regionToGroup, activeTableIndex } = props;
@@ -39,12 +59,13 @@ export default function DataTable(props) {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell />
+            <TableCell align="right"/>
             {valueKeys.map(renderHeaderCell)}
           </TableRow>
         </TableHead>
         <TableBody>
           {Object.entries(finalTableIndex).map(function ([regionID, dataRow]) {
+            const valueSum = GIG2.getValueSum(dataRow);
             return (
               <TableRow
                 key={regionID}
@@ -55,9 +76,7 @@ export default function DataTable(props) {
                 </TableCell>
                 {valueKeys.map(function (valueKey) {
                   return (
-                    <TableCell key={regionID + valueKey}>
-                      {dataRow[valueKey]}
-                    </TableCell>
+                    <TableCellNumber value={dataRow[valueKey]} valueSum={valueSum} />
                   );
                 })}
               </TableRow>
