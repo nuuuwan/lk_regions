@@ -15,7 +15,7 @@ import MapPanel from "../../nonstate/molecules/MapPanel.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [7.9, 81.5];
-const DEFAULT_MAP_ID = ENT.DISTRICT;
+const DEFAULT_MAP_ID = ENT.PD;
 
 const TABLE_NAMES = COLOR_INFO_LIST.map((d) => d.tableName);
 const DEFAULT_TABLE_NAME = TABLE_NAMES[0];
@@ -140,7 +140,6 @@ export default class HomePage extends Component {
 
     function funcGetRegionStyle(regionID) {
       const regionRow = activeTableIndex[regionID];
-      console.debug(regionID, activeTableIndex, regionRow);
 
       const maxValueKey = GIG2.getMaxValueKey(regionRow);
       const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
@@ -179,6 +178,7 @@ export default class HomePage extends Component {
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
           activeMapColorTableName={activeMapColorTableName}
+          tableIndexIndex={tableIndexIndex}
         />
         <GroupSelector
           showGroupSelector={showGroupSelector}

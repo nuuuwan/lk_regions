@@ -8,13 +8,14 @@ import TabPanel from "@mui/lab/TabPanel";
 
 import PartitionsTabContent from "../../nonstate/molecules/PartitionsTabContent.js";
 import DataTable from "../../nonstate/molecules/DataTable.js";
+import MapPropertiesView from "../../nonstate/molecules/MapPropertiesView.js";
 
 const TAB = {
+  MAP_PROPS: "Map Properties",
   DATA: "Data",
-  MAP_QUALITY: "Map Quality",
   REGIONS: "Regions",
 };
-const DEFAULT_TAB = TAB.DATA;
+const DEFAULT_TAB = TAB.MAP_PROPS;
 
 export default class MainPanel extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export default class MainPanel extends Component {
       activeGroupID,
       activeTableIndex,
       activeMapColorTableName,
+      tableIndexIndex,
     } = this.props;
     const { activeTab } = this.state;
 
@@ -54,11 +56,18 @@ export default class MainPanel extends Component {
               onChange={this.onTabChange.bind(this)}
               aria-label="lab API tabs example"
             >
-              {[TAB.DATA, TAB.MAP_QUALITY, TAB.REGIONS].map(function (tab) {
+              {Object.values(TAB).map(function (tab) {
                 return <Tab key={tab} label={tab} value={tab} />;
               })}
             </TabList>
           </Box>
+
+          <TabPanel value={TAB.MAP_PROPS}>
+            <MapPropertiesView
+              regionToGroup={regionToGroup}
+              tableIndexIndex={tableIndexIndex}
+            />
+          </TabPanel>
 
           <TabPanel value={TAB.DATA}>
             <DataTable
@@ -67,7 +76,7 @@ export default class MainPanel extends Component {
               activeMapColorTableName={activeMapColorTableName}
             />
           </TabPanel>
-          <TabPanel value={TAB.MAP_QUALITY}>TODO</TabPanel>
+
           <TabPanel value={TAB.REGIONS}>
             <PartitionsTabContent
               groupIndex={groupIndex}

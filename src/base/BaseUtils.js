@@ -1,3 +1,5 @@
+import { MathX } from "@nuuuwan/utils-js-dev";
+
 export class DataStructures {
   static async buildIndex(keyIDs, asyncFuncKeyToData) {
     const dataList = await Promise.all(
@@ -51,5 +53,23 @@ export class Humanize {
       return "<1%";
     }
     return (p * 100.0).toPrecision(DEFAULT_PRECISION) + "%";
+  }
+}
+
+export class StatX {
+  static mean(xList) {
+    const n = xList.length;
+    return MathX.sum(xList) / n;
+  }
+
+  static variance(xList) {
+    const n = xList.length;
+    const eX2 = MathX.sum(xList.map((x) => x * x)) / n;
+    const mean = StatX.mean(xList);
+    return eX2 - mean;
+  }
+
+  static stdev(xList) {
+    return Math.sqrt(StatX.variance(xList));
   }
 }
