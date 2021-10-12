@@ -27,8 +27,10 @@ export const FIELD_NAME_TO_COLOR = {
   burgher: "purple",
   chetty: "blue",
   indian_tamil: COLOR_SL_FLAG.TAMIL,
+  tamil: COLOR_SL_FLAG.TAMIL,
   malay: COLOR_SL_FLAG.MOOR,
   moor: COLOR_SL_FLAG.MOOR,
+  muslim: COLOR_SL_FLAG.MOOR,
   sinhalese: COLOR_SL_FLAG.SINHALA,
   sri_lankan_tamil: COLOR_SL_FLAG.TAMIL,
   // religious_affiliation_of_population
@@ -37,6 +39,7 @@ export const FIELD_NAME_TO_COLOR = {
   hindu: COLOR_SL_FLAG.TAMIL,
   roman_catholic: "purple",
   other_christian: "blue",
+  christian: "purple",
   // gender_of_population
   female: "pink",
   male: "lightblue",

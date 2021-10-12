@@ -4,15 +4,15 @@ import { APP_NAME } from "../constants/Constants.js";
 let adhocValueKeyToColor = {};
 
 const ID_FIELD_KEY = "entity_id";
-const OTHER_LIMIT = 0.05;
+const OTHER_LIMIT = 0.01;
 const KEY_OTHER = "other";
 const MERGE_ALIAS_MAP = {
-  moor: "all_muslim",
-  malay: "all_muslim",
-  sri_lankan_tamil: "all_tamil",
-  indian_tamil: "all_tamil",
-  roman_catholic: "all_christian",
-  other_christian: "all_christian",
+  moor: "muslim",
+  malay: "muslim",
+  sri_lankan_tamil: "tamil",
+  indian_tamil: "tamil",
+  roman_catholic: "christian",
+  other_christian: "christian",
 };
 
 export default class GIG2 {

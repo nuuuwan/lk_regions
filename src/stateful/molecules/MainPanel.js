@@ -42,11 +42,9 @@ export default class MainPanel extends Component {
           position: "absolute",
           top: 20,
           right: 20,
-
+          bottom: 20,
           width: 600,
-          height: 400,
           zIndex: 1000,
-          overflow: "scroll",
         }}
       >
         <TabContext value={activeTab}>
