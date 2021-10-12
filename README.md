@@ -37,3 +37,4 @@
   *  [2021-10-12 02:29PM] Table FOrmatting
   *  [2021-10-12 03:33PM] Table mostly complete
   *  [2021-10-12 03:40PM] Added Header Title
+  *  [2021-10-12 04:03PM] Copied gig2 data for Districts Elections
