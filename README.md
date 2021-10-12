@@ -39,3 +39,4 @@
   *  [2021-10-12 03:40PM] Added Header Title
   *  [2021-10-12 04:03PM] Copied gig2 data for Districts Elections
   *  [2021-10-12 04:08PM] Fixed GIG2.elections.districts bug
+  *  [2021-10-12 04:21PM] Added GNDs
