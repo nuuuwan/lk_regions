@@ -7,8 +7,17 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import { StringX } from "@nuuuwan/utils-js-dev";
 import GIG2 from "../../base/GIG2.js";
 import RegionChip from "../../stateful/atoms/RegionChip.js";
+
+function renderHeaderCell(valueKey) {
+  return (
+    <TableCell key={"header-" + valueKey}>
+      {StringX.toTitleCase(valueKey)}
+    </TableCell>
+  );
+}
 
 export default function DataTable(props) {
   const { regionToGroup, activeTableIndex } = props;
@@ -23,11 +32,7 @@ export default function DataTable(props) {
         <TableHead>
           <TableRow>
             <TableCell />
-            {valueKeys.map(function (valueKey) {
-              return (
-                <TableCell key={"header-" + valueKey}>{valueKey}</TableCell>
-              );
-            })}
+            {valueKeys.map(renderHeaderCell)}
           </TableRow>
         </TableHead>
         <TableBody>
