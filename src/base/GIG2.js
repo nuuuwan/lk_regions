@@ -1,10 +1,11 @@
 import { MathX, Color, WWW } from "@nuuuwan/utils-js-dev";
 import { FIELD_NAME_TO_COLOR } from "../constants/ColorConstants.js";
 import { APP_NAME } from "../constants/Constants.js";
-
 let adhocValueKeyToColor = {};
 
 const ID_FIELD_KEY = "entity_id";
+const OTHER_LIMIT = 0.05;
+const KEY_OTHER = "other";
 
 export default class GIG2 {
   static async getTable(tableName) {
@@ -14,7 +15,7 @@ export default class GIG2 {
 
   static async getTableIndex(tableName) {
     const table = await GIG2.getTable(tableName);
-    const valueKeys = GIG2.filterValueCellKeys(table[0]);
+    const valueKeys = GIG2.getValueKeys(table[0]);
     return table.reduce(function (tableIndex, tableRow) {
       tableIndex[tableRow[ID_FIELD_KEY]] = Object.entries(tableRow).reduce(
         function (cleanTableRow, [key, value]) {
@@ -30,7 +31,7 @@ export default class GIG2 {
     }, {});
   }
 
-  static filterValueCellKeys(tableRow) {
+  static getValueKeys(tableRow) {
     const valueCellKeys = Object.keys(tableRow).filter(
       (cellKey) =>
         !(
@@ -47,7 +48,7 @@ export default class GIG2 {
   }
 
   static getMaxValueKey(tableRow) {
-    const valueKeys = GIG2.filterValueCellKeys(tableRow);
+    const valueKeys = GIG2.getValueKeys(tableRow);
     const maxValueKey = valueKeys.reduce(function (maxValueKey, valueKey) {
       if (tableRow[maxValueKey] < tableRow[valueKey]) {
         maxValueKey = valueKey;
@@ -70,7 +71,7 @@ export default class GIG2 {
   }
 
   static getSumValues(tableRow) {
-    const valueKeys = GIG2.filterValueCellKeys(tableRow);
+    const valueKeys = GIG2.getValueKeys(tableRow);
     return MathX.sum(valueKeys.map((valueKey) => tableRow[valueKey]));
   }
 
@@ -103,5 +104,85 @@ export default class GIG2 {
       valuePToRankP[valueP] = iValue / nValues;
       return valuePToRankP;
     }, {});
+  }
+
+  static getFirstRow(tableIndex) {
+    return Object.values(tableIndex)[0];
+  }
+
+  static getTotalRow(tableIndex) {
+    const firstRow = GIG2.getFirstRow(tableIndex);
+    const valueKeys = GIG2.getValueKeys(firstRow);
+    return valueKeys.reduce(function (totalRow, key) {
+      totalRow[key] = MathX.sum(
+        Object.values(tableIndex).map((tableRow) => tableRow[key])
+      );
+      return totalRow;
+    }, {});
+  }
+
+  static getValueSum(tableRow) {
+    const valueKeys = GIG2.getValueKeys(tableRow);
+    return MathX.sum(valueKeys.map((valueKey) => tableRow[valueKey]));
+  }
+
+  static expandOtherOnTableRow(tableRow, sortedNonOtherKeys, otherValueKeys) {
+    let expandedTableRow = sortedNonOtherKeys.reduce(function (
+      expandedTableRow,
+      nonOtherKey
+    ) {
+      expandedTableRow[nonOtherKey] = tableRow[nonOtherKey];
+      return expandedTableRow;
+    },
+    {});
+
+    const otherValueSum = MathX.sum(
+      otherValueKeys.map((valueKey) => tableRow[valueKey])
+    );
+    expandedTableRow[KEY_OTHER] = otherValueSum;
+
+    return expandedTableRow;
+  }
+
+  static expandOtherOnTable(tableIndex) {
+    const totalRow = GIG2.getTotalRow(tableIndex);
+    const valueKeys = GIG2.getValueKeys(totalRow);
+    const valueSum = GIG2.getValueSum(totalRow);
+
+    const [otherValueKeys, nonOtherValueKeys] = valueKeys.reduce(
+      function ([otherValueKeys, nonOtherValueKeys], valueKey) {
+        if (valueKey === KEY_OTHER) {
+          otherValueKeys.push(valueKey);
+        }
+        if (totalRow[valueKey] / valueSum < OTHER_LIMIT) {
+          otherValueKeys.push(valueKey);
+        } else {
+          nonOtherValueKeys.push(valueKey);
+        }
+        return [otherValueKeys, nonOtherValueKeys];
+      },
+      [[], []]
+    );
+
+    const sortedNonOtherKeys = nonOtherValueKeys
+      .map(function (key) {
+        return { key, value: totalRow[key] };
+      })
+      .sort((a, b) => b.value - a.value)
+      .map((x) => x.key);
+
+    const expandedTableIndex = Object.entries(tableIndex).reduce(function (
+      expandedTableIndex,
+      [regionID, tableRow]
+    ) {
+      expandedTableIndex[regionID] = GIG2.expandOtherOnTableRow(
+        tableRow,
+        sortedNonOtherKeys,
+        otherValueKeys
+      );
+      return expandedTableIndex;
+    },
+    {});
+    return expandedTableIndex;
   }
 }

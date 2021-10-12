@@ -21,10 +21,18 @@ function renderHeaderCell(valueKey) {
 
 export default function DataTable(props) {
   const { regionToGroup, activeTableIndex } = props;
-  const dataTable = Object.values(activeTableIndex).filter(
-    (d) => regionToGroup[d["entity_id"]]
-  );
-  const valueKeys = GIG2.filterValueCellKeys(dataTable[0]);
+  const filteredTableIndex = Object.entries(activeTableIndex).reduce(function (
+    filteredTableIndex,
+    [regionID, tableRow]
+  ) {
+    if (regionToGroup[regionID]) {
+      filteredTableIndex[regionID] = tableRow;
+    }
+    return filteredTableIndex;
+  },
+  {});
+  const finalTableIndex = GIG2.expandOtherOnTable(filteredTableIndex);
+  const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(finalTableIndex));
 
   return (
     <TableContainer component={Paper}>
@@ -36,8 +44,7 @@ export default function DataTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataTable.map(function (dataRow) {
-            const regionID = dataRow["entity_id"];
+          {Object.entries(finalTableIndex).map(function ([regionID, dataRow]) {
             return (
               <TableRow
                 key={regionID}

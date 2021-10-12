@@ -1,6 +1,7 @@
 import { WWW, StringX } from "@nuuuwan/utils-js-dev";
 import { APP_NAME } from "../constants/Constants.js";
 
+export const REGION_ID_LK = "LK";
 export const ENT = {
   COUNTRY: "country",
   PROVINCE: "province",
