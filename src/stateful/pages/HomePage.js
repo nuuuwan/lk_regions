@@ -176,6 +176,7 @@ export default class HomePage extends Component {
           onClickGroup={this.onClickGroup.bind(this)}
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
+          activeMapColorTableName={activeMapColorTableName}
         />
         <GroupSelector
           showGroupSelector={showGroupSelector}

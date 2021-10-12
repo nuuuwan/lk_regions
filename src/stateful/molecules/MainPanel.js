@@ -33,6 +33,7 @@ export default class MainPanel extends Component {
       onClickGroup,
       activeGroupID,
       activeTableIndex,
+      activeMapColorTableName,
     } = this.props;
     const { activeTab } = this.state;
 
@@ -63,6 +64,7 @@ export default class MainPanel extends Component {
             <DataTable
               regionToGroup={regionToGroup}
               activeTableIndex={activeTableIndex}
+              activeMapColorTableName={activeMapColorTableName}
             />
           </TabPanel>
           <TabPanel value={TAB.MAP_QUALITY}>TODO</TabPanel>
