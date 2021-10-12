@@ -34,8 +34,10 @@ function TableCellNumber(props) {
   const p = value / valueSum;
 
   let backgroundColor = "white";
+  let color = "black";
   if (p > 0.5) {
     backgroundColor = GIG2.getValueKeyColor(valueKey);
+    color = "white";
   }
 
   let opacity = 0.2;
@@ -57,8 +59,8 @@ function TableCellNumber(props) {
   return (
     <TableCell align="right">
       <div style={styleText}>
-        <div style={{ fontSize: 15 }}>{humanizedPercent}</div>
-        <div style={{ fontSize: 9 }}>{humanizedValue}</div>
+        <div style={{ fontSize: 15, color }}>{humanizedPercent}</div>
+        <div style={{ fontSize: 9, color }}>{humanizedValue}</div>
       </div>
     </TableCell>
   );
