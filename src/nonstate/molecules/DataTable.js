@@ -96,18 +96,22 @@ export default function DataTable(props) {
         <Table stickyHeader padding="none">
           <TableHead>
             <TableRow>
+              <TableCell align="right" width="5" />
               <TableCell align="right" width="80" />
               {valueKeys.map(renderHeaderCell)}
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.entries(finalTableIndex).map(function ([
-              regionID,
-              dataRow,
-            ]) {
+            {Object.entries(finalTableIndex).map(function (
+              [regionID, dataRow],
+              iRow
+            ) {
               const valueSum = GIG2.getValueSum(dataRow);
               return (
                 <TableRow key={regionID}>
+                  <TableCell>
+                    <Typography variant="caption">{`${iRow + 1}.`}</Typography>
+                  </TableCell>
                   <TableCell>
                     <RegionChip regionID={regionID} />
                   </TableCell>
