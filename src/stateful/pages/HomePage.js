@@ -137,11 +137,10 @@ export default class HomePage extends Component {
     }
 
     const activeTableIndex = tableIndexIndex[activeMapColorTableName];
-    console.debug(activeTableIndex);
 
     function funcGetRegionStyle(regionID) {
       const regionRow = activeTableIndex[regionID];
-
+      console.debug(regionID, activeTableIndex, regionRow);
 
       const maxValueKey = GIG2.getMaxValueKey(regionRow);
       const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
