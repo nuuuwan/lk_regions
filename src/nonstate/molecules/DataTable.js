@@ -31,7 +31,7 @@ export default function DataTable(props) {
     return filteredTableIndex;
   },
   {});
-  const finalTableIndex = GIG2.expandOtherOnTable(filteredTableIndex);
+  const finalTableIndex = GIG2.mergeAndExpandOtherOnTable(filteredTableIndex);
   const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(finalTableIndex));
 
   return (

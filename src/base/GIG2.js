@@ -6,6 +6,14 @@ let adhocValueKeyToColor = {};
 const ID_FIELD_KEY = "entity_id";
 const OTHER_LIMIT = 0.05;
 const KEY_OTHER = "other";
+const MERGE_ALIAS_MAP = {
+  moor: "muslim_and_malay",
+  malay: "muslim_and_malay",
+  sri_lankan_tamil: "all_tamil",
+  ind_tamil: "tamil",
+  roman_catholic: "all_christian",
+  other_christian: "all_christian",
+};
 
 export default class GIG2 {
   static async getTable(tableName) {
@@ -144,8 +152,36 @@ export default class GIG2 {
     return expandedTableRow;
   }
 
-  static expandOtherOnTable(tableIndex) {
-    const totalRow = GIG2.getTotalRow(tableIndex);
+  static mergeKeysOnTableRow(tableRow) {
+    return Object.entries(tableRow).reduce(function (
+      mergedTableRow,
+      [key, value]
+    ) {
+      const mergedKey = MERGE_ALIAS_MAP[key] ? MERGE_ALIAS_MAP[key] : key;
+      if (!mergedTableRow[mergedKey]) {
+        mergedTableRow[mergedKey] = 0;
+      }
+      mergedTableRow[mergedKey] += value;
+      return mergedTableRow;
+    },
+    {});
+  }
+
+  static mergeKeysOnTable(tableIndex) {
+    return Object.entries(tableIndex).reduce(function (
+      mergedTableIndex,
+      [regionID, tableRow]
+    ) {
+      mergedTableIndex[regionID] = GIG2.mergeKeysOnTableRow(tableRow);
+      return mergedTableIndex;
+    },
+    {});
+  }
+
+  static mergeAndExpandOtherOnTable(tableIndex) {
+    const mergedTableIndex = GIG2.mergeKeysOnTable(tableIndex);
+
+    const totalRow = GIG2.getTotalRow(mergedTableIndex);
     const valueKeys = GIG2.getValueKeys(totalRow);
     const valueSum = GIG2.getValueSum(totalRow);
 
@@ -171,18 +207,17 @@ export default class GIG2 {
       .sort((a, b) => b.value - a.value)
       .map((x) => x.key);
 
-    const expandedTableIndex = Object.entries(tableIndex).reduce(function (
-      expandedTableIndex,
-      [regionID, tableRow]
-    ) {
-      expandedTableIndex[regionID] = GIG2.expandOtherOnTableRow(
-        tableRow,
-        sortedNonOtherKeys,
-        otherValueKeys
-      );
-      return expandedTableIndex;
-    },
-    {});
+    const expandedTableIndex = Object.entries(mergedTableIndex).reduce(
+      function (expandedTableIndex, [regionID, tableRow]) {
+        expandedTableIndex[regionID] = GIG2.expandOtherOnTableRow(
+          tableRow,
+          sortedNonOtherKeys,
+          otherValueKeys
+        );
+        return expandedTableIndex;
+      },
+      {}
+    );
     return expandedTableIndex;
   }
 }
