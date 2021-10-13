@@ -9,9 +9,10 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import { StringX } from "@nuuuwan/utils-js-dev";
+
+import { DataStructures } from "../../base/BaseUtils.js";
 import { Humanize } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
-import RegionChip from "../../stateful/atoms/RegionChip.js";
 
 function renderHeaderCell(valueKey) {
   const style = { fontWeight: 800 };
@@ -68,6 +69,7 @@ function TableCellNumber(props) {
 
 export default function DataTable(props) {
   const { regionToGroup, activeTableIndex, activeMapColorTableName } = props;
+
   const filteredTableIndex = Object.entries(activeTableIndex).reduce(function (
     filteredTableIndex,
     [regionID, tableRow]
@@ -84,6 +86,36 @@ export default function DataTable(props) {
   const title = StringX.toTitleCase(
     activeMapColorTableName.split(".").splice(1, 3).join(" - ")
   );
+
+  const groupToRegions = DataStructures.invertDict(regionToGroup);
+  const groupTableIndex = Object.entries(groupToRegions).reduce(function (
+    groupTableIndex,
+    [groupID, regionIDs]
+  ) {
+    groupTableIndex[groupID] = regionIDs.reduce(function (groupRow, regionID) {
+      if (!finalTableIndex[regionID]) {
+        return groupRow;
+      }
+      return Object.entries(finalTableIndex[regionID]).reduce(function (
+        groupRow,
+        [key, value]
+      ) {
+        if (valueKeys.includes(key)) {
+          if (!groupRow[key]) {
+            groupRow[key] = value;
+          } else {
+            groupRow[key] += value;
+          }
+        } else {
+          groupRow[key] = value;
+        }
+        return groupRow;
+      },
+      groupRow);
+    }, {});
+    return groupTableIndex;
+  },
+  {});
 
   return (
     <Box>
@@ -102,23 +134,21 @@ export default function DataTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.entries(finalTableIndex).map(function (
-              [regionID, dataRow],
+            {Object.entries(groupTableIndex).map(function (
+              [groupID, dataRow],
               iRow
             ) {
               const valueSum = GIG2.getValueSum(dataRow);
               return (
-                <TableRow key={regionID}>
+                <TableRow key={groupID}>
                   <TableCell>
                     <Typography variant="caption">{`${iRow + 1}.`}</Typography>
                   </TableCell>
-                  <TableCell>
-                    <RegionChip regionID={regionID} />
-                  </TableCell>
+                  <TableCell>{groupID}</TableCell>
                   {valueKeys.map(function (valueKey) {
                     return (
                       <TableCellNumber
-                        key={regionID + "-" + valueKey}
+                        key={groupID + "-" + valueKey}
                         value={dataRow[valueKey]}
                         valueSum={valueSum}
                         valueKey={valueKey}
