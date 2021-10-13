@@ -23,3 +23,4 @@
   *  [2021-10-13 12:53PM] Copied Custom Map Data
   *  [2021-10-13 12:54PM] Formatting
   *  [2021-10-13 01:59PM] CustomMap support
+  *  [2021-10-13 02:06PM] Small Speed-up
