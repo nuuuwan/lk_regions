@@ -113,6 +113,9 @@ export default class Ents {
     const entType = Ents.getEntType(entID);
     const entIndex = await Ents.getEntIndexByType(entType);
     let ent = entIndex[entID];
+    if (!ent) {
+      return null;
+    }
     if (ent["centroid"]) {
       ent["centroid"] = JSON.parse(ent["centroid"]);
     }

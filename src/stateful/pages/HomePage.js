@@ -34,7 +34,7 @@ export default class HomePage extends Component {
 
       groupIndex: undefined,
       activeGroupID: undefined,
-      
+
       tableIndexIndex: undefined,
       activeMapColorTableName: DEFAULT_TABLE_NAME,
 
@@ -49,7 +49,11 @@ export default class HomePage extends Component {
   }
 
   async updateMap(activeMapID) {
-    const mapInfoIndex = await RegionGroup.getMapInfoIndex();
+    let mapInfoIndex = this.state.mapInfoIndex;
+    if (mapInfoIndex === undefined) {
+      mapInfoIndex = await RegionGroup.getMapInfoIndex();
+    }
+
     const { groupIndex, regionToGroup } = mapInfoIndex[activeMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
@@ -142,11 +146,22 @@ export default class HomePage extends Component {
 
     function funcGetRegionStyle(regionID) {
       const regionRow = activeTableIndex[regionID];
+      let opacity = 0.1;
+      let color = "gray";
+
+      if (!regionRow) {
+        return {
+          fillColor: color,
+          fillOpacity: opacity,
+          color: color,
+          opacity: opacity,
+          weight: 0,
+        };
+      }
 
       const maxValueKey = GIG2.getMaxValueKey(regionRow);
       const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
 
-      let opacity, color;
       if (maxValueP > 0.5) {
         opacity = Math.max(0, maxValueP - 0.5) + 0.5;
         color = GIG2.getTableRowColor(regionRow);
@@ -158,7 +173,8 @@ export default class HomePage extends Component {
       return {
         fillColor: color,
         fillOpacity: opacity,
-        color: "lightgray",
+        color: color,
+        opacity: opacity,
         weight: 1,
       };
     }
@@ -173,6 +189,16 @@ export default class HomePage extends Component {
             funcGetRegionStyle={funcGetRegionStyle}
           />
         </GeoMap>
+        <MapPanel
+          activeMapID={activeMapID}
+          onClickMap={this.onClickMap.bind(this)}
+          mapInfoIndex={mapInfoIndex}
+        />
+        <ColorPanel
+          activeMapColorTableName={activeMapColorTableName}
+          onClickMapColor={this.onClickMapColor.bind(this)}
+        />
+
         <MainPanel
           groupIndex={groupIndex}
           regionToGroup={regionToGroup}
@@ -187,15 +213,6 @@ export default class HomePage extends Component {
           onGroupSelectorHide={this.onGroupSelectorHide.bind(this)}
           mapInfoIndex={mapInfoIndex}
           onClickMap={this.onClickMap.bind(this)}
-        />
-        <ColorPanel
-          activeMapColorTableName={activeMapColorTableName}
-          onClickMapColor={this.onClickMapColor.bind(this)}
-        />
-        <MapPanel
-          activeMapID={activeMapID}
-          onClickMap={this.onClickMap.bind(this)}
-          activeTableIndex={activeTableIndex}
         />
       </div>
     );

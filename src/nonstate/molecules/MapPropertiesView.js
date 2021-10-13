@@ -65,7 +65,11 @@ export default function MapPropertiesView(props) {
     .map(function ([groupID, regionIDs]) {
       const pop = MathX.sum(
         regionIDs.map(function (regionID) {
-          return parseInt(popTableIndex[regionID][POP_FIELD_KEY]);
+          if (popTableIndex[regionID]) {
+            return parseInt(popTableIndex[regionID][POP_FIELD_KEY]);
+          } else {
+            return 0;
+          }
         })
       );
       return {

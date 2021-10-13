@@ -8,12 +8,10 @@ import ListItemText from "@mui/material/ListItemText";
 
 import MapIcon from "@mui/icons-material/Map";
 
-import Ents, { ENT } from "../../base/Ents.js";
-
-const REGION_TYPE_LIST = [ENT.PROVINCE, ENT.DISTRICT, ENT.DSD, ENT.ED, ENT.PD];
+import Ents from "../../base/Ents.js";
 
 export default function MapPanel(props) {
-  const { activeMapID, onClickMap } = props;
+  const { activeMapID, onClickMap, mapInfoIndex } = props;
 
   function renderListItem(mapID) {
     const selected = activeMapID === mapID;
@@ -45,7 +43,7 @@ export default function MapPanel(props) {
       }}
     >
       <List dense subheader={<ListSubheader>Split Regions by</ListSubheader>}>
-        {REGION_TYPE_LIST.map(renderListItem)}
+        {Object.keys(mapInfoIndex).map(renderListItem)}
       </List>
     </Paper>
   );
