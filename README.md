@@ -25,3 +25,4 @@
   *  [2021-10-13 01:59PM] CustomMap support
   *  [2021-10-13 02:06PM] Small Speed-up
   *  [2021-10-13 02:22PM] Fixed Table Bugs
+  *  [2021-10-13 03:30PM] Merged Polygons Done

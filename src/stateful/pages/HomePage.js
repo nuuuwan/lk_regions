@@ -7,7 +7,7 @@ import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import MainPanel from "../molecules/MainPanel.js";
 import GroupSelector from "../molecules/GroupSelector.js";
-import MultiRegionView from "../../nonstate/molecules/MultiRegionView.js";
+import MultiRegionView from "../../stateful/molecules/MultiRegionView.js";
 import ColorPanel, {
   COLOR_INFO_LIST,
 } from "../../nonstate/molecules/ColorPanel.js";
@@ -15,10 +15,13 @@ import MapPanel from "../../nonstate/molecules/MapPanel.js";
 
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [7.9, 81.5];
-const DEFAULT_MAP_ID = ENT.PD;
+const DEFAULT_MAP_ID = ENT.PROVINCE;
 
 const TABLE_NAMES = COLOR_INFO_LIST.map((d) => d.tableName);
 const DEFAULT_TABLE_NAME = TABLE_NAMES[0];
+
+const BORDER_COLOR = "white";
+const BORDER_WIDTH = 1;
 
 async function getTableIndexIndex() {
   return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
@@ -153,9 +156,8 @@ export default class HomePage extends Component {
         return {
           fillColor: color,
           fillOpacity: opacity,
-          color: color,
-          opacity: opacity,
-          weight: 0,
+          color: BORDER_COLOR,
+          weight: BORDER_WIDTH,
         };
       }
 
@@ -173,9 +175,8 @@ export default class HomePage extends Component {
       return {
         fillColor: color,
         fillOpacity: opacity,
-        color: color,
-        opacity: opacity,
-        weight: 1,
+        color: BORDER_COLOR,
+        weight: BORDER_WIDTH,
       };
     }
 
@@ -183,6 +184,7 @@ export default class HomePage extends Component {
       <div>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
+            key={`multi-region-view-${activeMapID}`}
             regionToGroup={regionToGroup}
             activeGroupID={activeGroupID}
             onClickRegion={this.onClickRegion.bind(this)}
