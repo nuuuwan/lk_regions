@@ -31,8 +31,10 @@ export default class HomePage extends Component {
       // Data
       activeMapID: DEFAULT_MAP_ID,
       mapInfoIndex: undefined,
+
       groupIndex: undefined,
       activeGroupID: undefined,
+      
       tableIndexIndex: undefined,
       activeMapColorTableName: DEFAULT_TABLE_NAME,
 
