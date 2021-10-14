@@ -66,49 +66,8 @@ function TableCellNumber(props) {
   );
 }
 
-function getGroupTableIndex(groupToRegions, activeTableIndex) {
-  const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(activeTableIndex));
-
-  const rawGroupTableIndex = Object.entries(groupToRegions).reduce(function (
-    groupTableIndex,
-    [groupID, regionIDs]
-  ) {
-    groupTableIndex[groupID] = regionIDs.reduce(function (groupRow, regionID) {
-      if (!activeTableIndex[regionID]) {
-        return groupRow;
-      }
-      return Object.entries(activeTableIndex[regionID]).reduce(function (
-        groupRow,
-        [key, value]
-      ) {
-        if (valueKeys.includes(key)) {
-          if (!groupRow[key]) {
-            groupRow[key] = value;
-          } else {
-            groupRow[key] += value;
-          }
-        } else {
-          groupRow[key] = value;
-        }
-        return groupRow;
-      },
-      groupRow);
-    }, {});
-    return groupTableIndex;
-  },
-  {});
-
-  const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(
-    rawGroupTableIndex,
-  );
-
-  return groupTableIndex;
-
-}
-
 export default function DataTable(props) {
-  const { groupToRegions, activeTableIndex, activeMapColorTableName } = props;
-  const groupTableIndex = getGroupTableIndex(groupToRegions, activeTableIndex);
+  const { groupTableIndex, activeMapColorTableName } = props;
   const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(groupTableIndex));
 
   const title = StringX.toTitleCase(activeMapColorTableName.split('.')[1]);

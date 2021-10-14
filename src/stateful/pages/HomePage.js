@@ -43,11 +43,11 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    const { activeMapID } = this.state;
-    await this.updateMap(activeMapID);
+    const { activeMapID , activeMapColorTableName} = this.state;
+    await this.updateMap(activeMapID, activeMapColorTableName);
   }
 
-  async updateMap(activeMapID) {
+  async updateMap(activeMapID, activeMapColorTableName) {
     let mapInfoIndex = this.state.mapInfoIndex;
     if (mapInfoIndex === undefined) {
       mapInfoIndex = await RegionGroup.getMapInfoIndex();
@@ -61,21 +61,28 @@ export default class HomePage extends Component {
       tableIndexIndex = await getTableIndexIndex();
     }
 
+    const activeTableIndex = tableIndexIndex[activeMapColorTableName];
+    const groupTableIndex = RegionGroup.getGroupTableIndex(groupToRegions, activeTableIndex);
+
     this.setState({
+      activeMapID,
+      activeMapColorTableName,
+
       mapInfoIndex,
       groupIndex,
       groupToRegions ,
       activeGroupID,
-      activeMapID,
       tableIndexIndex,
+      activeTableIndex,
+      groupTableIndex,
     });
   }
 
-  onClickMapColor(activeMapColorTableName) {
-    this.setState({ activeMapColorTableName });
+  async onClickMapColor(activeMapColorTableName) {
+    await this.updateMap(this.state.activeMapID, activeMapColorTableName);
   }
   async onClickMap(activeMapID) {
-    await this.updateMap(activeMapID);
+    await this.updateMap(activeMapID, this.state.activeMapColorTableName);
   }
 
   render() {
@@ -87,16 +94,16 @@ export default class HomePage extends Component {
       tableIndexIndex,
       activeMapColorTableName,
       activeMapID,
+      activeTableIndex,
+      groupTableIndex,
     } = this.state;
 
     if (!groupIndex) {
       return "...";
     }
 
-    const activeTableIndex = tableIndexIndex[activeMapColorTableName];
-
-    function funcGetRegionStyle(regionID) {
-      const regionRow = activeTableIndex[regionID];
+    function funcGetRegionStyle(groupID) {
+      const regionRow = groupTableIndex[groupID];
       let opacity = 0.1;
       let color = "gray";
 
@@ -155,6 +162,7 @@ export default class HomePage extends Component {
           activeTableIndex={activeTableIndex}
           activeMapColorTableName={activeMapColorTableName}
           tableIndexIndex={tableIndexIndex}
+          groupTableIndex={groupTableIndex}
         />
       </div>
     );

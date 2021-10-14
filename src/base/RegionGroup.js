@@ -2,6 +2,7 @@ import { WWW } from "@nuuuwan/utils-js-dev";
 
 import { APP_NAME } from "../constants/Constants.js";
 import Ents, { ENT } from "./Ents.js";
+import GIG2 from "./GIG2.js";
 import { DataStructures } from "./BaseUtils.js";
 
 export default class RegionGroup {
@@ -80,5 +81,44 @@ export default class RegionGroup {
     );
 
     return Object.assign({}, forRegionTypes, forCustomMaps);
+  }
+
+  static getGroupTableIndex(groupToRegions, activeTableIndex) {
+    const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(activeTableIndex));
+
+    const rawGroupTableIndex = Object.entries(groupToRegions).reduce(function (
+      groupTableIndex,
+      [groupID, regionIDs]
+    ) {
+      groupTableIndex[groupID] = regionIDs.reduce(function (groupRow, regionID) {
+        if (!activeTableIndex[regionID]) {
+          return groupRow;
+        }
+        return Object.entries(activeTableIndex[regionID]).reduce(function (
+          groupRow,
+          [key, value]
+        ) {
+          if (valueKeys.includes(key)) {
+            if (!groupRow[key]) {
+              groupRow[key] = value;
+            } else {
+              groupRow[key] += value;
+            }
+          } else {
+            groupRow[key] = value;
+          }
+          return groupRow;
+        },
+        groupRow);
+      }, {});
+      return groupTableIndex;
+    },
+    {});
+
+    const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(
+      rawGroupTableIndex,
+    );
+
+    return groupTableIndex;
   }
 }

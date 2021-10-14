@@ -32,7 +32,7 @@ export default class MainPanel extends Component {
       // groupIndex,
       groupToRegions,
       // activeGroupID,
-      activeTableIndex,
+      groupTableIndex,
       activeMapColorTableName,
       tableIndexIndex,
     } = this.props;
@@ -71,7 +71,7 @@ export default class MainPanel extends Component {
           <TabPanel value={TAB.DATA}>
             <DataTable
               groupToRegions={groupToRegions}
-              activeTableIndex={activeTableIndex}
+              groupTableIndex={groupTableIndex}
               activeMapColorTableName={activeMapColorTableName}
             />
           </TabPanel>

@@ -42,12 +42,12 @@ class GroupRegionView extends Component {
     if (!mergedGeoJSON) {
       return null;
     }
-    const { regionIDs, funcGetRegionStyle } = this.props;
+    const {style } = this.props;
 
     return (
       <RegionView
         geoJSON={mergedGeoJSON}
-        style={funcGetRegionStyle(regionIDs[0])}
+        style={style}
       />
     );
   }
@@ -65,7 +65,7 @@ export default class MultiRegionView extends Component {
         <GroupRegionView
           key={`group-${groupID}`}
           regionIDs={regionIDs}
-          funcGetRegionStyle={funcGetRegionStyle}
+          style={funcGetRegionStyle(groupID)}
         />
       );
     });
