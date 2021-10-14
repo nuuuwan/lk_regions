@@ -5,7 +5,6 @@ import Paper from "@mui/material/Paper";
 import { MathX } from "@nuuuwan/utils-js-dev";
 
 import { DataStructures, Humanize, StatX } from "../../base/BaseUtils.js";
-import RegionChip from "../../stateful/atoms/RegionChip.js";
 
 const POP_TABLE_NAME = "regions.2012_census.ethnicity_of_population";
 const POP_FIELD_KEY = "total_population";
@@ -16,7 +15,9 @@ function GroupInfoView(props) {
     <Box key={region.groupID}>
       <Typography variant="h5">
         {Humanize.number(region.pop)}
-        {<RegionChip regionID={region.groupID} />}
+      </Typography>
+      <Typography variant="h7">
+        {region.groupID}
       </Typography>
       <Typography variant="caption">{title}</Typography>
     </Box>

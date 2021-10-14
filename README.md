@@ -6,6 +6,8 @@
 * Parliamentary Election Data
   * Seats
 
+* Change logic from Group -> Region  
+
 * Map Quality
   * Fairness
 
@@ -35,3 +37,4 @@
   *  [2021-10-14 12:26PM] Removed console.log
   *  [2021-10-14 12:33PM] Disabled Partitions panel
   *  [2021-10-14 12:48PM] Removed GroupSelector
+  *  [2021-10-14 12:53PM] Misc
