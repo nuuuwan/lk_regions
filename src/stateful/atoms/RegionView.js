@@ -1,16 +1,10 @@
 import { Component } from "react";
 import { GeoJSON, Circle } from "react-leaflet";
-import * as d3 from "d3";
-
-
-function getRadiusFromPop(pop) {
-  return Math.sqrt(pop) * 10;
-}
 
 export default class RegionView extends Component {
   render() {
-    const { geoJSON, style, pop } = this.props;
-    const isCartogram  = true;
+    const { geoJSON, style, center, radius } = this.props;
+    const showCartogram = true;
     const onEachFeature = (feature, layer) => {
       layer.on({
         click: function (e) {
@@ -19,18 +13,28 @@ export default class RegionView extends Component {
       });
     };
 
-    if (isCartogram) {
-      const [lng, lat] = d3.geoCentroid(geoJSON);
-      const center = [lat, lng];
+    const renderedCartogram = showCartogram ? (
+      <Circle center={center} radius={radius} pathOptions={style} />
+    ) : null;
 
-      return (
-        <Circle center={center} radius={getRadiusFromPop(pop)} pathOptions={style}/>
-      );
+    const mapStyle = showCartogram
+      ? {
+          fillColor: style.fillColor,
+          fillOpacity: style.fillOpacity / 5,
+          color: "rgba(0,0,0,0.2)",
+          weight: style.weight,
+        }
+      : style;
 
-
-    } else {
-      return (<GeoJSON data={geoJSON} style={style} onEachFeature={onEachFeature} />);
-    }
-
+    return (
+      <>
+        <GeoJSON
+          data={geoJSON}
+          style={mapStyle}
+          onEachFeature={onEachFeature}
+        />
+        {renderedCartogram}
+      </>
+    );
   }
 }
