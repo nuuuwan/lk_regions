@@ -200,8 +200,10 @@ export default class GIG2 {
       function (nonOtherValueKeysLocalSet, tableRow) {
         const tableRowValueSum = GIG2.getValueSum(tableRow);
         return valueKeys.reduce(function (otherValueKeysLocal, valueKey) {
-          if (tableRow[valueKey] / tableRowValueSum >= OTHER_LIMIT_LOCAL  &&
-          valueKey !== KEY_OTHER) {
+          if (
+            tableRow[valueKey] / tableRowValueSum >= OTHER_LIMIT_LOCAL &&
+            valueKey !== KEY_OTHER
+          ) {
             nonOtherValueKeysLocalSet.add(valueKey);
           }
           return nonOtherValueKeysLocalSet;

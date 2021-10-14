@@ -94,7 +94,7 @@ export default function DataTable(props) {
               iRow
             ) {
               const valueSum = GIG2.getValueSum(dataRow);
-              const maxValueKey  = GIG2.getMaxValueKey(dataRow);
+              const maxValueKey = GIG2.getMaxValueKey(dataRow);
               return (
                 <TableRow key={groupID}>
                   <TableCell>
