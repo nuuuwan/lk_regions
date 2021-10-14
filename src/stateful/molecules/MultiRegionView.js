@@ -2,9 +2,45 @@ import { Component } from "react";
 
 import * as topojsonClient from "topojson-client";
 import * as topojsonServer from "topojson-server";
+import * as topojsonSimplify from "topojson-simplify";
+
+import { LRUCache } from "../../base/BaseUtils.js";
 
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
+
+const CACHE_VERSION = "v2";
+const SIMPLIFY_WEIGHT = null;
+
+async function getGroupGeoJSONNoCache(regionIDs) {
+  const geoJSON = await Promise.all(
+    regionIDs.map(async function (regionID) {
+      return {
+        type: "MultiPolygon",
+        coordinates: await GeoData.getCoordinatesForRegion(regionID),
+      };
+    })
+  );
+
+  let topoJSON = topojsonServer.topology(geoJSON);
+  if (SIMPLIFY_WEIGHT) {
+    topoJSON = topojsonSimplify.presimplify(topoJSON);
+    topoJSON = topojsonSimplify.simplify(topoJSON, SIMPLIFY_WEIGHT);
+  }
+
+  const mergedGeoJSON = topojsonClient.merge(
+    topoJSON,
+    Object.values(topoJSON.objects)
+  );
+  return mergedGeoJSON;
+}
+
+async function getGroupGeoJSON(regionIDs) {
+  const cacheKey = regionIDs.join(":") + CACHE_VERSION;
+  return await LRUCache.get(cacheKey, async function () {
+    return await getGroupGeoJSONNoCache(regionIDs);
+  });
+}
 
 class GroupRegionView extends Component {
   constructor(props) {
@@ -16,21 +52,7 @@ class GroupRegionView extends Component {
   async componentDidMount() {
     this.isComponentMounted = true;
     const { regionIDs } = this.props;
-
-    const geoJSON = await Promise.all(
-      regionIDs.map(async function (regionID) {
-        return {
-          type: "MultiPolygon",
-          coordinates: await GeoData.getCoordinatesForRegion(regionID),
-        };
-      })
-    );
-
-    const topoJSON = topojsonServer.topology(geoJSON);
-    const mergedGeoJSON = topojsonClient.merge(
-      topoJSON,
-      Object.values(topoJSON.objects)
-    );
+    const mergedGeoJSON = await getGroupGeoJSON(regionIDs);
 
     if (this.isComponentMounted) {
       this.setState({ mergedGeoJSON });
