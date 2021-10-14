@@ -1,6 +1,6 @@
 import { MathX } from "@nuuuwan/utils-js-dev";
 const LRU = require("lru-cache");
-const CACHE = new LRU();
+const LRU_CACHE = new LRU();
 
 export class DataStructures {
   static async buildIndex(keyIDs, asyncFuncKeyToData) {
@@ -78,18 +78,27 @@ export class StatX {
 
 export class LRUCache {
   static async get(cacheKey, asyncFallback) {
-    const hotItem = CACHE.get(cacheKey);
-    if (hotItem) {
-      return JSON.parse(hotItem);
+    const hotItemInLRUCache = LRU_CACHE.get(cacheKey);
+    if (hotItemInLRUCache) {
+      return JSON.parse(hotItemInLRUCache);
     }
 
-    const coldItem = await asyncFallback();
+    const hotItemInLocalStorage = localStorage.getItem(cacheKey);
+    if (hotItemInLocalStorage) {
+      console.debug(cacheKey + " localStorage");
+      LRU_CACHE.set(cacheKey, hotItemInLocalStorage);
+      return JSON.parse(hotItemInLocalStorage);
+    }
+
+    const coldItemRaw = await asyncFallback();
+    const coldItem = JSON.stringify(coldItemRaw);
+    LRU_CACHE.set(cacheKey, coldItem);
+
     try {
-      CACHE.set(cacheKey, JSON.stringify(coldItem));
+      localStorage.setItem(cacheKey, coldItem);
     } catch (QuotaExceededError) {
-      console.warning("localStorage.clear()");
       localStorage.clear();
     }
-    return coldItem;
+    return coldItemRaw;
   }
 }
