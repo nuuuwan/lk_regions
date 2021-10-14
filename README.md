@@ -33,3 +33,4 @@
   *  [2021-10-13 03:30PM] Merged Polygons Done
   *  [2021-10-14 12:25PM] README
   *  [2021-10-14 12:26PM] Removed console.log
+  *  [2021-10-14 12:33PM] Disabled Partitions panel
