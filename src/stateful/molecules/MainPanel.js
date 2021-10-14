@@ -30,7 +30,7 @@ export default class MainPanel extends Component {
   render() {
     const {
       // groupIndex,
-      groupToRegion,
+      groupToRegions,
       // onClickGroup,
       // activeGroupID,
       activeTableIndex,

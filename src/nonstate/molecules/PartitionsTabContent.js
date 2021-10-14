@@ -12,7 +12,7 @@ import {
 } from "../../constants/ColorConstants.js";
 
 export default function PartitionsTabContent(props) {
-  const { groupIndex, groupToRegion, onClickGroup, activeGroupID } = props;
+  const { groupIndex, groupToRegions, onClickGroup, activeGroupID } = props;
 
   return (
     <Box>

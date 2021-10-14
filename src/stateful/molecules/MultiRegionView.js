@@ -57,7 +57,7 @@ class GroupRegionView extends Component {
 
 export default class MultiRegionView extends Component {
   render() {
-    const { groupToRegion, onClickRegion, funcGetRegionStyle } = this.props;
+    const { groupToRegions, onClickRegion, funcGetRegionStyle } = this.props;
 
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],
