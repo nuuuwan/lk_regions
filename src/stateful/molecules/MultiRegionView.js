@@ -9,8 +9,8 @@ import { LRUCache } from "../../base/BaseUtils.js";
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
 
-const CACHE_VERSION = "v4";
-const SIMPLIFY_WEIGHT = 0.000001;
+const CACHE_VERSION = "v5";
+const SIMPLIFY_WEIGHT = 0.0000001;
 
 async function getGroupGeoJSONNoCache(regionIDs) {
   const geoJSON = await Promise.all(
