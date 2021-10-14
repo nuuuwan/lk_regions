@@ -6,7 +6,6 @@ import Ents, { ENT } from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import MainPanel from "../molecules/MainPanel.js";
-import GroupSelector from "../molecules/GroupSelector.js";
 import MultiRegionView from "../../stateful/molecules/MultiRegionView.js";
 import ColorPanel, {
   COLOR_INFO_LIST,
@@ -41,8 +40,6 @@ export default class HomePage extends Component {
       tableIndexIndex: undefined,
       activeMapColorTableName: DEFAULT_TABLE_NAME,
 
-      // View
-      showGroupSelector: false,
     };
   }
 
@@ -115,13 +112,6 @@ export default class HomePage extends Component {
     this.setState({ activeGroupID: groupID });
   }
 
-  onGroupSelectorShow() {
-    this.setState({ showGroupSelector: true });
-  }
-  onGroupSelectorHide() {
-    this.setState({ showGroupSelector: false });
-  }
-
   onClickMapColor(activeMapColorTableName) {
     this.setState({ activeMapColorTableName });
   }
@@ -132,7 +122,6 @@ export default class HomePage extends Component {
   render() {
     const {
       groupIndex,
-      showGroupSelector,
       regionToGroup,
       activeGroupID,
       mapInfoIndex,
@@ -210,12 +199,7 @@ export default class HomePage extends Component {
           activeMapColorTableName={activeMapColorTableName}
           tableIndexIndex={tableIndexIndex}
         />
-        <GroupSelector
-          showGroupSelector={showGroupSelector}
-          onGroupSelectorHide={this.onGroupSelectorHide.bind(this)}
-          mapInfoIndex={mapInfoIndex}
-          onClickMap={this.onClickMap.bind(this)}
-        />
+
       </div>
     );
   }
