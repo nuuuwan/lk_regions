@@ -13,29 +13,45 @@ const PRESIDENTIAL_ELECTION_YEAR_LIST = [
   2019, 2015, 2010, 2005, 1999, 1994, 1988, 1982,
 ];
 
-export const COLOR_INFO_LIST = [].concat(
-  // Presidential Elections
-  PRESIDENTIAL_ELECTION_YEAR_LIST.map(function (electionYear) {
-    return {
-      label: `${electionYear} Presidential Election`,
-      tableName: `regions_ec.${electionYear}_election_presidential.result`,
-      Icon: BallotIcon,
-    };
-  }),
-  // 2012 Census
-  [
-    {
-      label: "Ethnicity",
-      tableName: "regions.2012_census.ethnicity_of_population",
-      Icon: PeopleAltIcon,
-    },
-    {
-      label: "Religion",
-      tableName: "regions.2012_census.religious_affiliation_of_population",
-      Icon: PeopleAltIcon,
-    },
-  ]
-);
+const PARLIAMENTARY_ELECTION_YEAR_LIST = [
+  1989, 1994, 2000, 2001, 2004, 2010, 2015, 2020,
+];
+
+export const COLOR_INFO_LIST = []
+  .concat(
+    // Presidential Elections
+    PRESIDENTIAL_ELECTION_YEAR_LIST.map(function (electionYear) {
+      return {
+        label: `${electionYear} Presidential Election`,
+        tableName: `regions_ec.${electionYear}_election_presidential.result`,
+        Icon: BallotIcon,
+      };
+    }),
+
+    // Parliamentary Elections
+    PARLIAMENTARY_ELECTION_YEAR_LIST.map(function (electionYear) {
+      return {
+        label: `${electionYear} Parliamentary Election`,
+        tableName: `regions_ec.${electionYear}_election_parliamentary.result`,
+        Icon: BallotIcon,
+      };
+    }),
+
+    // 2012 Census
+    [
+      {
+        label: "Ethnicity",
+        tableName: "regions.2012_census.ethnicity_of_population",
+        Icon: PeopleAltIcon,
+      },
+      {
+        label: "Religion",
+        tableName: "regions.2012_census.religious_affiliation_of_population",
+        Icon: PeopleAltIcon,
+      },
+    ]
+  )
+  .sort((a, b) => -a.tableName.localeCompare(b.tableName));
 
 export default function ColorPanel(props) {
   const { activeMapColorTableName, onClickMapColor } = props;

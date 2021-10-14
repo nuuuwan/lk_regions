@@ -15,9 +15,12 @@ export const FIELD_NAME_TO_COLOR = {
   SLPP: COLOR_SL_FLAG.SINHALA,
   UNP: "green",
   NDF: "green",
+  SJB: "green",
   JVP: "red",
+  JJB: "red",
   LSSP: "red",
   ACTC: COLOR_SL_FLAG.TAMIL,
+  ITAK: COLOR_SL_FLAG.TAMIL,
   SLMP: "purple",
 
   other: "ghostwhite",

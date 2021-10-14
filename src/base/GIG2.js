@@ -29,6 +29,9 @@ export default class GIG2 {
         function (cleanTableRow, [key, value]) {
           if (valueKeys.includes(key)) {
             value = parseFloat(value);
+            if (isNaN(value)) {
+              value = 0;
+            }
           }
           cleanTableRow[key] = value;
           return cleanTableRow;
