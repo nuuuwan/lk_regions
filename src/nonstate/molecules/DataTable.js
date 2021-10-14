@@ -10,7 +10,6 @@ import Typography from "@mui/material/Typography";
 
 import { StringX } from "@nuuuwan/utils-js-dev";
 
-import { DataStructures } from "../../base/BaseUtils.js";
 import { Humanize } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
 
@@ -70,7 +69,7 @@ function TableCellNumber(props) {
 function getGroupTableIndex(groupToRegions, activeTableIndex) {
   const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(activeTableIndex));
 
-  const groupTableIndex = Object.entries(groupToRegions).reduce(function (
+  const rawGroupTableIndex = Object.entries(groupToRegions).reduce(function (
     groupTableIndex,
     [groupID, regionIDs]
   ) {
@@ -99,16 +98,18 @@ function getGroupTableIndex(groupToRegions, activeTableIndex) {
   },
   {});
 
-  return {
-    groupTableIndex,
-    valueKeys,
-  }
+  const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(
+    rawGroupTableIndex,
+  );
+
+  return groupTableIndex;
 
 }
 
 export default function DataTable(props) {
   const { groupToRegions, activeTableIndex, activeMapColorTableName } = props;
-  const {groupTableIndex, valueKeys} = getGroupTableIndex(groupToRegions, activeTableIndex);
+  const groupTableIndex = getGroupTableIndex(groupToRegions, activeTableIndex);
+  const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(groupTableIndex));
 
   const title = StringX.toTitleCase(activeMapColorTableName.split('.')[1]);
 

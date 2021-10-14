@@ -2,7 +2,7 @@ import { Component } from "react";
 
 import { DataStructures } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
-import Ents, { ENT } from "../../base/Ents.js";
+import { ENT } from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
 import MainPanel from "../molecules/MainPanel.js";

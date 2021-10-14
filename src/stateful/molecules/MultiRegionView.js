@@ -3,7 +3,6 @@ import { Component } from "react";
 import * as topojsonClient from "topojson-client";
 import * as topojsonServer from "topojson-server";
 
-import { DataStructures } from "../../base/BaseUtils.js";
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
 
