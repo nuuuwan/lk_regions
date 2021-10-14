@@ -6,8 +6,6 @@
 * Parliamentary Election Data
   * Seats
 
-* Change logic from Group -> Region  
-
 * Map Quality
   * Fairness
 
@@ -51,3 +49,4 @@
   *  [2021-10-14 01:11PM] Everything except data table works
   *  [2021-10-14 01:18PM] Done
   *  [2021-10-14 01:18PM] Pre-Merge
+  *  [2021-10-14 01:19PM] README
