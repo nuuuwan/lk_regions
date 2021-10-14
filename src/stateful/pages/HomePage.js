@@ -1,5 +1,7 @@
 import { Component } from "react";
 
+import { MathX } from "@nuuuwan/utils-js-dev";
+
 import { DataStructures } from "../../base/BaseUtils.js";
 import GIG2 from "../../base/GIG2.js";
 import { ENT } from "../../base/Ents.js";
@@ -133,6 +135,11 @@ export default class HomePage extends Component {
       };
     }
 
+    function funcGetRegionPop(groupID) {
+      const regionRow = groupTableIndex[groupID];
+      return MathX.sum(Object.values(regionRow));
+    }
+
     return (
       <div>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
@@ -141,6 +148,7 @@ export default class HomePage extends Component {
             groupToRegions={groupToRegions}
             activeGroupID={activeGroupID}
             funcGetRegionStyle={funcGetRegionStyle}
+            funcGetRegionPop={funcGetRegionPop}
           />
         </GeoMap>
         <MapPanel

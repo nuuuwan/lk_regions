@@ -43,36 +43,47 @@ async function getGroupGeoJSON(regionIDs) {
 }
 
 class GroupRegionView extends Component {
+  render() {
+    const { style, pop, geoJSON } = this.props;
+
+    return <RegionView geoJSON={geoJSON} style={style} pop={pop} />;
+  }
+}
+
+export default class MultiRegionView extends Component {
+
   constructor(props) {
     super(props);
-    this.state = { mergedGeoJSON: null };
+    this.state = { groupGeoJSONList: null };
     this.isComponentMounted = false;
   }
 
   async componentDidMount() {
     this.isComponentMounted = true;
-    const { regionIDs } = this.props;
-    const mergedGeoJSON = await getGroupGeoJSON(regionIDs);
+    const { groupToRegions } = this.props;
+
+    const groupGeoJSONList = await Promise.all(
+      Object.entries(groupToRegions).map(
+        async function([groupID, regionIDs]) {
+          return await getGroupGeoJSON(regionIDs);
+        },
+      )
+    )
 
     if (this.isComponentMounted) {
-      this.setState({ mergedGeoJSON });
+      this.setState({ groupGeoJSONList });
     }
   }
 
   render() {
-    const { mergedGeoJSON } = this.state;
-    if (!mergedGeoJSON) {
+    const {groupGeoJSONList} = this.state;
+
+    if (!groupGeoJSONList) {
       return null;
     }
-    const { style } = this.props;
 
-    return <RegionView geoJSON={mergedGeoJSON} style={style} />;
-  }
-}
+    const { groupToRegions, funcGetRegionStyle, funcGetRegionPop } = this.props;
 
-export default class MultiRegionView extends Component {
-  render() {
-    const { groupToRegions, funcGetRegionStyle } = this.props;
 
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],
@@ -81,8 +92,9 @@ export default class MultiRegionView extends Component {
       return (
         <GroupRegionView
           key={`group-${groupID}`}
-          regionIDs={regionIDs}
+          geoJSON={groupGeoJSONList[iGroup]}
           style={funcGetRegionStyle(groupID)}
+          pop={funcGetRegionPop(groupID)}
         />
       );
     });

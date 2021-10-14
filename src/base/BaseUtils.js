@@ -89,7 +89,6 @@ export class LRUCache {
 
     const hotItemInLocalStorage = localStorage.getItem(cacheKey);
     if (hotItemInLocalStorage) {
-      console.debug(cacheKey + " localStorage");
       LRU_CACHE.set(cacheKey, hotItemInLocalStorage);
       return JSON.parse(hotItemInLocalStorage);
     }
