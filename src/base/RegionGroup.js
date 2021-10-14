@@ -9,8 +9,8 @@ export default class RegionGroup {
     const url = `/${APP_NAME}/data/custom_maps/${mapName}.json`;
     const rawInfo = await WWW.json(url);
 
-    const groupNameToRegionIDs = rawInfo["label_to_region_ids"];
-    const groupIndex = Object.keys(groupNameToRegionIDs).reduce(function (
+    const groupToRegions = rawInfo["label_to_region_ids"];
+    const groupIndex = Object.keys(groupToRegions).reduce(function (
       groupIndex,
       groupID
     ) {
@@ -22,22 +22,11 @@ export default class RegionGroup {
     },
     {});
 
-    const regionToGroup = Object.entries(groupNameToRegionIDs).reduce(function (
-      regionToGroup,
-      [groupID, regionIDs]
-    ) {
-      return regionIDs.reduce(function (regionToGroup, regionID) {
-        regionToGroup[regionID] = groupID;
-        return regionToGroup;
-      }, regionToGroup);
-    },
-    {});
-
     return {
-      mapID: "custom_" + mapName,
+      mapID: mapName,
       name: mapName,
       groupIndex,
-      regionToGroup,
+      groupToRegions,
     };
   }
 
@@ -62,16 +51,20 @@ export default class RegionGroup {
         return regionType !== ENT.PD || regionID.substring(5) !== "P";
       });
 
-    const regionToGroup = regionIDs.reduce(function (regionToGroup, regionID) {
-      regionToGroup[regionID] = regionID;
-      return regionToGroup;
-    }, {});
+    const groupToRegions = regionIDs.reduce(function (
+      groupToRegions,
+      regionID
+    ) {
+      groupToRegions[regionID] = [regionID];
+      return groupToRegions;
+    },
+    {});
 
     return {
       mapID: "region_type_" + regionType,
       name: "By " + Ents.getEntTypeLongName(regionType),
       groupIndex,
-      regionToGroup,
+      groupToRegions,
     };
   }
 

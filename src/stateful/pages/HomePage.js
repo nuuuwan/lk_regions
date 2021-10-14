@@ -39,7 +39,6 @@ export default class HomePage extends Component {
 
       tableIndexIndex: undefined,
       activeMapColorTableName: DEFAULT_TABLE_NAME,
-
     };
   }
 
@@ -199,7 +198,6 @@ export default class HomePage extends Component {
           activeMapColorTableName={activeMapColorTableName}
           tableIndexIndex={tableIndexIndex}
         />
-
       </div>
     );
   }

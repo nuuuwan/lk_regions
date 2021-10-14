@@ -13,12 +13,8 @@ function GroupInfoView(props) {
   const { region, title } = props;
   return (
     <Box key={region.groupID}>
-      <Typography variant="h5">
-        {Humanize.number(region.pop)}
-      </Typography>
-      <Typography variant="h7">
-        {region.groupID}
-      </Typography>
+      <Typography variant="h5">{Humanize.number(region.pop)}</Typography>
+      <Typography variant="h7">{region.groupID}</Typography>
       <Typography variant="caption">{title}</Typography>
     </Box>
   );
