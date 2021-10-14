@@ -67,36 +67,18 @@ function TableCellNumber(props) {
   );
 }
 
-export default function DataTable(props) {
-  const { regionToGroup, activeTableIndex, activeMapColorTableName } = props;
+function getGroupTableIndex(groupToRegion, activeTableIndex) {
+  const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(activeTableIndex));
 
-  const filteredTableIndex = Object.entries(activeTableIndex).reduce(function (
-    filteredTableIndex,
-    [regionID, tableRow]
-  ) {
-    if (regionToGroup[regionID]) {
-      filteredTableIndex[regionID] = tableRow;
-    }
-    return filteredTableIndex;
-  },
-  {});
-  const finalTableIndex = GIG2.mergeAndExpandOtherOnTable(filteredTableIndex);
-  const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(finalTableIndex));
-
-  const title = StringX.toTitleCase(
-    activeMapColorTableName.split(".").splice(1, 3).join(" - ")
-  );
-
-  const groupToRegions = DataStructures.invertDict(regionToGroup);
-  const groupTableIndex = Object.entries(groupToRegions).reduce(function (
+  return Object.entries(groupToRegions).reduce(function (
     groupTableIndex,
     [groupID, regionIDs]
   ) {
     groupTableIndex[groupID] = regionIDs.reduce(function (groupRow, regionID) {
-      if (!finalTableIndex[regionID]) {
+      if (!activeTableIndex[regionID]) {
         return groupRow;
       }
-      return Object.entries(finalTableIndex[regionID]).reduce(function (
+      return Object.entries(activeTableIndex[regionID]).reduce(function (
         groupRow,
         [key, value]
       ) {
@@ -116,6 +98,12 @@ export default function DataTable(props) {
     return groupTableIndex;
   },
   {});
+
+}
+
+export default function DataTable(props) {
+  const { groupToRegion, activeTableIndex, activeMapColorTableName } = props;
+  const groupTableIndex = getGroupTableIndex(groupToRegion, activeTableIndex);
 
   return (
     <Box>

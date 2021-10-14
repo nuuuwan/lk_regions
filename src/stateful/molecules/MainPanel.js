@@ -30,7 +30,7 @@ export default class MainPanel extends Component {
   render() {
     const {
       // groupIndex,
-      regionToGroup,
+      groupToRegion,
       // onClickGroup,
       // activeGroupID,
       activeTableIndex,
@@ -64,14 +64,14 @@ export default class MainPanel extends Component {
 
           <TabPanel value={TAB.MAP_PROPS}>
             <MapPropertiesView
-              regionToGroup={regionToGroup}
+              groupToRegion={groupToRegion}
               tableIndexIndex={tableIndexIndex}
             />
           </TabPanel>
 
           <TabPanel value={TAB.DATA}>
             <DataTable
-              regionToGroup={regionToGroup}
+              groupToRegion={groupToRegion}
               activeTableIndex={activeTableIndex}
               activeMapColorTableName={activeMapColorTableName}
             />
@@ -85,7 +85,7 @@ export default class MainPanel extends Component {
 // <TabPanel value={TAB.REGIONS}>
 //   <PartitionsTabContent
 //     groupIndex={groupIndex}
-//     regionToGroup={regionToGroup}
+//     groupToRegion={groupToRegion}
 //     onClickGroup={onClickGroup}
 //     activeGroupID={activeGroupID}
 //   />

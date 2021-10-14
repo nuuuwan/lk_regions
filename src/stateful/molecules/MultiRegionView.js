@@ -57,9 +57,7 @@ class GroupRegionView extends Component {
 
 export default class MultiRegionView extends Component {
   render() {
-    const { regionToGroup, onClickRegion, funcGetRegionStyle } = this.props;
-
-    const groupToRegions = DataStructures.invertDict(regionToGroup);
+    const { groupToRegion, onClickRegion, funcGetRegionStyle } = this.props;
 
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],

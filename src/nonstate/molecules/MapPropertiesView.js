@@ -52,9 +52,8 @@ function PCorrectStats(props) {
 }
 
 export default function MapPropertiesView(props) {
-  const { regionToGroup, tableIndexIndex } = props;
+  const { groupToRegions, tableIndexIndex } = props;
   const popTableIndex = tableIndexIndex[POP_TABLE_NAME];
-  const groupToRegions = DataStructures.invertDict(regionToGroup);
 
   const nRegions = Object.keys(groupToRegions).length;
 
