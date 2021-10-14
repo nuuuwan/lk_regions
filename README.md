@@ -48,3 +48,4 @@
   *  [2021-10-14 01:03PM] Updates Done - Not tested
   *  [2021-10-14 01:06PM] Renamed groupToRegion to groupToRegious
   *  [2021-10-14 01:09PM] Removed onClickRegion, onClickGroup
+  *  [2021-10-14 01:11PM] Everything except data table works

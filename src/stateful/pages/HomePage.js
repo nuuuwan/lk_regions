@@ -53,7 +53,7 @@ export default class HomePage extends Component {
       mapInfoIndex = await RegionGroup.getMapInfoIndex();
     }
 
-    const { groupIndex, groupToGroup } = mapInfoIndex[activeMapID];
+    const { groupIndex, groupToRegions  } = mapInfoIndex[activeMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
     let tableIndexIndex = this.state.tableIndexIndex;
@@ -64,7 +64,7 @@ export default class HomePage extends Component {
     this.setState({
       mapInfoIndex,
       groupIndex,
-      groupToGroup,
+      groupToRegions ,
       activeGroupID,
       activeMapID,
       tableIndexIndex,
@@ -81,7 +81,7 @@ export default class HomePage extends Component {
   render() {
     const {
       groupIndex,
-      groupToGroup,
+      groupToRegions ,
       activeGroupID,
       mapInfoIndex,
       tableIndexIndex,
@@ -133,7 +133,7 @@ export default class HomePage extends Component {
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
             key={`multi-region-view-${activeMapID}`}
-            groupToGroup={groupToGroup}
+            groupToRegions ={groupToRegions }
             activeGroupID={activeGroupID}
             funcGetRegionStyle={funcGetRegionStyle}
           />
@@ -150,7 +150,7 @@ export default class HomePage extends Component {
 
         <MainPanel
           groupIndex={groupIndex}
-          groupToGroup={groupToGroup}
+          groupToRegions ={groupToRegions }
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
           activeMapColorTableName={activeMapColorTableName}
