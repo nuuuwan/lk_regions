@@ -14,3 +14,29 @@ Current branch main is up to date.
 [0;34m$ git checkout -b update-logic-to-group-[0m
 [0;34m$ gitc Updated README[0m
 [0;34m$ git add .[0m
+[0;34m$ git commit -m [update-logic-to-group-] Updated README (2021-10-14-1253)[0m
+[update-logic-to-group- 579284e] [update-logic-to-group-] Updated README (2021-10-14-1253)
+ 2 files changed, 18 insertions(+)
+ create mode 100644 Region
+[0;34m$ git diff --stat[0m
+ Region | 5 +++++
+ 1 file changed, 5 insertions(+)
+[0;34m$ git log --oneline -n 10[0m
+579284e [update-logic-to-group-] Updated README (2021-10-14-1253)
+d722b04 [main] Misc (2021-10-14-1253)
+43e66f0 [main] Removed GroupSelector (2021-10-14-1248)
+062103b [main] Disabled Partitions panel (2021-10-14-1233)
+fd57921 [main] Removed console.log (2021-10-14-1226)
+73420c5 [main] README (2021-10-14-1225)
+900dd5a [main] Merged Polygons Done (2021-10-13-1530)
+39f4bdf [main] Fixed Table Bugs (2021-10-13-1422)
+ba6cb1b [main] Small Speed-up (2021-10-13-1406)
+30d4a83 [main] CustomMap support (2021-10-13-1359)
+[0;34m$ git branch[0m
+  main
+  merged-expand-regions
+  merged-group-selector-panel
+  merged-save-maps
+  merged-select-regions-for-groups
+  merged-select-regions-for-groups-2
+* update-logic-to-group-
