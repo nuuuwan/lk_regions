@@ -21,9 +21,15 @@ export const FIELD_NAME_TO_COLOR = {
   LSSP: "red",
   ACTC: COLOR_SL_FLAG.TAMIL,
   ITAK: COLOR_SL_FLAG.TAMIL,
+  AITC: "yellow",
+  TMVP: "red",
+  MNA: "darkgreen",
+  SLMC: "darkgreen",
+  EPDP: "red",
+  TULF: "red",
   SLMP: "purple",
 
-  other: "ghostwhite",
+  other: "gray",
   others: "gray",
   // ethnicity_of_population
   bharatha: "cyan",

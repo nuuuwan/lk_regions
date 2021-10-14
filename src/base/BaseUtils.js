@@ -37,6 +37,10 @@ const DEFAULT_PRECISION = 3;
 
 export class Humanize {
   static number(x) {
+    if (!x) {
+      return "-";
+    }
+
     if (x > 1_000_000) {
       return (x / 1_000_000).toPrecision(DEFAULT_PRECISION) + "M";
     }
@@ -47,7 +51,7 @@ export class Humanize {
   }
 
   static percent(x, xSum) {
-    if (!xSum) {
+    if (!xSum || !x) {
       return "-";
     }
     const p = x / xSum;

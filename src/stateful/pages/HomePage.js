@@ -102,7 +102,7 @@ export default class HomePage extends Component {
     } = this.state;
 
     if (!groupIndex) {
-      return "...";
+      return "Loading...";
     }
 
     function funcGetRegionStyle(groupID) {
@@ -122,13 +122,8 @@ export default class HomePage extends Component {
       const maxValueKey = GIG2.getMaxValueKey(regionRow);
       const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
 
-      if (maxValueP > 0.5) {
-        opacity = Math.max(0, maxValueP - 0.5) + 0.5;
-        color = GIG2.getTableRowColor(regionRow);
-      } else {
-        opacity = 0.75;
-        color = "gray";
-      }
+      opacity = maxValueP;
+      color = GIG2.getTableRowColor(regionRow);
 
       return {
         fillColor: color,

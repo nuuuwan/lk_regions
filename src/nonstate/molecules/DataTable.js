@@ -28,14 +28,14 @@ function renderHeaderCell(valueKey) {
 }
 
 function TableCellNumber(props) {
-  const { value, valueSum, valueKey } = props;
+  const { value, valueSum, valueKey, isMax } = props;
   const humanizedValue = Humanize.number(value);
   const humanizedPercent = Humanize.percent(value, valueSum);
   const p = value / valueSum;
 
   let backgroundColor = "white";
   let color = "black";
-  if (p > 0.5) {
+  if (isMax) {
     backgroundColor = GIG2.getValueKeyColor(valueKey);
     color = "white";
   }
@@ -94,6 +94,7 @@ export default function DataTable(props) {
               iRow
             ) {
               const valueSum = GIG2.getValueSum(dataRow);
+              const maxValueKey  = GIG2.getMaxValueKey(dataRow);
               return (
                 <TableRow key={groupID}>
                   <TableCell>
@@ -101,12 +102,14 @@ export default function DataTable(props) {
                   </TableCell>
                   <TableCell>{groupID}</TableCell>
                   {valueKeys.map(function (valueKey) {
+                    const isMax = maxValueKey === valueKey;
                     return (
                       <TableCellNumber
                         key={groupID + "-" + valueKey}
                         value={dataRow[valueKey]}
                         valueSum={valueSum}
                         valueKey={valueKey}
+                        isMax={isMax}
                       />
                     );
                   })}

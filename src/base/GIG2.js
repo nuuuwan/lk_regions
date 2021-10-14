@@ -4,7 +4,8 @@ import { APP_NAME } from "../constants/Constants.js";
 let adhocValueKeyToColor = {};
 
 const ID_FIELD_KEY = "entity_id";
-const OTHER_LIMIT = 0.01;
+const OTHER_LIMIT_GLOBAL = 0.01;
+const OTHER_LIMIT_LOCAL = 0.2;
 const KEY_OTHER = "other";
 const MERGE_ALIAS_MAP = {
   moor: "muslim",
@@ -61,8 +62,10 @@ export default class GIG2 {
   static getMaxValueKey(tableRow) {
     const valueKeys = GIG2.getValueKeys(tableRow);
     const maxValueKey = valueKeys.reduce(function (maxValueKey, valueKey) {
-      if (tableRow[maxValueKey] < tableRow[valueKey]) {
-        maxValueKey = valueKey;
+      if (valueKey !== KEY_OTHER) {
+        if (tableRow[maxValueKey] < tableRow[valueKey]) {
+          maxValueKey = valueKey;
+        }
       }
       return maxValueKey;
     }, valueKeys[0]);
@@ -188,19 +191,28 @@ export default class GIG2 {
     const valueKeys = GIG2.getValueKeys(totalRow);
     const valueSum = GIG2.getValueSum(totalRow);
 
-    const [otherValueKeys, nonOtherValueKeys] = valueKeys.reduce(
-      function ([otherValueKeys, nonOtherValueKeys], valueKey) {
-        if (valueKey === KEY_OTHER) {
-          otherValueKeys.push(valueKey);
-        }
-        if (totalRow[valueKey] / valueSum < OTHER_LIMIT) {
-          otherValueKeys.push(valueKey);
-        } else {
-          nonOtherValueKeys.push(valueKey);
-        }
-        return [otherValueKeys, nonOtherValueKeys];
+    const nonOtherValueKeysGlobal = valueKeys.filter(
+      (valueKey) =>
+        totalRow[valueKey] / valueSum >= OTHER_LIMIT_GLOBAL &&
+        valueKey !== KEY_OTHER
+    );
+    const nonOtherValueKeysLocalSet = Object.values(mergedTableIndex).reduce(
+      function (nonOtherValueKeysLocalSet, tableRow) {
+        const tableRowValueSum = GIG2.getValueSum(tableRow);
+        return valueKeys.reduce(function (otherValueKeysLocal, valueKey) {
+          if (tableRow[valueKey] / tableRowValueSum >= OTHER_LIMIT_LOCAL  &&
+          valueKey !== KEY_OTHER) {
+            nonOtherValueKeysLocalSet.add(valueKey);
+          }
+          return nonOtherValueKeysLocalSet;
+        });
       },
-      [[], []]
+      new Set(nonOtherValueKeysGlobal)
+    );
+    const nonOtherValueKeys = Array.from(nonOtherValueKeysLocalSet);
+
+    const otherValueKeys = valueKeys.filter(
+      (valueKey) => !nonOtherValueKeysLocalSet.has(valueKey)
     );
 
     const sortedNonOtherKeys = nonOtherValueKeys
