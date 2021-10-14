@@ -3,20 +3,25 @@
 [App Home](https://nuuuwan.github.io/lk_regions)
 
 ## TODOs (React JS)
-* Candidate Maps
-  * Need to compress first
 * Parliamentary Election Data
   * Seats
+
 * Map Quality
   * Fairness
+
 * Dorling Cartogram
+
 * Color Legend
+
 * Information on Click
   * ToolTip
   * Or Popup?
     * With splits
+
 * I18n
+
 * Presidential Elections Slider
+
 ## TODOs (Python)
 
 ## Revision History
@@ -26,3 +31,4 @@
   *  [2021-10-13 02:06PM] Small Speed-up
   *  [2021-10-13 02:22PM] Fixed Table Bugs
   *  [2021-10-13 03:30PM] Merged Polygons Done
+  *  [2021-10-14 12:25PM] README
