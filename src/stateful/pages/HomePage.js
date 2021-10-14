@@ -53,7 +53,7 @@ export default class HomePage extends Component {
       mapInfoIndex = await RegionGroup.getMapInfoIndex();
     }
 
-    const { groupIndex, regionToGroup } = mapInfoIndex[activeMapID];
+    const { groupIndex, groupToGroup } = mapInfoIndex[activeMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
     let tableIndexIndex = this.state.tableIndexIndex;
@@ -64,51 +64,11 @@ export default class HomePage extends Component {
     this.setState({
       mapInfoIndex,
       groupIndex,
-      regionToGroup,
+      groupToGroup,
       activeGroupID,
       activeMapID,
       tableIndexIndex,
     });
-  }
-
-  async expandRegion(regionID) {
-    // Update regionToGroup
-    let { regionToGroup } = this.state;
-    const regionType = Ents.getEntType(regionID);
-    const childRegionType = Ents.getChildType(regionType);
-
-    if (!childRegionType) {
-      return;
-    }
-
-    const childRegionIDs = await Ents.getChildIDs(regionID, childRegionType);
-    const regionGroup = regionToGroup[regionID];
-    regionToGroup = childRegionIDs.reduce(function (
-      regionToGroup,
-      childRegionID
-    ) {
-      regionToGroup[childRegionID] = regionGroup;
-      return regionToGroup;
-    },
-    regionToGroup);
-    delete regionToGroup[regionID];
-
-    this.setState({ regionToGroup });
-  }
-
-  async onClickRegion(regionID, altKey) {
-    if (altKey) {
-      await this.expandRegion(regionID);
-    } else {
-      let { regionToGroup, activeGroupID } = this.state;
-      regionToGroup[regionID] =
-        regionToGroup[regionID] === activeGroupID ? undefined : activeGroupID;
-      this.setState({ regionToGroup });
-    }
-  }
-
-  onClickGroup(groupID) {
-    this.setState({ activeGroupID: groupID });
   }
 
   onClickMapColor(activeMapColorTableName) {
@@ -121,7 +81,7 @@ export default class HomePage extends Component {
   render() {
     const {
       groupIndex,
-      regionToGroup,
+      groupToGroup,
       activeGroupID,
       mapInfoIndex,
       tableIndexIndex,
@@ -173,7 +133,7 @@ export default class HomePage extends Component {
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
             key={`multi-region-view-${activeMapID}`}
-            regionToGroup={regionToGroup}
+            groupToGroup={groupToGroup}
             activeGroupID={activeGroupID}
             onClickRegion={this.onClickRegion.bind(this)}
             funcGetRegionStyle={funcGetRegionStyle}
@@ -191,7 +151,7 @@ export default class HomePage extends Component {
 
         <MainPanel
           groupIndex={groupIndex}
-          regionToGroup={regionToGroup}
+          groupToGroup={groupToGroup}
           onClickGroup={this.onClickGroup.bind(this)}
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
