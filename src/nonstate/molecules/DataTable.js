@@ -70,7 +70,7 @@ function TableCellNumber(props) {
 function getGroupTableIndex(groupToRegions, activeTableIndex) {
   const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(activeTableIndex));
 
-  return Object.entries(groupToRegions).reduce(function (
+  const groupTableIndex = Object.entries(groupToRegions).reduce(function (
     groupTableIndex,
     [groupID, regionIDs]
   ) {
@@ -99,11 +99,18 @@ function getGroupTableIndex(groupToRegions, activeTableIndex) {
   },
   {});
 
+  return {
+    groupTableIndex,
+    valueKeys,
+  }
+
 }
 
 export default function DataTable(props) {
   const { groupToRegions, activeTableIndex, activeMapColorTableName } = props;
-  const groupTableIndex = getGroupTableIndex(groupToRegions, activeTableIndex);
+  const {groupTableIndex, valueKeys} = getGroupTableIndex(groupToRegions, activeTableIndex);
+
+  const title = StringX.toTitleCase(activeMapColorTableName.split('.')[1]);
 
   return (
     <Box>

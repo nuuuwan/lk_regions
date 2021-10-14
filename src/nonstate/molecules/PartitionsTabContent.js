@@ -12,7 +12,7 @@ import {
 } from "../../constants/ColorConstants.js";
 
 export default function PartitionsTabContent(props) {
-  const { groupIndex, groupToRegions, onClickGroup, activeGroupID } = props;
+  const { groupIndex, groupToRegions, activeGroupID } = props;
 
   return (
     <Box>
@@ -21,16 +21,13 @@ export default function PartitionsTabContent(props) {
         if (!regionIDs) {
           regionIDs = [];
         }
-        function onClickGroupInner() {
-          onClickGroup(groupID);
-        }
 
         const color =
           activeGroupID === groupID ? COLOR_ACTIVE : COLOR_NOT_ACTIVE;
 
         const groupKey = `group-${groupID}`;
         return (
-          <Box key={groupKey} onClick={onClickGroupInner}>
+          <Box key={groupKey}>
             <Grid container direction="row" alignItems="center">
               <Grid item>
                 <Typography variant="overline">{group.name}</Typography>

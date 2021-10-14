@@ -135,7 +135,6 @@ export default class HomePage extends Component {
             key={`multi-region-view-${activeMapID}`}
             groupToGroup={groupToGroup}
             activeGroupID={activeGroupID}
-            onClickRegion={this.onClickRegion.bind(this)}
             funcGetRegionStyle={funcGetRegionStyle}
           />
         </GeoMap>
@@ -152,7 +151,6 @@ export default class HomePage extends Component {
         <MainPanel
           groupIndex={groupIndex}
           groupToGroup={groupToGroup}
-          onClickGroup={this.onClickGroup.bind(this)}
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
           activeMapColorTableName={activeMapColorTableName}

@@ -43,12 +43,11 @@ class GroupRegionView extends Component {
     if (!mergedGeoJSON) {
       return null;
     }
-    const { regionIDs, onClickRegion, funcGetRegionStyle } = this.props;
+    const { regionIDs, funcGetRegionStyle } = this.props;
 
     return (
       <RegionView
         geoJSON={mergedGeoJSON}
-        onClickRegion={onClickRegion}
         style={funcGetRegionStyle(regionIDs[0])}
       />
     );
@@ -57,7 +56,7 @@ class GroupRegionView extends Component {
 
 export default class MultiRegionView extends Component {
   render() {
-    const { groupToRegions, onClickRegion, funcGetRegionStyle } = this.props;
+    const { groupToRegions, funcGetRegionStyle } = this.props;
 
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],
@@ -67,7 +66,6 @@ export default class MultiRegionView extends Component {
         <GroupRegionView
           key={`group-${groupID}`}
           regionIDs={regionIDs}
-          onClickRegion={onClickRegion}
           funcGetRegionStyle={funcGetRegionStyle}
         />
       );
