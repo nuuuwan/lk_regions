@@ -38,3 +38,5 @@
   *  [2021-10-14 12:33PM] Disabled Partitions panel
   *  [2021-10-14 12:48PM] Removed GroupSelector
   *  [2021-10-14 12:53PM] Misc
+* [2021-10-14 12:53PM] Update Logic to Group-
+  *  [2021-10-14 12:53PM] Updated README

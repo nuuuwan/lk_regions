@@ -1,0 +1,16 @@
+[0;34m$ git checkout main[0m
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+[0;34m$ git branch[0m
+* main
+  merged-expand-regions
+  merged-group-selector-panel
+  merged-save-maps
+  merged-select-regions-for-groups
+  merged-select-regions-for-groups-2
+[0;34m$ git config pull.rebase true[0m
+[0;34m$ git pull origin main[0m
+Current branch main is up to date.
+[0;34m$ git checkout -b update-logic-to-group-[0m
+[0;34m$ gitc Updated README[0m
+[0;34m$ git add .[0m
