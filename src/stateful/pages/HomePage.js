@@ -43,7 +43,7 @@ export default class HomePage extends Component {
   }
 
   async componentDidMount() {
-    const { activeMapID , activeMapColorTableName} = this.state;
+    const { activeMapID, activeMapColorTableName } = this.state;
     await this.updateMap(activeMapID, activeMapColorTableName);
   }
 
@@ -53,7 +53,7 @@ export default class HomePage extends Component {
       mapInfoIndex = await RegionGroup.getMapInfoIndex();
     }
 
-    const { groupIndex, groupToRegions  } = mapInfoIndex[activeMapID];
+    const { groupIndex, groupToRegions } = mapInfoIndex[activeMapID];
     const activeGroupID = Object.keys(groupIndex)[0];
 
     let tableIndexIndex = this.state.tableIndexIndex;
@@ -62,7 +62,10 @@ export default class HomePage extends Component {
     }
 
     const activeTableIndex = tableIndexIndex[activeMapColorTableName];
-    const groupTableIndex = RegionGroup.getGroupTableIndex(groupToRegions, activeTableIndex);
+    const groupTableIndex = RegionGroup.getGroupTableIndex(
+      groupToRegions,
+      activeTableIndex
+    );
 
     this.setState({
       activeMapID,
@@ -70,7 +73,7 @@ export default class HomePage extends Component {
 
       mapInfoIndex,
       groupIndex,
-      groupToRegions ,
+      groupToRegions,
       activeGroupID,
       tableIndexIndex,
       activeTableIndex,
@@ -88,7 +91,7 @@ export default class HomePage extends Component {
   render() {
     const {
       groupIndex,
-      groupToRegions ,
+      groupToRegions,
       activeGroupID,
       mapInfoIndex,
       tableIndexIndex,
@@ -140,7 +143,7 @@ export default class HomePage extends Component {
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
             key={`multi-region-view-${activeMapID}`}
-            groupToRegions ={groupToRegions }
+            groupToRegions={groupToRegions}
             activeGroupID={activeGroupID}
             funcGetRegionStyle={funcGetRegionStyle}
           />
@@ -157,7 +160,7 @@ export default class HomePage extends Component {
 
         <MainPanel
           groupIndex={groupIndex}
-          groupToRegions ={groupToRegions }
+          groupToRegions={groupToRegions}
           activeGroupID={activeGroupID}
           activeTableIndex={activeTableIndex}
           activeMapColorTableName={activeMapColorTableName}

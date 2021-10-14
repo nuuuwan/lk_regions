@@ -70,7 +70,7 @@ export default function DataTable(props) {
   const { groupTableIndex, activeMapColorTableName } = props;
   const valueKeys = GIG2.getValueKeys(GIG2.getFirstRow(groupTableIndex));
 
-  const title = StringX.toTitleCase(activeMapColorTableName.split('.')[1]);
+  const title = StringX.toTitleCase(activeMapColorTableName.split(".")[1]);
 
   return (
     <Box>

@@ -42,14 +42,9 @@ class GroupRegionView extends Component {
     if (!mergedGeoJSON) {
       return null;
     }
-    const {style } = this.props;
+    const { style } = this.props;
 
-    return (
-      <RegionView
-        geoJSON={mergedGeoJSON}
-        style={style}
-      />
-    );
+    return <RegionView geoJSON={mergedGeoJSON} style={style} />;
   }
 }
 

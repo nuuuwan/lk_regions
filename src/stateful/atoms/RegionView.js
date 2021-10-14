@@ -7,7 +7,7 @@ export default class RegionView extends Component {
     const onEachFeature = (feature, layer) => {
       layer.on({
         click: function (e) {
-          console.debug('Not implemented');
+          console.debug("Not implemented");
         },
       });
     };

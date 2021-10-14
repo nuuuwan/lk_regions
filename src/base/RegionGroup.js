@@ -90,7 +90,10 @@ export default class RegionGroup {
       groupTableIndex,
       [groupID, regionIDs]
     ) {
-      groupTableIndex[groupID] = regionIDs.reduce(function (groupRow, regionID) {
+      groupTableIndex[groupID] = regionIDs.reduce(function (
+        groupRow,
+        regionID
+      ) {
         if (!activeTableIndex[regionID]) {
           return groupRow;
         }
@@ -110,14 +113,13 @@ export default class RegionGroup {
           return groupRow;
         },
         groupRow);
-      }, {});
+      },
+      {});
       return groupTableIndex;
     },
     {});
 
-    const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(
-      rawGroupTableIndex,
-    );
+    const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(rawGroupTableIndex);
 
     return groupTableIndex;
   }

@@ -6,14 +6,12 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-// import PartitionsTabContent from "../../nonstate/molecules/PartitionsTabContent.js";
 import DataTable from "../../nonstate/molecules/DataTable.js";
 import MapPropertiesView from "../../nonstate/molecules/MapPropertiesView.js";
 
 const TAB = {
   MAP_PROPS: "Map Properties",
   DATA: "Data",
-  // REGIONS: "Regions",
 };
 const DEFAULT_TAB = TAB.MAP_PROPS;
 
@@ -29,9 +27,7 @@ export default class MainPanel extends Component {
 
   render() {
     const {
-      // groupIndex,
       groupToRegions,
-      // activeGroupID,
       groupTableIndex,
       activeMapColorTableName,
       tableIndexIndex,
@@ -80,11 +76,3 @@ export default class MainPanel extends Component {
     );
   }
 }
-
-// <TabPanel value={TAB.REGIONS}>
-//   <PartitionsTabContent
-//     groupIndex={groupIndex}
-//     groupToRegion={groupToRegion}
-//     activeGroupID={activeGroupID}
-//   />
-// </TabPanel>
