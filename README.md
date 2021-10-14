@@ -32,3 +32,4 @@
   *  [2021-10-13 02:22PM] Fixed Table Bugs
   *  [2021-10-13 03:30PM] Merged Polygons Done
   *  [2021-10-14 12:25PM] README
+  *  [2021-10-14 12:26PM] Removed console.log

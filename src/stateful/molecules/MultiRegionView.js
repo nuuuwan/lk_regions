@@ -28,7 +28,6 @@ class GroupRegionView extends Component {
     );
 
     const topoJSON = topojsonServer.topology(geoJSON);
-    console.debug(topoJSON);
     const mergedGeoJSON = topojsonClient.merge(
       topoJSON,
       Object.values(topoJSON.objects)
