@@ -3,9 +3,6 @@
 [App Home](https://nuuuwan.github.io/lk_regions)
 
 ## TODOs (React JS)
-* Parliamentary Election Data
-  * Seats
-
 * Information on Click
   * ToolTip
   * Or Popup?
@@ -62,3 +59,5 @@
   *  [2021-10-14 03:47PM] Added Parl Data
   *  [2021-10-14 04:27PM] Fixed Colors
   *  [2021-10-14 04:28PM] Lint
+* [2021-10-14 04:29PM] Dorling Cartogram
+  *  [2021-10-14 04:29PM] Updated README
