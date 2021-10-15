@@ -40,3 +40,5 @@
 ## Revision History
   *  [2021-10-15 01:26PM] README
   *  [2021-10-15 01:27PM] README
+* [2021-10-15 01:27PM] Information on Click
+  *  [2021-10-15 01:27PM] Updated README
