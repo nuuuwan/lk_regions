@@ -13,17 +13,14 @@ export default function DataRowTable(props) {
   const valueSum = GIG2.getValueSum(groupTableRow);
 
   let sortedEntries = GIG2.getValueEntriesSortedByValue(groupTableRow);
-  sortedEntries.push(['TOTAL', valueSum]);
+  sortedEntries.push(["TOTAL", valueSum]);
 
   return (
     <Box sx={{ width: 200 }}>
       <TableContainer>
         <Table stickyHeader padding="none">
           <TableBody>
-            {sortedEntries.map(function (
-              [valueKey, value],
-              iKey
-            ) {
+            {sortedEntries.map(function ([valueKey, value], iKey) {
               if (value === 0) {
                 return null;
               }

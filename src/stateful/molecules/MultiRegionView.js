@@ -6,6 +6,8 @@ import { Popup } from "react-leaflet";
 import Box from "@mui/material/Box";
 
 import GeoData from "../../base/GeoData.js";
+import GIG2 from "../../base/GIG2.js";
+import RegionGroup from "../../base/RegionGroup.js";
 import RegionView from "../atoms/RegionView.js";
 import DataRowTable from "../../nonstate/molecules/DataRowTable.js";
 import RegionLabel from "../atoms/RegionLabel.js";
@@ -46,20 +48,17 @@ export default class MultiRegionView extends Component {
       return null;
     }
 
-    const {
-      groupToRegions,
-      funcGetRegionStyle,
-      funcGetRegionPop,
-      groupTableIndex,
-      showDorlingCartogram,
-    } = this.props;
+    const { groupToRegions, groupTableIndex, showDorlingCartogram } =
+      this.props;
 
     const groupIDs = Object.keys(groupToRegions);
-
     let groupGeoJSONListSim = groupGeoJSONList.map(function (d) {
       const centroid = d3.geoCentroid(d);
       [d.y, d.x] = centroid;
       return d;
+    });
+    const groupPopList = groupIDs.map(function (groupID) {
+      return GIG2.getValueSum(groupTableIndex[groupID]);
     });
 
     let nodes;
@@ -77,9 +76,7 @@ export default class MultiRegionView extends Component {
         .force(
           "collide",
           d3.forceCollide(
-            (d, i) =>
-              RADIUS_TO_GEO_UNITS *
-              getRadiusFromPop(funcGetRegionPop(groupIDs[i]))
+            (d, i) => RADIUS_TO_GEO_UNITS * getRadiusFromPop(groupPopList[i])
           )
         )
         .stop();
@@ -93,9 +90,9 @@ export default class MultiRegionView extends Component {
       [groupID, regionIDs],
       iGroup
     ) {
-      const pop = funcGetRegionPop(groupID);
-      const radius = getRadiusFromPop(pop);
       const groupTableRow = groupTableIndex[groupID];
+      const pop = GIG2.getValueSum(groupTableRow);
+      const radius = getRadiusFromPop(pop);
 
       let center;
       if (showDorlingCartogram) {
@@ -111,11 +108,13 @@ export default class MultiRegionView extends Component {
         </Popup>
       );
 
+      const style = RegionGroup.getRegionStyle(groupTableRow);
+
       return (
         <RegionView
           key={`group-${regionIDs[0]}`}
           geoJSON={groupGeoJSONList[iGroup]}
-          style={funcGetRegionStyle(groupID)}
+          style={style}
           renderedPopup={renderedPopup}
           showDorlingCartogram={showDorlingCartogram}
           radius={radius}

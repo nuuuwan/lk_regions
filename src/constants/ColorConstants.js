@@ -15,7 +15,7 @@ export const COLOR_POLITICAL = {
   SLFP: "blue",
   UNP: "green",
   JVP: "red",
-}
+};
 
 export const FIELD_NAME_TO_COLOR = {
   // political parties
@@ -42,7 +42,6 @@ export const FIELD_NAME_TO_COLOR = {
   ACTC: COLOR_SL_FLAG.TAMIL_YELLOW,
   ITAK: COLOR_SL_FLAG.TAMIL_YELLOW,
   AITC: COLOR_SL_FLAG.TAMIL_REDDER,
-
 
   SLMP: "purple",
 

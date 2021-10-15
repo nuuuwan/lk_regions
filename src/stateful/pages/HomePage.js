@@ -1,7 +1,5 @@
 import { Component } from "react";
 
-import { MathX } from "@nuuuwan/utils-js-dev";
-
 import GIG2 from "../../base/GIG2.js";
 import { DEFAULT_TABLE_NAME } from "../../constants/GIG2Constants.js";
 import { ENT } from "../../base/Ents.js";
@@ -15,9 +13,6 @@ import ColorPanel from "../../nonstate/molecules/ColorPanel.js";
 const DEFAULT_ZOOM = 8;
 const DEFAULT_LATLNG = [7.9, 81.5];
 const DEFAULT_MAP_ID = ENT.PROVINCE;
-
-const BORDER_COLOR = "white";
-const BORDER_WIDTH = 1;
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -90,8 +85,13 @@ export default class HomePage extends Component {
   }
 
   render() {
+    const { groupIndex } = this.state;
+
+    if (!groupIndex) {
+      return "Loading...";
+    }
+
     const {
-      groupIndex,
       groupToRegions,
       activeGroupID,
       mapInfoIndex,
@@ -103,43 +103,6 @@ export default class HomePage extends Component {
       showDorlingCartogram,
     } = this.state;
 
-    if (!groupIndex) {
-      return "Loading...";
-    }
-
-    function funcGetRegionStyle(groupID) {
-      const regionRow = groupTableIndex[groupID];
-      let opacity = 0.1;
-      let color = "gray";
-
-      if (!regionRow) {
-        return {
-          fillColor: color,
-          fillOpacity: opacity,
-          color: BORDER_COLOR,
-          weight: BORDER_WIDTH,
-        };
-      }
-
-      const maxValueKey = GIG2.getMaxValueKey(regionRow);
-      const maxValueP = GIG2.getValueKeyP(regionRow, maxValueKey);
-
-      opacity = maxValueP;
-      color = GIG2.getTableRowColor(regionRow);
-
-      return {
-        fillColor: color,
-        fillOpacity: opacity,
-        color: BORDER_COLOR,
-        weight: BORDER_WIDTH,
-      };
-    }
-
-    function funcGetRegionPop(groupID) {
-      const regionRow = groupTableIndex[groupID];
-      return MathX.sum(Object.values(regionRow));
-    }
-
     return (
       <div>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
@@ -148,8 +111,6 @@ export default class HomePage extends Component {
             groupToRegions={groupToRegions}
             activeGroupID={activeGroupID}
             groupTableIndex={groupTableIndex}
-            funcGetRegionStyle={funcGetRegionStyle}
-            funcGetRegionPop={funcGetRegionPop}
             showDorlingCartogram={showDorlingCartogram}
           />
         </GeoMap>

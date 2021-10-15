@@ -6,6 +6,9 @@ import GIG2 from "./GIG2.js";
 import GIG2Merge from "./GIG2Merge.js";
 import { DataStructures } from "./BaseUtils.js";
 
+const BORDER_COLOR = "white";
+const BORDER_WIDTH = 1;
+
 export default class RegionGroup {
   static async getMapInfoForCustomMap(mapName) {
     const url = `/${APP_NAME}/data/custom_maps/${mapName}.json`;
@@ -124,5 +127,32 @@ export default class RegionGroup {
       GIG2Merge.mergeAndExpandOtherOnTable(rawGroupTableIndex);
 
     return groupTableIndex;
+  }
+
+  static getRegionStyle(groupTableRow) {
+    let opacity = 0.1;
+    let color = "gray";
+
+    if (!groupTableRow) {
+      return {
+        fillColor: color,
+        fillOpacity: opacity,
+        color: BORDER_COLOR,
+        weight: BORDER_WIDTH,
+      };
+    }
+
+    const maxValueKey = GIG2.getMaxValueKey(groupTableRow);
+    const maxValueP = GIG2.getValueKeyP(groupTableRow, maxValueKey);
+
+    opacity = maxValueP;
+    color = GIG2.getTableRowColor(groupTableRow);
+
+    return {
+      fillColor: color,
+      fillOpacity: opacity,
+      color: BORDER_COLOR,
+      weight: BORDER_WIDTH,
+    };
   }
 }
