@@ -8,8 +8,58 @@ import ListItemText from "@mui/material/ListItemText";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import Typography from "@mui/material/Typography";
 
 import { COLOR_INFO_LIST } from "../../constants/GIG2Constants.js";
+
+const STYLE = {
+  position: "absolute",
+  zIndex: 1000,
+
+  left: 20,
+  bottom: 20,
+
+  width: 300,
+  height: 420,
+  overflow: "scroll",
+};
+
+function DorlingCartogramSelector(props) {
+  const { showDorlingCartogram, onChangeDorlingCartogram } = props;
+  return (
+    <FormGroup sx={{ marginLeft: 2 }}>
+      <FormControlLabel
+        label={<Typography variant="caption">Dorling Cartogram</Typography>}
+        disableTypography
+        control={
+          <Switch
+            checked={showDorlingCartogram}
+            onChange={onChangeDorlingCartogram}
+          />
+        }
+      />
+    </FormGroup>
+  );
+}
+
+function ColorPanelListItem(props) {
+  const { label, tableName, Icon, activeMapColorTableName, onClickMapColor } =
+    props;
+  const selected = activeMapColorTableName === tableName;
+
+  function onClick() {
+    onClickMapColor(tableName);
+  }
+
+  return (
+    <ListItemButton key={label} selected={selected} onClick={onClick}>
+      <ListItemIcon>
+        <Icon />
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+}
 
 export default function ColorPanel(props) {
   const {
@@ -20,58 +70,32 @@ export default function ColorPanel(props) {
     onClickHideDorlingCartogram,
   } = props;
 
-  function renderListItem({ label, tableName, Icon }) {
-    const selected = activeMapColorTableName === tableName;
-
-    function onClick() {
-      onClickMapColor(tableName);
-    }
-
-    return (
-      <ListItemButton key={label} selected={selected} onClick={onClick}>
-        <ListItemIcon>
-          <Icon />
-        </ListItemIcon>
-        <ListItemText primary={label} />
-      </ListItemButton>
-    );
-  }
-
   function onChangeDorlingCartogram(e) {
-    if (e.target.checked) {
-      onClickShowDorlingCartogram();
-    } else {
-      onClickHideDorlingCartogram();
-    }
+    e.target.checked
+      ? onClickShowDorlingCartogram()
+      : onClickHideDorlingCartogram();
   }
 
   return (
-    <Paper
-      sx={{
-        position: "absolute",
-        zIndex: 1000,
+    <Paper sx={STYLE}>
+      <DorlingCartogramSelector
+        showDorlingCartogram={showDorlingCartogram}
+        onChangeDorlingCartogram={onChangeDorlingCartogram}
+      />
 
-        left: 20,
-        bottom: 20,
-
-        width: 300,
-        height: 420,
-        overflow: "scroll",
-      }}
-    >
-      <FormGroup sx={{ marginLeft: 2 }}>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={showDorlingCartogram}
-              onChange={onChangeDorlingCartogram}
-            />
-          }
-          label="Dorling Cartogram"
-        />
-      </FormGroup>
       <List dense subheader={<ListSubheader>Color Map by</ListSubheader>}>
-        {COLOR_INFO_LIST.map(renderListItem)}
+        {COLOR_INFO_LIST.map(function (colorInfo) {
+          const { label, tableName, Icon } = colorInfo;
+          return (
+            <ColorPanelListItem
+              label={label}
+              tableName={tableName}
+              Icon={Icon}
+              activeMapColorTableName={activeMapColorTableName}
+              onClickMapColor={onClickMapColor}
+            />
+          );
+        })}
       </List>
     </Paper>
   );

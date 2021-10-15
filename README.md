@@ -52,3 +52,4 @@
   *  [2021-10-15 05:55PM] Made GIG2 Smaller
   *  [2021-10-15 05:55PM] Done
   *  [2021-10-15 05:55PM] Pre-Merge
+  *  [2021-10-15 06:08PM] Added ThemeProvider
