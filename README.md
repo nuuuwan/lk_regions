@@ -41,3 +41,5 @@
   *  [2021-10-15 03:14PM] Pre-Merge
   *  [2021-10-15 03:26PM] README
   *  [2021-10-15 04:10PM] Fixed Dorling Bug
+* [2021-10-15 05:01PM] Make Files Smaller
+  *  [2021-10-15 05:01PM] Updated README
