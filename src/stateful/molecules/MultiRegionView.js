@@ -12,6 +12,7 @@ import { StringX } from "@nuuuwan/utils-js-dev";
 
 import { LRUCache } from "../../base/BaseUtils.js";
 
+import GIG2 from "../../base/GIG2.js";
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
 
@@ -82,7 +83,7 @@ export default class MultiRegionView extends Component {
       return null;
     }
 
-    const { groupToRegions, funcGetRegionStyle, funcGetRegionPop } = this.props;
+    const { groupToRegions, funcGetRegionStyle, funcGetRegionPop, groupTableIndex } = this.props;
 
     const groupIDs = Object.keys(groupToRegions);
 
@@ -118,15 +119,31 @@ export default class MultiRegionView extends Component {
     ) {
       const pop = funcGetRegionPop(groupID);
       const radius = getRadiusFromPop(pop);
+      const groupTableRow = groupTableIndex[groupID];
+      const valueKeys = GIG2.getValueKeys(groupTableRow);
+
+      const renderedTable = valueKeys.map(
+        function(valueKey) {
+          const value = groupTableRow[valueKey];
+          return (
+            <div>
+              <span>
+                {valueKey}
+              </span>
+              <span>
+                {value}
+              </span>
+            </div>
+          )
+        }
+      )
 
       const renderedPopup = (
         <Popup>
           <Typography variant="h5">
             {StringX.toTitleCase(groupID.replaceAll('-', ' - '))}
           </Typography>
-          <Typography variant="caption">
-            {regionIDs.join(' · ')}
-          </Typography>
+          {renderedTable}
         </Popup>
       );
 

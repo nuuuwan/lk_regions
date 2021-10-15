@@ -147,6 +147,7 @@ export default class HomePage extends Component {
             key={`multi-region-view-${activeMapID}`}
             groupToRegions={groupToRegions}
             activeGroupID={activeGroupID}
+            groupTableIndex={groupTableIndex}
             funcGetRegionStyle={funcGetRegionStyle}
             funcGetRegionPop={funcGetRegionPop}
           />
