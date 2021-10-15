@@ -12,9 +12,9 @@ import { StringX } from "@nuuuwan/utils-js-dev";
 
 import { LRUCache } from "../../base/BaseUtils.js";
 
-import GIG2 from "../../base/GIG2.js";
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
+import DataRowTable from "../../nonstate/molecules/DataRowTable.js";
 
 const CACHE_VERSION = "v5";
 const SIMPLIFY_WEIGHT = 0.0000001;
@@ -83,7 +83,12 @@ export default class MultiRegionView extends Component {
       return null;
     }
 
-    const { groupToRegions, funcGetRegionStyle, funcGetRegionPop, groupTableIndex } = this.props;
+    const {
+      groupToRegions,
+      funcGetRegionStyle,
+      funcGetRegionPop,
+      groupTableIndex,
+    } = this.props;
 
     const groupIDs = Object.keys(groupToRegions);
 
@@ -120,30 +125,13 @@ export default class MultiRegionView extends Component {
       const pop = funcGetRegionPop(groupID);
       const radius = getRadiusFromPop(pop);
       const groupTableRow = groupTableIndex[groupID];
-      const valueKeys = GIG2.getValueKeys(groupTableRow);
-
-      const renderedTable = valueKeys.map(
-        function(valueKey) {
-          const value = groupTableRow[valueKey];
-          return (
-            <div>
-              <span>
-                {valueKey}
-              </span>
-              <span>
-                {value}
-              </span>
-            </div>
-          )
-        }
-      )
 
       const renderedPopup = (
         <Popup>
           <Typography variant="h5">
-            {StringX.toTitleCase(groupID.replaceAll('-', ' - '))}
+            {StringX.toTitleCase(groupID.replaceAll("-", " - "))}
           </Typography>
-          {renderedTable}
+          <DataRowTable groupTableRow={groupTableRow} />
         </Popup>
       );
 
@@ -151,10 +139,11 @@ export default class MultiRegionView extends Component {
         <RegionView
           key={`group-${groupID}`}
           geoJSON={groupGeoJSONList[iGroup]}
-          center={[nodes[iGroup].x, nodes[iGroup].y]}
           style={funcGetRegionStyle(groupID)}
-          radius={radius}
           renderedPopup={renderedPopup}
+          showCartogram={true}
+          radius={radius}
+          center={[nodes[iGroup].x, nodes[iGroup].y]}
         />
       );
     });

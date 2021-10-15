@@ -59,6 +59,13 @@ export default class GIG2 {
     return valueCellKeys;
   }
 
+  static getValueEntriesSortedByValue(tableRow) {
+    const valueKeys = GIG2.getValueKeys(tableRow);
+    return valueKeys
+      .map((valueKey) => [valueKey, tableRow[valueKey]])
+      .sort((a, b) => b[1] - a[1]);
+  }
+
   static getMaxValueKey(tableRow) {
     const valueKeys = GIG2.getValueKeys(tableRow);
     const maxValueKey = valueKeys.reduce(function (maxValueKey, valueKey) {
