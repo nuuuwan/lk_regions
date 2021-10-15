@@ -5,6 +5,8 @@ import * as topojsonServer from "topojson-server";
 import * as topojsonSimplify from "topojson-simplify";
 import * as d3 from "d3";
 
+import { Popup } from "react-leaflet";
+
 import { LRUCache } from "../../base/BaseUtils.js";
 
 import GeoData from "../../base/GeoData.js";
@@ -113,6 +115,9 @@ export default class MultiRegionView extends Component {
     ) {
       const pop = funcGetRegionPop(groupID);
       const radius = getRadiusFromPop(pop);
+
+      const renderedPopup = <Popup>{groupID}</Popup>;
+
       return (
         <RegionView
           key={`group-${groupID}`}
@@ -120,6 +125,7 @@ export default class MultiRegionView extends Component {
           center={[nodes[iGroup].x, nodes[iGroup].y]}
           style={funcGetRegionStyle(groupID)}
           radius={radius}
+          renderedPopup={renderedPopup}
         />
       );
     });

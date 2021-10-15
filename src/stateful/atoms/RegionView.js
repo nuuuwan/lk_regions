@@ -3,7 +3,7 @@ import { GeoJSON, Circle } from "react-leaflet";
 
 export default class RegionView extends Component {
   render() {
-    const { geoJSON, style, center, radius } = this.props;
+    const { geoJSON, style, center, radius, renderedPopup } = this.props;
     const showCartogram = true;
     const onEachFeature = (feature, layer) => {
       layer.on({
@@ -14,7 +14,9 @@ export default class RegionView extends Component {
     };
 
     const renderedCartogram = showCartogram ? (
-      <Circle center={center} radius={radius} pathOptions={style} />
+      <Circle center={center} radius={radius} pathOptions={style}>
+        {renderedPopup}
+      </Circle>
     ) : null;
 
     const mapStyle = showCartogram
@@ -28,11 +30,9 @@ export default class RegionView extends Component {
 
     return (
       <>
-        <GeoJSON
-          data={geoJSON}
-          style={mapStyle}
-          onEachFeature={onEachFeature}
-        />
+        <GeoJSON data={geoJSON} style={mapStyle} onEachFeature={onEachFeature}>
+          {renderedPopup}
+        </GeoJSON>
         {renderedCartogram}
       </>
     );
