@@ -11,12 +11,16 @@ import GIG2 from "../../base/GIG2.js";
 export default function DataRowTable(props) {
   const { groupTableRow } = props;
   const valueSum = GIG2.getValueSum(groupTableRow);
+
+  let sortedEntries = GIG2.getValueEntriesSortedByValue(groupTableRow);
+  sortedEntries.push(['TOTAL', valueSum]);
+
   return (
     <Box sx={{ width: 200 }}>
       <TableContainer>
         <Table stickyHeader padding="none">
           <TableBody>
-            {GIG2.getValueEntriesSortedByValue(groupTableRow).map(function (
+            {sortedEntries.map(function (
               [valueKey, value],
               iKey
             ) {

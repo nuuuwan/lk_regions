@@ -45,3 +45,4 @@
   *  [2021-10-15 05:01PM] Updated README
   *  [2021-10-15 05:12PM] Added GIG2Merge
   *  [2021-10-15 05:15PM] Moved files to GeoData
+  *  [2021-10-15 05:33PM] Make ColorConstants Smaller
