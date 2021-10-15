@@ -6,6 +6,9 @@ import * as topojsonSimplify from "topojson-simplify";
 import * as d3 from "d3";
 
 import { Popup } from "react-leaflet";
+import Typography from "@mui/material/Typography";
+
+import { StringX } from "@nuuuwan/utils-js-dev";
 
 import { LRUCache } from "../../base/BaseUtils.js";
 
@@ -116,7 +119,16 @@ export default class MultiRegionView extends Component {
       const pop = funcGetRegionPop(groupID);
       const radius = getRadiusFromPop(pop);
 
-      const renderedPopup = <Popup>{groupID}</Popup>;
+      const renderedPopup = (
+        <Popup>
+          <Typography variant="h5">
+            {StringX.toTitleCase(groupID.replaceAll('-', ' - '))}
+          </Typography>
+          <Typography variant="caption">
+            {regionIDs.join(' · ')}
+          </Typography>
+        </Popup>
+      );
 
       return (
         <RegionView
