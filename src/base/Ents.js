@@ -12,7 +12,7 @@ export const ENT = {
   ED: "ed",
   MOH: "moh",
   LG: "lg",
-  UNKNOWN: "unknown-entity",
+  UNKNOWN: "unknown",
 };
 
 export const REGION_TYPES = Object.values(ENT);

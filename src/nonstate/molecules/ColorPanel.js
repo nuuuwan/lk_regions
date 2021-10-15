@@ -9,7 +9,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 
-import {COLOR_INFO_LIST} from '../../base/GIG2.js';
+import { COLOR_INFO_LIST } from "../../base/GIG2.js";
 
 export default function ColorPanel(props) {
   const {
@@ -57,10 +57,9 @@ export default function ColorPanel(props) {
         width: 300,
         height: 420,
         overflow: "scroll",
-
       }}
     >
-      <FormGroup sx={{marginLeft: 2}}>
+      <FormGroup sx={{ marginLeft: 2 }}>
         <FormControlLabel
           control={
             <Switch

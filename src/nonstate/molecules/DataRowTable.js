@@ -12,8 +12,8 @@ export default function DataRowTable(props) {
   const { groupTableRow } = props;
   const valueSum = GIG2.getValueSum(groupTableRow);
   return (
-    <Box>
-      <TableContainer sx={{ width: 200 }}>
+    <Box sx={{ width: 200 }}>
+      <TableContainer>
         <Table stickyHeader padding="none">
           <TableBody>
             {GIG2.getValueEntriesSortedByValue(groupTableRow).map(function (

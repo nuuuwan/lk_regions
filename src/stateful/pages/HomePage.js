@@ -2,8 +2,7 @@ import { Component } from "react";
 
 import { MathX } from "@nuuuwan/utils-js-dev";
 
-import { DataStructures } from "../../base/BaseUtils.js";
-import GIG2, {DEFAULT_TABLE_NAME} from "../../base/GIG2.js";
+import GIG2, { DEFAULT_TABLE_NAME } from "../../base/GIG2.js";
 import { ENT } from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
@@ -18,7 +17,6 @@ const DEFAULT_MAP_ID = ENT.PROVINCE;
 
 const BORDER_COLOR = "white";
 const BORDER_WIDTH = 1;
-
 
 export default class HomePage extends Component {
   constructor(props) {

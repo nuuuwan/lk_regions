@@ -6,15 +6,14 @@ import * as topojsonSimplify from "topojson-simplify";
 import * as d3 from "d3";
 
 import { Popup } from "react-leaflet";
-import Typography from "@mui/material/Typography";
-
-import { StringX } from "@nuuuwan/utils-js-dev";
+import Box from "@mui/material/Box";
 
 import { LRUCache } from "../../base/BaseUtils.js";
 
 import GeoData from "../../base/GeoData.js";
 import RegionView from "../atoms/RegionView.js";
 import DataRowTable from "../../nonstate/molecules/DataRowTable.js";
+import RegionLabel from "../atoms/RegionLabel.js";
 
 const CACHE_VERSION = "v5";
 const SIMPLIFY_WEIGHT = 0.0000001;
@@ -129,9 +128,9 @@ export default class MultiRegionView extends Component {
 
       const renderedPopup = (
         <Popup>
-          <Typography variant="h5">
-            {StringX.toTitleCase(groupID.replaceAll("-", " - "))}
-          </Typography>
+          <Box style={{ fontSize: 24 }}>
+            <RegionLabel regionID={groupID} />
+          </Box>
           <DataRowTable groupTableRow={groupTableRow} />
         </Popup>
       );

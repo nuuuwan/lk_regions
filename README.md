@@ -44,3 +44,4 @@
   *  [2021-10-15 02:07PM] Popup Done
   *  [2021-10-15 02:23PM] Added Cartogram Toggle
   *  [2021-10-15 02:35PM] Loading Speedup
+  *  [2021-10-15 03:13PM] Labels Done

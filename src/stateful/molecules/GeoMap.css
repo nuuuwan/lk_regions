@@ -7,3 +7,8 @@
 .leaflet-tile-pane {
 	filter: grayscale(100%) opacity(50%);
 }
+
+/* stylelint-disable selector-max-type */
+.leaflet-popup-content p {
+	margin: 0;
+}

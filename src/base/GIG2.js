@@ -6,7 +6,6 @@ import { LRUCache, DataStructures } from "./BaseUtils.js";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BallotIcon from "@mui/icons-material/Ballot";
 
-
 let adhocValueKeyToColor = {};
 
 const ID_FIELD_KEY = "entity_id";
@@ -300,8 +299,8 @@ export default class GIG2 {
 
   static async getTableIndexIndex() {
     return await LRUCache.get(
-      'getTableIndexIndex',
-      GIG2.getTableIndexIndexNoCache,
+      "getTableIndexIndex",
+      GIG2.getTableIndexIndexNoCache
     );
   }
 

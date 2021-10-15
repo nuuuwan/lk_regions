@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import { StringX } from "@nuuuwan/utils-js-dev";
 
 import { TableCellHeader, TableCellNumber } from "../../base/TableX.js";
+import RegionLabel from "../../stateful/atoms/RegionLabel.js";
 import GIG2 from "../../base/GIG2.js";
 
 export default function DataTable(props) {
@@ -49,7 +50,9 @@ export default function DataTable(props) {
                   <TableCell>
                     <Typography variant="caption">{`${iRow + 1}.`}</Typography>
                   </TableCell>
-                  <TableCell>{groupID}</TableCell>
+                  <TableCell>
+                    <RegionLabel regionID={groupID} />
+                  </TableCell>
                   {valueKeys.map(function (valueKey) {
                     const isMax = maxValueKey === valueKey;
                     return (
