@@ -5,11 +5,12 @@ import * as d3 from "d3";
 import { Popup } from "react-leaflet";
 import Box from "@mui/material/Box";
 
-import GeoData from "../../base/GeoData.js";
+import TopoJSONX from "../../base/TopoJSONX.js";
 import GIG2 from "../../base/GIG2.js";
 import RegionGroup from "../../base/RegionGroup.js";
-import RegionView from "../atoms/RegionView.js";
+
 import DataRowTable from "../../nonstate/molecules/DataRowTable.js";
+import RegionView from "../atoms/RegionView.js";
 import RegionLabel from "../atoms/RegionLabel.js";
 
 const SIMULATION_ITERATIONS = 80;
@@ -32,7 +33,7 @@ export default class MultiRegionView extends Component {
 
     const groupGeoJSONList = await Promise.all(
       Object.entries(groupToRegions).map(async function ([groupID, regionIDs]) {
-        return await GeoData.getGroupGeoJSON(regionIDs);
+        return await TopoJSONX.getGroupGeoJSON(regionIDs);
       })
     );
 
