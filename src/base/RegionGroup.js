@@ -120,7 +120,8 @@ export default class RegionGroup {
     },
     {});
 
-    const groupTableIndex = GIG2Merge.mergeAndExpandOtherOnTable(rawGroupTableIndex);
+    const groupTableIndex =
+      GIG2Merge.mergeAndExpandOtherOnTable(rawGroupTableIndex);
 
     return groupTableIndex;
   }

@@ -44,3 +44,4 @@
 * [2021-10-15 05:01PM] Make Files Smaller
   *  [2021-10-15 05:01PM] Updated README
   *  [2021-10-15 05:12PM] Added GIG2Merge
+  *  [2021-10-15 05:15PM] Moved files to GeoData

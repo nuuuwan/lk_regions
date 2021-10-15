@@ -1,5 +1,5 @@
 import { MathX } from "@nuuuwan/utils-js-dev";
-import GIG2 from './GIG2.js';
+import GIG2 from "./GIG2.js";
 
 import {
   OTHER_LIMIT_GLOBAL,
