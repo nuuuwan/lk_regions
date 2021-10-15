@@ -17,9 +17,10 @@ import RegionLabel from "../atoms/RegionLabel.js";
 
 const CACHE_VERSION = "v5";
 const SIMPLIFY_WEIGHT = 0.0000001;
+const SIMULATION_ITERATIONS = 80;
 
 function getRadiusFromPop(pop) {
-  return Math.sqrt(pop) * 25;
+  return Math.sqrt(pop) * 20;
 }
 const RADIUS_TO_GEO_UNITS = 0.00001015;
 
@@ -92,31 +93,44 @@ export default class MultiRegionView extends Component {
 
     const groupIDs = Object.keys(groupToRegions);
 
-    const simulation = d3
-      .forceSimulation(groupGeoJSONList)
-      .force(
-        "x",
-        d3.forceX((d) => d3.geoCentroid(d)[1])
-      )
-      .force(
-        "y",
-        d3.forceY((d) => d3.geoCentroid(d)[0])
-      )
-      .force(
-        "collide",
-        d3.forceCollide(
-          (d, i) =>
-            RADIUS_TO_GEO_UNITS *
-            getRadiusFromPop(funcGetRegionPop(groupIDs[i]))
-        )
-      )
-      .stop();
 
-    for (let i = 0; i < 1000; i++) {
-      simulation.tick();
+    let groupGeoJSONListSim = groupGeoJSONList.map(
+      function(d) {
+        const centroid = d3.geoCentroid(d);
+        [ d.y, d.x] = centroid;
+        return d;
+      },
+    )
+
+    let nodes;
+    if (showDorlingCartogram) {
+      const simulation = d3
+        .forceSimulation(groupGeoJSONListSim)
+        .force(
+          "x",
+          d3.forceX((d) => d3.geoCentroid(d)[1])
+        )
+        .force(
+          "y",
+          d3.forceY((d) => d3.geoCentroid(d)[0])
+        )
+        .force(
+          "collide",
+          d3.forceCollide(
+            (d, i) =>
+              RADIUS_TO_GEO_UNITS *
+              getRadiusFromPop(funcGetRegionPop(groupIDs[i]))
+          )
+        )
+        .stop();
+      for (let i = 0; i < SIMULATION_ITERATIONS; i++) {
+        simulation.tick();
+      }
+      nodes = simulation.nodes();
     }
 
-    const nodes = simulation.nodes();
+
+
 
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],
@@ -125,6 +139,11 @@ export default class MultiRegionView extends Component {
       const pop = funcGetRegionPop(groupID);
       const radius = getRadiusFromPop(pop);
       const groupTableRow = groupTableIndex[groupID];
+
+      let center;
+      if (showDorlingCartogram) {
+        center = [nodes[iGroup].x, nodes[iGroup].y]
+      }
 
       const renderedPopup = (
         <Popup>
@@ -137,13 +156,13 @@ export default class MultiRegionView extends Component {
 
       return (
         <RegionView
-          key={`group-${groupID}`}
+          key={`group-${regionIDs[0]}`}
           geoJSON={groupGeoJSONList[iGroup]}
           style={funcGetRegionStyle(groupID)}
           renderedPopup={renderedPopup}
           showDorlingCartogram={showDorlingCartogram}
           radius={radius}
-          center={[nodes[iGroup].x, nodes[iGroup].y]}
+          center={center}
         />
       );
     });

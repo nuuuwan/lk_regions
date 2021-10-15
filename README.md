@@ -40,3 +40,4 @@
   *  [2021-10-15 03:13PM] Labels Done
   *  [2021-10-15 03:14PM] Pre-Merge
   *  [2021-10-15 03:26PM] README
+  *  [2021-10-15 04:10PM] Fixed Dorling Bug

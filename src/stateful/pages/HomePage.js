@@ -43,17 +43,17 @@ export default class HomePage extends Component {
 
   async updateMap(activeMapID, activeMapColorTableName) {
     let mapInfoIndex = this.state.mapInfoIndex;
-    if (mapInfoIndex === undefined) {
+    if (!mapInfoIndex) {
       mapInfoIndex = await RegionGroup.getMapInfoIndex();
     }
-    const { groupIndex, groupToRegions } = mapInfoIndex[activeMapID];
-    const activeGroupID = Object.keys(groupIndex)[0];
 
     let tableIndexIndex = this.state.tableIndexIndex;
-    if (tableIndexIndex === undefined) {
+    if (!tableIndexIndex) {
       tableIndexIndex = await GIG2.getTableIndexIndex();
     }
 
+    const { groupIndex, groupToRegions } = mapInfoIndex[activeMapID];
+    const activeGroupID = Object.keys(groupIndex)[0];
     const activeTableIndex = tableIndexIndex[activeMapColorTableName];
     const groupTableIndex = RegionGroup.getGroupTableIndex(
       groupToRegions,
