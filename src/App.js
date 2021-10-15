@@ -5,7 +5,7 @@ import HomePage from "./stateful/pages/HomePage.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme({
   typography: {
-    fontFamily: ["Courier", "sans-serif"].join(","),
+    fontFamily: ["Raleway", "sans-serif"].join(","),
   },
 });
 
