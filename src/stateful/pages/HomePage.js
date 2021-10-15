@@ -41,6 +41,8 @@ export default class HomePage extends Component {
 
       tableIndexIndex: undefined,
       activeMapColorTableName: DEFAULT_TABLE_NAME,
+
+      showDorlingCartogram: false,
     };
   }
 
@@ -90,6 +92,13 @@ export default class HomePage extends Component {
     await this.updateMap(activeMapID, this.state.activeMapColorTableName);
   }
 
+  onClickShowDorlingCartogram() {
+    this.setState({ showDorlingCartogram: true });
+  }
+  onClickHideDorlingCartogram() {
+    this.setState({ showDorlingCartogram: false });
+  }
+
   render() {
     const {
       groupIndex,
@@ -101,6 +110,7 @@ export default class HomePage extends Component {
       activeMapID,
       activeTableIndex,
       groupTableIndex,
+      showDorlingCartogram,
     } = this.state;
 
     if (!groupIndex) {
@@ -144,12 +154,13 @@ export default class HomePage extends Component {
       <div>
         <GeoMap center={DEFAULT_LATLNG} zoom={DEFAULT_ZOOM}>
           <MultiRegionView
-            key={`multi-region-view-${activeMapID}`}
+            key={`multi-region-view-${activeMapID}-${showDorlingCartogram}`}
             groupToRegions={groupToRegions}
             activeGroupID={activeGroupID}
             groupTableIndex={groupTableIndex}
             funcGetRegionStyle={funcGetRegionStyle}
             funcGetRegionPop={funcGetRegionPop}
+            showDorlingCartogram={showDorlingCartogram}
           />
         </GeoMap>
         <MapPanel
@@ -160,6 +171,13 @@ export default class HomePage extends Component {
         <ColorPanel
           activeMapColorTableName={activeMapColorTableName}
           onClickMapColor={this.onClickMapColor.bind(this)}
+          showDorlingCartogram={showDorlingCartogram}
+          onClickShowDorlingCartogram={this.onClickShowDorlingCartogram.bind(
+            this
+          )}
+          onClickHideDorlingCartogram={this.onClickHideDorlingCartogram.bind(
+            this
+          )}
         />
 
         <MainPanel

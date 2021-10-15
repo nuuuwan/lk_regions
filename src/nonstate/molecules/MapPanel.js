@@ -40,6 +40,7 @@ export default function MapPanel(props) {
         top: 20,
         width: 200,
         height: 300,
+
       }}
     >
       <List dense subheader={<ListSubheader>Split Regions by</ListSubheader>}>

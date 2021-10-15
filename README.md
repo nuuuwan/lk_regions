@@ -42,3 +42,4 @@
   *  [2021-10-15 01:35PM] Basic Popup
   *  [2021-10-15 01:39PM] Basic Table Data
   *  [2021-10-15 02:07PM] Popup Done
+  *  [2021-10-15 02:23PM] Added Cartogram Toggle

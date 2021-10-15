@@ -88,6 +88,7 @@ export default class MultiRegionView extends Component {
       funcGetRegionStyle,
       funcGetRegionPop,
       groupTableIndex,
+      showDorlingCartogram,
     } = this.props;
 
     const groupIDs = Object.keys(groupToRegions);
@@ -141,7 +142,7 @@ export default class MultiRegionView extends Component {
           geoJSON={groupGeoJSONList[iGroup]}
           style={funcGetRegionStyle(groupID)}
           renderedPopup={renderedPopup}
-          showCartogram={true}
+          showDorlingCartogram={showDorlingCartogram}
           radius={radius}
           center={[nodes[iGroup].x, nodes[iGroup].y]}
         />

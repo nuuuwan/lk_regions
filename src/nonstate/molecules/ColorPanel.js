@@ -5,6 +5,9 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import BallotIcon from "@mui/icons-material/Ballot";
@@ -54,7 +57,13 @@ export const COLOR_INFO_LIST = []
   .sort((a, b) => -a.tableName.localeCompare(b.tableName));
 
 export default function ColorPanel(props) {
-  const { activeMapColorTableName, onClickMapColor } = props;
+  const {
+    activeMapColorTableName,
+    onClickMapColor,
+    showDorlingCartogram,
+    onClickShowDorlingCartogram,
+    onClickHideDorlingCartogram,
+  } = props;
 
   function renderListItem({ label, tableName, Icon }) {
     const selected = activeMapColorTableName === tableName;
@@ -73,6 +82,14 @@ export default function ColorPanel(props) {
     );
   }
 
+  function onChangeDorlingCartogram(e) {
+    if (e.target.checked) {
+      onClickShowDorlingCartogram();
+    } else {
+      onClickHideDorlingCartogram();
+    }
+  }
+
   return (
     <Paper
       sx={{
@@ -85,8 +102,20 @@ export default function ColorPanel(props) {
         width: 300,
         height: 420,
         overflow: "scroll",
+
       }}
     >
+      <FormGroup sx={{marginLeft: 2}}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={showDorlingCartogram}
+              onChange={onChangeDorlingCartogram}
+            />
+          }
+          label="Dorling Cartogram"
+        />
+      </FormGroup>
       <List dense subheader={<ListSubheader>Color Map by</ListSubheader>}>
         {COLOR_INFO_LIST.map(renderListItem)}
       </List>
