@@ -12,6 +12,7 @@ import {
 let adhocValueKeyToColor = {};
 
 export default class GIG2 {
+  // Multi-Table Functions
   static async getTable(tableName) {
     const url = `/${APP_NAME}/data/gig2/${tableName}.tsv`;
     return await WWW.tsv(url);
@@ -37,6 +38,36 @@ export default class GIG2 {
       return tableIndex;
     }, {});
   }
+
+  static async getTableIndexIndex() {
+    return await LRUCache.get(
+      "getTableIndexIndex",
+      GIG2.getTableIndexIndexNoCache
+    );
+  }
+
+  static async getTableIndexIndexNoCache() {
+    return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
+  }
+
+  // Table Functions
+
+  static getFirstRow(tableIndex) {
+    return Object.values(tableIndex)[0];
+  }
+
+  static getTotalRow(tableIndex) {
+    const firstRow = GIG2.getFirstRow(tableIndex);
+    const valueKeys = GIG2.getValueKeys(firstRow);
+    return valueKeys.reduce(function (totalRow, key) {
+      totalRow[key] = MathX.sum(
+        Object.values(tableIndex).map((tableRow) => tableRow[key])
+      );
+      return totalRow;
+    }, {});
+  }
+
+  // Row Functions
 
   static getValueKeys(tableRow) {
     const valueCellKeys = Object.keys(tableRow).filter(
@@ -74,27 +105,17 @@ export default class GIG2 {
     return maxValueKey;
   }
 
-  static getMinMaxValueP(dataList, valueKey) {
-    return dataList.reduce(
-      function ([minValueP, maxValueP], tableRow) {
-        const sumValue = GIG2.getSumValues(tableRow);
-        const value = tableRow[valueKey];
-        const valueP = value / sumValue;
-        return [Math.min(minValueP, valueP), Math.max(maxValueP, valueP)];
-      },
-      [1.0, 0.0]
-    );
+  static getValueKeyP(tableRow, valueKey) {
+    const sumValues = GIG2.getValueSum(tableRow);
+    return tableRow[valueKey] / sumValues;
   }
 
-  static getSumValues(tableRow) {
+  static getValueSum(tableRow) {
     const valueKeys = GIG2.getValueKeys(tableRow);
     return MathX.sum(valueKeys.map((valueKey) => tableRow[valueKey]));
   }
 
-  static getValueKeyP(tableRow, valueKey) {
-    const sumValues = GIG2.getSumValues(tableRow);
-    return tableRow[valueKey] / sumValues;
-  }
+  // Row Functions - Color
 
   static getValueKeyColor(valueKey) {
     if (FIELD_NAME_TO_COLOR[valueKey]) {
@@ -109,47 +130,5 @@ export default class GIG2 {
   static getTableRowColor(tableRow) {
     const maxValueKey = GIG2.getMaxValueKey(tableRow);
     return GIG2.getValueKeyColor(maxValueKey);
-  }
-
-  static getValuePToRankP(dataList, valueKey) {
-    const sortedValuePs = dataList
-      .map((tableRow) => GIG2.getValueKeyP(tableRow, valueKey))
-      .sort();
-    const nValues = sortedValuePs.length;
-    return sortedValuePs.reduce(function (valuePToRankP, valueP, iValue) {
-      valuePToRankP[valueP] = iValue / nValues;
-      return valuePToRankP;
-    }, {});
-  }
-
-  static getFirstRow(tableIndex) {
-    return Object.values(tableIndex)[0];
-  }
-
-  static getTotalRow(tableIndex) {
-    const firstRow = GIG2.getFirstRow(tableIndex);
-    const valueKeys = GIG2.getValueKeys(firstRow);
-    return valueKeys.reduce(function (totalRow, key) {
-      totalRow[key] = MathX.sum(
-        Object.values(tableIndex).map((tableRow) => tableRow[key])
-      );
-      return totalRow;
-    }, {});
-  }
-
-  static getValueSum(tableRow) {
-    const valueKeys = GIG2.getValueKeys(tableRow);
-    return MathX.sum(valueKeys.map((valueKey) => tableRow[valueKey]));
-  }
-
-  static async getTableIndexIndex() {
-    return await LRUCache.get(
-      "getTableIndexIndex",
-      GIG2.getTableIndexIndexNoCache
-    );
-  }
-
-  static async getTableIndexIndexNoCache() {
-    return await DataStructures.buildIndex(TABLE_NAMES, GIG2.getTableIndex);
   }
 }

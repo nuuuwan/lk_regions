@@ -49,3 +49,4 @@
   *  [2021-10-15 05:43PM] Moved funcs out of HomePage
   *  [2021-10-15 05:46PM] Created TopoJSONX
   *  [2021-10-15 05:49PM] Added RegionStyle
+  *  [2021-10-15 05:55PM] Made GIG2 Smaller
