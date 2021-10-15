@@ -9,7 +9,7 @@ import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 
-import { COLOR_INFO_LIST } from "../../base/GIG2.js";
+import { COLOR_INFO_LIST } from "../../constants/GIG2Constants.js";
 
 export default function ColorPanel(props) {
   const {

@@ -93,14 +93,11 @@ export default class MultiRegionView extends Component {
 
     const groupIDs = Object.keys(groupToRegions);
 
-
-    let groupGeoJSONListSim = groupGeoJSONList.map(
-      function(d) {
-        const centroid = d3.geoCentroid(d);
-        [ d.y, d.x] = centroid;
-        return d;
-      },
-    )
+    let groupGeoJSONListSim = groupGeoJSONList.map(function (d) {
+      const centroid = d3.geoCentroid(d);
+      [d.y, d.x] = centroid;
+      return d;
+    });
 
     let nodes;
     if (showDorlingCartogram) {
@@ -129,9 +126,6 @@ export default class MultiRegionView extends Component {
       nodes = simulation.nodes();
     }
 
-
-
-
     return Object.entries(groupToRegions).map(function (
       [groupID, regionIDs],
       iGroup
@@ -142,7 +136,7 @@ export default class MultiRegionView extends Component {
 
       let center;
       if (showDorlingCartogram) {
-        center = [nodes[iGroup].x, nodes[iGroup].y]
+        center = [nodes[iGroup].x, nodes[iGroup].y];
       }
 
       const renderedPopup = (

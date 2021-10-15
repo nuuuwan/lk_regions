@@ -3,6 +3,7 @@ import { WWW } from "@nuuuwan/utils-js-dev";
 import { APP_NAME } from "../constants/Constants.js";
 import Ents, { ENT } from "./Ents.js";
 import GIG2 from "./GIG2.js";
+import GIG2Merge from "./GIG2Merge.js";
 import { DataStructures } from "./BaseUtils.js";
 
 export default class RegionGroup {
@@ -119,7 +120,7 @@ export default class RegionGroup {
     },
     {});
 
-    const groupTableIndex = GIG2.mergeAndExpandOtherOnTable(rawGroupTableIndex);
+    const groupTableIndex = GIG2Merge.mergeAndExpandOtherOnTable(rawGroupTableIndex);
 
     return groupTableIndex;
   }

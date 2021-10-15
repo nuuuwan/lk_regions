@@ -2,7 +2,8 @@ import { Component } from "react";
 
 import { MathX } from "@nuuuwan/utils-js-dev";
 
-import GIG2, { DEFAULT_TABLE_NAME } from "../../base/GIG2.js";
+import GIG2 from "../../base/GIG2.js";
+import { DEFAULT_TABLE_NAME } from "../../constants/GIG2Constants.js";
 import { ENT } from "../../base/Ents.js";
 import RegionGroup from "../../base/RegionGroup.js";
 import GeoMap from "../molecules/GeoMap.js";
