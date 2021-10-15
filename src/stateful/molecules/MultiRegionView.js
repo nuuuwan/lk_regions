@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 
 import TopoJSONX from "../../base/TopoJSONX.js";
 import GIG2 from "../../base/GIG2.js";
-import RegionGroup from "../../base/RegionGroup.js";
+import RegionStyle from "../../base/RegionStyle.js";
 
 import DataRowTable from "../../nonstate/molecules/DataRowTable.js";
 import RegionView from "../atoms/RegionView.js";
@@ -109,7 +109,7 @@ export default class MultiRegionView extends Component {
         </Popup>
       );
 
-      const style = RegionGroup.getRegionStyle(groupTableRow);
+      const style = RegionStyle.getRegionStyle(groupTableRow);
 
       return (
         <RegionView
