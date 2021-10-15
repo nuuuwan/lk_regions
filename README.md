@@ -6,8 +6,6 @@
 * Information on Click
   * MiniMap
 
-* Dorling Cartogram - Toggle
-
 * Map Properties
   * Clean-up
   * Seats
@@ -27,8 +25,6 @@
 
 * Elections Slider
 
-* Add Region Labels
-
 * LRU Cache -> All Cache
 
 ## TODOs (Python)
@@ -45,3 +41,4 @@
   *  [2021-10-15 02:23PM] Added Cartogram Toggle
   *  [2021-10-15 02:35PM] Loading Speedup
   *  [2021-10-15 03:13PM] Labels Done
+  *  [2021-10-15 03:14PM] Pre-Merge
