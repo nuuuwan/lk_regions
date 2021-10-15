@@ -3,9 +3,6 @@
 [App Home](https://nuuuwan.github.io/lk_regions)
 
 ## TODOs (React JS)
-* Information on Click
-  * MiniMap
-
 * Map Properties
   * Clean-up
   * Seats
@@ -42,3 +39,4 @@
   *  [2021-10-15 02:35PM] Loading Speedup
   *  [2021-10-15 03:13PM] Labels Done
   *  [2021-10-15 03:14PM] Pre-Merge
+  *  [2021-10-15 03:26PM] README
