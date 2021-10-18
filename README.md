@@ -55,3 +55,4 @@
   *  [2021-10-15 06:08PM] Added ThemeProvider
   *  [2021-10-15 06:12PM] Changed Font
   *  [2021-10-15 08:29PM] Added slider for elections
+  *  [2021-10-18 01:44PM] Copied gig-data
