@@ -114,6 +114,7 @@ export default class HomePage extends Component {
             showDorlingCartogram={showDorlingCartogram}
           />
         </GeoMap>
+
         <MapPanel
           activeMapID={activeMapID}
           onClickMap={this.onClickMap.bind(this)}

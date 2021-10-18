@@ -7,10 +7,10 @@ export const OTHER_LIMIT_LOCAL = 0.2;
 export const KEY_OTHER = "other";
 
 export const MERGE_ALIAS_MAP = {
-  moor: "muslim",
+  sl_moor: "muslim",
   malay: "muslim",
-  sri_lankan_tamil: "tamil",
-  indian_tamil: "tamil",
+  sl_tamil: "tamil",
+  ind_tamil: "tamil",
   roman_catholic: "christian",
   other_christian: "christian",
 };
@@ -26,28 +26,25 @@ const PARLIAMENTARY_ELECTION_YEAR_LIST = [
 export const TABLE_INFO_LIST = [
   {
     getLabel: (config) => "Ethnicity",
-    getTableName: (config) => "regions.2012_census.ethnicity_of_population",
+    getTableName: (config) => "census/data.ethnicity_of_population",
     Icon: PeopleAltIcon,
     configList: [1],
   },
   {
     getLabel: (config) => "Religion",
-    getTableName: (config) =>
-      "regions.2012_census.religious_affiliation_of_population",
+    getTableName: (config) => "census/data.religious_affiliation_of_population",
     Icon: PeopleAltIcon,
     configList: [1],
   },
   {
     getLabel: (config) => `${config} Presidential Election`,
-    getTableName: (config) =>
-      `regions_ec.${config}_election_presidential.result`,
+    getTableName: (config) => `elections/presidential_election_${config}`,
     Icon: BallotIcon,
     configList: PRESIDENTIAL_ELECTION_YEAR_LIST,
   },
   {
     getLabel: (config) => `${config} Parliamentary Election`,
-    getTableName: (config) =>
-      `regions_ec.${config}_election_parliamentary.result`,
+    getTableName: (config) => `elections/parliamentary_election_${config}`,
     Icon: BallotIcon,
     configList: PARLIAMENTARY_ELECTION_YEAR_LIST,
   },

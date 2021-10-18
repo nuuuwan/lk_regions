@@ -70,8 +70,9 @@ function isPointInMultiMultiPolygon(point, multiMultiPolygon) {
 export default class GeoData {
   static async getCoordinatesForRegion(regionID) {
     const regionType = Ents.getEntType(regionID);
-    const url = `/${APP_NAME}/data/geo/${regionType}/${regionID}.json`;
-    return await WWW.json(url);
+    const url = `/${APP_NAME}/data/gig-data/geo/${regionType}/${regionID}.json`;
+    const coordinates = await WWW.json(url);
+    return coordinates;
   }
 
   static async getRegionToGeo(regionIDs) {
@@ -85,11 +86,6 @@ export default class GeoData {
       regionToGeo[regionID] = geoDataList[iRegion];
       return regionToGeo;
     }, {});
-  }
-
-  static async getRegionTree() {
-    const url = `/${APP_NAME}/data/geo/region_tree.json`;
-    return await WWW.json(url);
   }
 
   static async isPointInRegion(point, regionID) {

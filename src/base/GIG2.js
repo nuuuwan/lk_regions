@@ -14,14 +14,14 @@ let adhocValueKeyToColor = {};
 export default class GIG2 {
   // Multi-Table Functions
   static async getTable(tableName) {
-    const url = `/${APP_NAME}/data/gig2/${tableName}.tsv`;
+    const url = `/${APP_NAME}/data/gig-data/${tableName}.tsv`;
     return await WWW.tsv(url);
   }
 
   static async getTableIndex(tableName) {
     const table = await GIG2.getTable(tableName);
     const valueKeys = GIG2.getValueKeys(table[0]);
-    return table.reduce(function (tableIndex, tableRow) {
+    const tableIndex = table.reduce(function (tableIndex, tableRow) {
       tableIndex[tableRow[ID_FIELD_KEY]] = Object.entries(tableRow).reduce(
         function (cleanTableRow, [key, value]) {
           if (valueKeys.includes(key)) {
@@ -37,6 +37,7 @@ export default class GIG2 {
       );
       return tableIndex;
     }, {});
+    return tableIndex;
   }
 
   static async getTableIndexIndex() {

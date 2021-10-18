@@ -55,7 +55,6 @@ export default class GIG2Merge {
 
   static mergeAndExpandOtherOnTable(tableIndex) {
     const mergedTableIndex = GIG2Merge.mergeKeysOnTable(tableIndex);
-
     const totalRow = GIG2.getTotalRow(mergedTableIndex);
     const valueKeys = GIG2.getValueKeys(totalRow);
     const valueSum = GIG2.getValueSum(totalRow);

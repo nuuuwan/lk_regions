@@ -83,7 +83,7 @@ export default class Ents {
     return ENT_TYPE_TO_LONG_NAME[regionType];
   }
   static async getEntsByType(entType) {
-    const url = `/${APP_NAME}/data/ents/${entType}.tsv`;
+    const url = `/${APP_NAME}/data/gig-data/${entType}.tsv`;
     return await WWW.tsv(url);
   }
 
@@ -120,11 +120,6 @@ export default class Ents {
       ent["centroid"] = JSON.parse(ent["centroid"]);
     }
     return ent;
-  }
-
-  static async getParentToChildMap() {
-    const url = `data/ents/parent_to_child_map.json`;
-    return await WWW.json(url);
   }
 
   static getChildType(parentType) {

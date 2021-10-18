@@ -6,7 +6,7 @@ import { MathX } from "@nuuuwan/utils-js-dev";
 
 import { Humanize, StatX } from "../../base/BaseUtils.js";
 
-const POP_TABLE_NAME = "regions.2012_census.ethnicity_of_population";
+const POP_TABLE_NAME = "census/data.ethnicity_of_population";
 const POP_FIELD_KEY = "total_population";
 
 function GroupInfoView(props) {

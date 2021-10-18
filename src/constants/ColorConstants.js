@@ -52,13 +52,14 @@ export const FIELD_NAME_TO_COLOR = {
   bharatha: "cyan",
   burgher: "purple",
   chetty: COLOR_SL_FLAG.BLUE,
-  indian_tamil: COLOR_SL_FLAG.TAMIL,
+  ind_tamil: COLOR_SL_FLAG.TAMIL,
   tamil: COLOR_SL_FLAG.TAMIL,
   malay: COLOR_SL_FLAG.MUSLIM,
   moor: COLOR_SL_FLAG.MUSLIM,
   muslim: COLOR_SL_FLAG.MUSLIM,
+  sl_moor: COLOR_SL_FLAG.MUSLIM,
   sinhalese: COLOR_SL_FLAG.SINHALA,
-  sri_lankan_tamil: COLOR_SL_FLAG.TAMIL,
+  sl_tamil: COLOR_SL_FLAG.TAMIL,
 
   // religious_affiliation_of_population
   buddhist: COLOR_SL_FLAG.BUDDHIST,

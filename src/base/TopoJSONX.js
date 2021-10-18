@@ -18,7 +18,7 @@ export default class TopoJSONX {
       regionIDs.map(async function (regionID) {
         return {
           type: "MultiPolygon",
-          coordinates: await GeoData.getCoordinatesForRegion(regionID),
+          coordinates: [await GeoData.getCoordinatesForRegion(regionID)],
         };
       })
     );
@@ -33,6 +33,7 @@ export default class TopoJSONX {
       topoJSON,
       Object.values(topoJSON.objects)
     );
+
     return mergedGeoJSON;
   }
 

@@ -2,6 +2,8 @@ import { MathX } from "@nuuuwan/utils-js-dev";
 const LRU = require("lru-cache");
 const LRU_CACHE = new LRU();
 
+const CACHE_VERSION = "v20211018";
+
 export class DataStructures {
   static async buildIndex(keyIDs, asyncFuncKeyToData) {
     const dataList = await Promise.all(
@@ -81,7 +83,8 @@ export class StatX {
 }
 
 export class LRUCache {
-  static async get(cacheKey, asyncFallback) {
+  static async get(cacheKeyExternal, asyncFallback) {
+    const cacheKey = cacheKeyExternal + "." + CACHE_VERSION;
     const hotItemInLRUCache = LRU_CACHE.get(cacheKey);
     if (hotItemInLRUCache) {
       return JSON.parse(hotItemInLRUCache);
